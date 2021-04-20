@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Huija&#39;s Blog</title>
+    <title>Home Page on Huija&#39;s Blog</title>
     <link>https://huija.github.io/</link>
-    <description>Recent content on Huija&#39;s Blog</description>
+    <description>Recent content in Home Page on Huija&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     <lastBuildDate>Sun, 18 Apr 2021 21:35:19 +0800</lastBuildDate><atom:link href="https://huija.github.io/index.xml" rel="self" type="application/rss+xml" />
@@ -22,7 +22,7 @@
       <pubDate>Sun, 18 Apr 2021 21:18:19 +0800</pubDate>
       
       <guid>https://huija.github.io/about/</guid>
-      <description>TODO ABOUT PAGE</description>
+      <description> 🔭 I’m currently working on JiangSu-WuXi 🌱 I’m currently learning Kubernetes 💬 Ask me: Wechat:zhj1150555483 📫 Reach me: zhj3212j@outlook.com 😄 Skills: Go,Java,Linux,MySQL,Redis,Mongo,Kafka,PG... ⚡ WeChat Public Account: 从入门到删库跑路 ⛵ Github: https://github.com/huija  </description>
     </item>
     
   </channel>
