@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Huija&#39;s Blog</title>
-    <link>https://huija.github.io/post/</link>
-    <description>Recent content in Posts on Huija&#39;s Blog</description>
+    <title>数据库 on Huija&#39;s Blog</title>
+    <link>https://huija.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
+    <description>Recent content in 数据库 on Huija&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 29 Apr 2021 09:44:48 +0800</lastBuildDate><atom:link href="https://huija.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 29 Apr 2021 09:44:48 +0800</lastBuildDate><atom:link href="https://huija.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>MongoDB入门</title>
       <link>https://huija.github.io/mongodb-starter/</link>
@@ -18,15 +18,6 @@
  传统RDBMS会设计为, &amp;lsquo;商品表&amp;rsquo;+&amp;lsquo;出入库表&amp;rsquo;, 以商品ID作为外键进行关联 作为文档型数据库, MongoDB只需要一个&amp;rsquo;商品表&#39;, 而出入库记录作为商品表的一个数组类型字段直接存在一起.  文档细节 相比原生的Json, Bson支持更多的数据类型: https://docs.mongodb.com/manual/reference/bson-types/
  每一行文档都有一个自己的唯一标志: _id, 有点类似于RDBMS内的Row Num, 不推荐用户自己进行定义, 其具有自己的生成规则, 其是长度12的byte数组, 前4个byte是时间戳, 中间5个byte是当前进程标志, 最后3个byte是程序内的计数器.
  与RDBMS比较 作为流行榜上, 文档型数据库中排行最高的MongoDB, 其实拿来跟RDBMS比较并不合理, 主要介绍一下其自身特性.</description>
-    </item>
-    
-    <item>
-      <title>Hello Hugo</title>
-      <link>https://huija.github.io/hello-hugo/</link>
-      <pubDate>Sun, 18 Apr 2021 21:24:41 +0800</pubDate>
-      
-      <guid>https://huija.github.io/hello-hugo/</guid>
-      <description>Hello Hugo!</description>
     </item>
     
   </channel>
