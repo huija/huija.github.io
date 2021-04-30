@@ -119,6 +119,7 @@ config          0.000GB
 local           0.000GB
 > use demo
 switched to db demo
+> show collections
 > db.test.insert({"x":1,"y":2})
 WriteResult({ "nInserted" : 1 })
 > db.test.insert({"x":2,"y":3,"z":1})
@@ -139,10 +140,12 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 { "_id" : ObjectId("608a9bcea09bfa905f74fbab"), "x" : 2, "y" : 3 }
 > db.test.aggregate([{"$match":{"x":2}}, {"$addFields":{"z":["$x","$y"]}}])
 { "_id" : ObjectId("608a9bcea09bfa905f74fbab"), "x" : 2, "y" : 3, "z" : [ 2, 3 ] }
+> db.test.drop()
+true
 ```
 
 上面涉及了一些概念的皮毛:
-- 无需创建DB,Table这些,不同格式的JSON文档也可以存一个集合 
+- 无需创建DB,Table这些,不同格式的BSON文档也可以存一个集合 
 - 初步感受下MongoDB最原始的操作, insert, find, update, delete
 - project代替select, findAndModify原子操作, update操作符, aggregate聚合操作等
 

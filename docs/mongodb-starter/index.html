@@ -454,6 +454,7 @@ config          0.000GB
 local           0.000GB
 &gt; use demo
 switched to db demo
+&gt; show collections
 &gt; db.test.insert({&quot;x&quot;:1,&quot;y&quot;:2})
 WriteResult({ &quot;nInserted&quot; : 1 })
 &gt; db.test.insert({&quot;x&quot;:2,&quot;y&quot;:3,&quot;z&quot;:1})
@@ -474,10 +475,12 @@ WriteResult({ &quot;nMatched&quot; : 1, &quot;nUpserted&quot; : 0, &quot;nModifi
 { &quot;_id&quot; : ObjectId(&quot;608a9bcea09bfa905f74fbab&quot;), &quot;x&quot; : 2, &quot;y&quot; : 3 }
 &gt; db.test.aggregate([{&quot;$match&quot;:{&quot;x&quot;:2}}, {&quot;$addFields&quot;:{&quot;z&quot;:[&quot;$x&quot;,&quot;$y&quot;]}}])
 { &quot;_id&quot; : ObjectId(&quot;608a9bcea09bfa905f74fbab&quot;), &quot;x&quot; : 2, &quot;y&quot; : 3, &quot;z&quot; : [ 2, 3 ] }
+&gt; db.test.drop()
+true
 </code></pre>
 <p>上面涉及了一些概念的皮毛:</p>
 <ul>
-<li>无需创建DB,Table这些,不同格式的JSON文档也可以存一个集合</li>
+<li>无需创建DB,Table这些,不同格式的BSON文档也可以存一个集合</li>
 <li>初步感受下MongoDB最原始的操作, insert, find, update, delete</li>
 <li>project代替select, findAndModify原子操作, update操作符, aggregate聚合操作等</li>
 </ul>
