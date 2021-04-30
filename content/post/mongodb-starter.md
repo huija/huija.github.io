@@ -7,15 +7,15 @@ toc: true
 ---
 
 # MongoDB入门
-MongoDB是面向文档的数据库, 有区别于传统的RDBMS(Oracle,MySQL,PG...), 是一个基于文档(`BSON`)存储的开源数据库系统.
+MongoDB是面向文档的数据库, 有区别于传统的RDBMS(Oracle,MySQL,PostgreSQL...), 是一个基于文档(`BSON`)存储的开源数据库系统.
 
 ## 最直观感受
 - **表**在MongoDB内叫**集合**, 英文名**Collection**, 表示一批同类文档的集合
 - 每**一行数据**在MongoDB内可以叫**一个文档**, 英文**Document**, 存储格式**Binary Json**, 可以简单类比为Json
 - MongoDB是NoSQL数据库, 有自己的语法规则, 也就是不使用SQL进行CRUD(但是其BI Connector支持模拟MySQL进行查询)
-- MongoDB推崇Schema Less, 无需提前涉及表的结构, 同一个集合内的文档可以有不同的字段
+- MongoDB推崇Schema Less, 无需提前设计表的结构, 同一个集合内的文档可以有不同的字段
 
-## 理解文档概念
+## 理解Document概念
 文档是文档型数据库的数据存储格式, 从根本上影响使用人员的方方面面.
 - 传统的RDBMS是基于Relation Model, 需要开发人员对现实业务进行抽象, 根据范式标准设计表结构, 使用联表查询来表示完整的事物结构, 关键词: 主键, 外键, 关系模型, 三范式.
 - 文档的存储可以理解为存了一个Json, 特性是支持对象模型的灵活**组合**, 一般情况下, 无需进行过度的设计拆分, 此外, 可以灵活地增删列是其一大核心优势, 关键词: 组合, Schema Less
@@ -33,10 +33,10 @@ MongoDB自己设计使用的Bson, 类似Json格式, 支持更多的数据类型:
 
 ### _id字段
 每一行文档都有一个自己的唯一标志: `_id`, 有点类似于RDBMS内的`Row Num`, 不推荐用户自己进行定义, 其具有自己的生成规则, 
-ObjectId类型, 其本质是长度12的byte数组, 前4个byte是时间戳, 中间5个byte是当前进程标志, 最后3个byte是程序内的计数器.
+默认是ObjectId类型, 其本质是长度12的byte数组, 前4个byte是时间戳, 中间5个byte是当前进程标志, 最后3个byte是程序内的计数器.
 
 ## 与RDBMS比较
-如果说开源的RDBMS还有Postgres和MySQL进行竞争, 那MongoDB可以说是文档型数据库的执牛耳者.
+如果说开源的RDBMS还有PostgreSQL和MySQL进行竞争, 那MongoDB可以说是文档型数据库的执牛耳者.
 
 > MongoDB主要还是针对OLTP场景, 并提供了适当的OLAP支持, 但是决定是否选择它, 最主要还是要了解其优劣.
 
@@ -49,8 +49,8 @@ ObjectId类型, 其本质是长度12的byte数组, 前4个byte是时间戳, 中�
 - 其余功能, Grid/Fs文件存储, 聚合操作支持数据的Pipeline加工(有限的OLAP), 支持基于时间点恢复(PITR), 自带监控工具等.
 
 ### 劣势
-- Schema Less, 过于灵活, 但并不意味着无设计, 完全的无设计只会影响软件的健壮性,考验开发人员代码质量.
-- 大量的空间换时间的优化, 使得MongoDB在资源占用(内存, 磁盘)上居高不下, 需要开发者更谨慎地创建索引.
+- Schema Less, 过于灵活, 但并不意味着无设计, 完全的无设计只会影响软件的健壮性.
+- 大量的空间换时间的优化, 使得MongoDB在资源占用(内存, 磁盘)上居高不下, 需要更谨慎地创建索引.
 - 外键功能薄弱, 且联表的语法较为复杂, 在分片集群无法使用联表查询, 所以避免联表几乎是必须的.
 - 基于文档存储, 对SQL基本无支持, 原RDBMS数据如果迁移, 便意味着完全重构服务.
 - 不建议使用MongoDB的单机部署模式, 最少也应该上到复制集架构, 来实现DB的高可用.
@@ -147,7 +147,7 @@ WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
 - project代替select, findAndModify原子操作, update操作符, aggregate聚合操作等
 
 ### GUI客户端
-个人推荐使用Mongo官方地Compass, 而非Navicat这种, [下载传送门](https://www.mongodb.com/try/download/compass)
+个人推荐使用Mongo官方的Compass, 而非Navicat这种, [下载传送门](https://www.mongodb.com/try/download/compass)
 
 ## 总结
 MongoDB作为文档型数据库, 具有很独特的特点, 性能卓越, 功能丰富, 在分布式场景极为优秀, 是十分值得学习使用的数据库产品.

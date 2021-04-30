@@ -257,7 +257,7 @@
       
         
           <br>
-          <strong>Last updated: </strong>Apr 29, 2021
+          <strong>Last updated: </strong>Apr 30, 2021
         
       
     </div>
@@ -309,8 +309,8 @@
           
           
           
-          <a href="#%e7%90%86%e8%a7%a3%e6%96%87%e6%a1%a3%e6%a6%82%e5%bf%b5">
-            理解文档概念
+          <a href="#%e7%90%86%e8%a7%a3document%e6%a6%82%e5%bf%b5">
+            理解Document概念
           </a>
         </li>
       
@@ -351,15 +351,15 @@
     
 
     <h1 id="mongodb入门">MongoDB入门</h1>
-<p>MongoDB是面向文档的数据库, 有区别于传统的RDBMS(Oracle,MySQL,PG&hellip;), 是一个基于文档(<code>BSON</code>)存储的开源数据库系统.</p>
+<p>MongoDB是面向文档的数据库, 有区别于传统的RDBMS(Oracle,MySQL,PostgreSQL&hellip;), 是一个基于文档(<code>BSON</code>)存储的开源数据库系统.</p>
 <h2 id="最直观感受">最直观感受</h2>
 <ul>
 <li><strong>表</strong>在MongoDB内叫<strong>集合</strong>, 英文名<strong>Collection</strong>, 表示一批同类文档的集合</li>
 <li>每<strong>一行数据</strong>在MongoDB内可以叫<strong>一个文档</strong>, 英文<strong>Document</strong>, 存储格式<strong>Binary Json</strong>, 可以简单类比为Json</li>
 <li>MongoDB是NoSQL数据库, 有自己的语法规则, 也就是不使用SQL进行CRUD(但是其BI Connector支持模拟MySQL进行查询)</li>
-<li>MongoDB推崇Schema Less, 无需提前涉及表的结构, 同一个集合内的文档可以有不同的字段</li>
+<li>MongoDB推崇Schema Less, 无需提前设计表的结构, 同一个集合内的文档可以有不同的字段</li>
 </ul>
-<h2 id="理解文档概念">理解文档概念</h2>
+<h2 id="理解document概念">理解Document概念</h2>
 <p>文档是文档型数据库的数据存储格式, 从根本上影响使用人员的方方面面.</p>
 <ul>
 <li>传统的RDBMS是基于Relation Model, 需要开发人员对现实业务进行抽象, 根据范式标准设计表结构, 使用联表查询来表示完整的事物结构, 关键词: 主键, 外键, 关系模型, 三范式.</li>
@@ -379,9 +379,9 @@
 </blockquote>
 <h3 id="_id字段">_id字段</h3>
 <p>每一行文档都有一个自己的唯一标志: <code>_id</code>, 有点类似于RDBMS内的<code>Row Num</code>, 不推荐用户自己进行定义, 其具有自己的生成规则, 
-ObjectId类型, 其本质是长度12的byte数组, 前4个byte是时间戳, 中间5个byte是当前进程标志, 最后3个byte是程序内的计数器.</p>
+默认是ObjectId类型, 其本质是长度12的byte数组, 前4个byte是时间戳, 中间5个byte是当前进程标志, 最后3个byte是程序内的计数器.</p>
 <h2 id="与rdbms比较">与RDBMS比较</h2>
-<p>如果说开源的RDBMS还有Postgres和MySQL进行竞争, 那MongoDB可以说是文档型数据库的执牛耳者.</p>
+<p>如果说开源的RDBMS还有PostgreSQL和MySQL进行竞争, 那MongoDB可以说是文档型数据库的执牛耳者.</p>
 <blockquote>
 <p>MongoDB主要还是针对OLTP场景, 并提供了适当的OLAP支持, 但是决定是否选择它, 最主要还是要了解其优劣.</p>
 </blockquote>
@@ -396,8 +396,8 @@ ObjectId类型, 其本质是长度12的byte数组, 前4个byte是时间戳, 中�
 </ul>
 <h3 id="劣势">劣势</h3>
 <ul>
-<li>Schema Less, 过于灵活, 但并不意味着无设计, 完全的无设计只会影响软件的健壮性,考验开发人员代码质量.</li>
-<li>大量的空间换时间的优化, 使得MongoDB在资源占用(内存, 磁盘)上居高不下, 需要开发者更谨慎地创建索引.</li>
+<li>Schema Less, 过于灵活, 但并不意味着无设计, 完全的无设计只会影响软件的健壮性.</li>
+<li>大量的空间换时间的优化, 使得MongoDB在资源占用(内存, 磁盘)上居高不下, 需要更谨慎地创建索引.</li>
 <li>外键功能薄弱, 且联表的语法较为复杂, 在分片集群无法使用联表查询, 所以避免联表几乎是必须的.</li>
 <li>基于文档存储, 对SQL基本无支持, 原RDBMS数据如果迁移, 便意味着完全重构服务.</li>
 <li>不建议使用MongoDB的单机部署模式, 最少也应该上到复制集架构, 来实现DB的高可用.</li>
@@ -482,7 +482,7 @@ WriteResult({ &quot;nMatched&quot; : 1, &quot;nUpserted&quot; : 0, &quot;nModifi
 <li>project代替select, findAndModify原子操作, update操作符, aggregate聚合操作等</li>
 </ul>
 <h3 id="gui客户端">GUI客户端</h3>
-<p>个人推荐使用Mongo官方地Compass, 而非Navicat这种, <a href="https://www.mongodb.com/try/download/compass">下载传送门</a></p>
+<p>个人推荐使用Mongo官方的Compass, 而非Navicat这种, <a href="https://www.mongodb.com/try/download/compass">下载传送门</a></p>
 <h2 id="总结">总结</h2>
 <p>MongoDB作为文档型数据库, 具有很独特的特点, 性能卓越, 功能丰富, 在分布式场景极为优秀, 是十分值得学习使用的数据库产品.</p>
 <ul>
