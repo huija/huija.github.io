@@ -1,5 +1,5 @@
 ---
-title: "Mongodb 复制集"
+title: "MongoDB复制集"
 date: 2021-05-07T13:37:16+08:00
 draft: true
 tags: ["数据库","MongoDB","分布式"]
