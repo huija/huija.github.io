@@ -2,7 +2,7 @@
 title: "MongoDB入门"
 date: 2021-04-29T09:44:48+08:00
 draft: true
-tags: ["数据库","入门"]
+tags: ["数据库","MongoDB","入门"]
 toc: true
 ---
 
