@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>数据库 on Huija&#39;s Blog</title>
-    <link>https://huija.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/</link>
-    <description>Recent content in 数据库 on Huija&#39;s Blog</description>
+    <title>MongoDB on Huija&#39;s Blog</title>
+    <link>https://huija.github.io/tags/mongodb/</link>
+    <description>Recent content in MongoDB on Huija&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 07 May 2021 13:37:16 +0800</lastBuildDate><atom:link href="https://huija.github.io/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 07 May 2021 13:37:16 +0800</lastBuildDate><atom:link href="https://huija.github.io/tags/mongodb/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Mongodb 复制集</title>
       <link>https://huija.github.io/mongodb-replicaset/</link>

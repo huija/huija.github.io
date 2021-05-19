@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.82.0" />
-  <link rel="canonical" href="/mongodb-starter/">
+  <link rel="canonical" href="/mongodb-replicaset/">
 
   
 
@@ -39,7 +39,7 @@
 
   
   
-  <title>MongoDB入门 | Huija&#39;s Blog</title>
+  <title>Mongodb 复制集 | Huija&#39;s Blog</title>
 </head>
 
   <body>
@@ -247,17 +247,17 @@
       <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
         <use xlink:href="#bookmark"></use>
       </svg>
-      MongoDB入门
+      Mongodb 复制集
     </h1>
 
     <div class="date">
       
       
-      <strong>Publish date: </strong>Apr 29, 2021
+      <strong>Publish date: </strong>May 7, 2021
       
         
           <br>
-          <strong>Last updated: </strong>May 8, 2021
+          <strong>Last updated: </strong>May 19, 2021
         
       
     </div>
@@ -288,7 +288,7 @@
                 <use xlink:href="#tag"></use>
               </svg>
               
-              <a href="/tags/%E5%85%A5%E9%97%A8/">入门</a>
+              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
             </li>
           
         </ul>
@@ -307,8 +307,8 @@
           
           
           
-          <a href="#%e6%9c%80%e7%9b%b4%e8%a7%82%e6%84%9f%e5%8f%97">
-            最直观感受
+          <a href="#%e6%b5%85%e8%b0%88%e5%a4%8d%e5%88%b6%e9%9b%86">
+            浅谈复制集
           </a>
         </li>
       
@@ -317,8 +317,8 @@
           
           
           
-          <a href="#%e7%90%86%e8%a7%a3document%e6%a6%82%e5%bf%b5">
-            理解Document概念
+          <a href="#mongodb%e5%a4%8d%e5%88%b6%e9%9b%86-1">
+            MongoDB复制集
           </a>
         </li>
       
@@ -327,8 +327,8 @@
           
           
           
-          <a href="#%e4%b8%8erdbms%e6%af%94%e8%be%83">
-            与RDBMS比较
+          <a href="#clientserver%e6%9c%ba%e5%88%b6">
+            Client/Server机制
           </a>
         </li>
       
@@ -337,8 +337,18 @@
           
           
           
-          <a href="#%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2%e4%bd%bf%e7%94%a8">
-            单机部署使用
+          <a href="#%e8%8a%82%e7%82%b9%e9%80%89%e4%b8%be">
+            节点选举
+          </a>
+        </li>
+      
+        <li>
+          
+          
+          
+          
+          <a href="#%e9%9b%86%e7%be%a4%e7%9b%91%e6%8e%a7">
+            集群监控
           </a>
         </li>
       
@@ -358,149 +368,260 @@
 
     
 
-    <h1 id="mongodb入门">MongoDB入门</h1>
-<p>MongoDB是面向文档的数据库, 有区别于传统的RDBMS(Oracle,MySQL,PostgreSQL&hellip;), 是一个基于文档(<code>BSON</code>)存储的开源数据库系统.</p>
-<h2 id="最直观感受">最直观感受</h2>
-<ul>
-<li><strong>表</strong>在MongoDB内叫<strong>集合</strong>, 英文名<strong>Collection</strong>, 表示一批同类文档的集合</li>
-<li>每<strong>一行数据</strong>在MongoDB内可以叫<strong>一个文档</strong>, 英文<strong>Document</strong>, 存储格式<strong>Binary Json</strong>, 可以简单类比为Json</li>
-<li>MongoDB是NoSQL数据库, 有自己的语法规则, 也就是不使用SQL进行CRUD(但是其BI Connector支持模拟MySQL进行查询)</li>
-<li>MongoDB推崇Schema Less, 无需提前设计表的结构, 同一个集合内的文档可以有不同的字段</li>
-</ul>
-<h2 id="理解document概念">理解Document概念</h2>
-<p>文档是文档型数据库的数据存储格式, 从根本上影响使用人员的方方面面.</p>
-<ul>
-<li>传统的RDBMS是基于Relation Model, 需要开发人员对现实业务进行抽象, 根据范式标准设计表结构, 使用联表查询来表示完整的事物结构, 关键词: 主键, 外键, 关系模型, 三范式.</li>
-<li>文档的存储可以理解为存了一个Json, 特性是支持对象模型的灵活<strong>组合</strong>, 一般情况下, 无需进行过度的设计拆分, 此外, 可以灵活地增删列是其一大核心优势, 关键词: 组合, Schema Less</li>
-</ul>
-<h3 id="业务设计举例">业务设计举例</h3>
-<p><strong>商品, 出入库设计</strong></p>
-<ul>
-<li>传统RDBMS会设计为, &lsquo;商品表&rsquo;+&lsquo;出入库表&rsquo;, 以商品ID作为外键进行关联</li>
-<li>作为文档型数据库, MongoDB只需要一个&rsquo;商品表', 而出入库记录作为商品表的一个数组类型字段直接存在一起.</li>
-</ul>
-<h3 id="binary-json">Binary Json</h3>
-<p>MongoDB自己设计使用的Bson, 类似Json格式, 支持更多的数据类型: <a href="https://docs.mongodb.com/manual/reference/bson-types/">https://docs.mongodb.com/manual/reference/bson-types/</a></p>
+    <h1 id="mongodb复制集">MongoDB复制集</h1>
+<p>MongoDB复制集是MongoDB分布式系统的核心.</p>
 <blockquote>
-<p>Bson实际就是一种<code>buffer</code>编码规则, 对外呈现Json格式, 
-客户端以Bson为参数, 对MongoDB进行RPC调用, 然后得到同样为Bson格式的返回结果.</p>
+<p>mongodb的api对于单点,复制集,分片集群都通用的, 这也就意味着, 改变底层架构, 对于代码基本无需改动.</p>
 </blockquote>
-<h3 id="_id字段">_id字段</h3>
-<p>每一行文档都有一个自己的唯一标志: <code>_id</code>, 有点类似于RDBMS内的<code>Row Num</code>, 不推荐用户自己进行定义, 其具有自己的生成规则, 
-默认是ObjectId类型, 其本质是长度12的byte数组, 前4个byte是时间戳, 中间5个byte是当前进程标志, 最后3个byte是程序内的计数器.</p>
-<h2 id="与rdbms比较">与RDBMS比较</h2>
-<p>如果说开源的RDBMS还有PostgreSQL和MySQL进行竞争, 那MongoDB可以说是文档型数据库的执牛耳者.</p>
+<h2 id="浅谈复制集">浅谈复制集</h2>
+<p>先撇开MongoDB单独来讲复制集群, 顾名思义, 就是从原先的机器复制一份, 一起部署,
+在分布式场景是很常见的部署架构, 以数据库们为例, 就有MySQL基于binlog的主从部署, 
+PostgreSQL基于WAL日志的同步/异步流复制, Redis的主从复制等.</p>
+<h3 id="复制集的意义">复制集的意义</h3>
+<ul>
+<li>复制集本身, 解决的根本问题是, 单机部署的单点故障问题, 当<strong>主节点</strong>挂掉, 可以转正<strong>从节点</strong>, 也就是数据冗余以及高可用.</li>
+<li>衍生出来的, 是可以进行读写分流, 并针对读的流量进行横向扩展, 也就是可伸缩性与负载均衡.</li>
+</ul>
+<h3 id="复制集的问题">复制集的问题</h3>
+<p>复制集的最核心的问题集中于消息从<strong>主节点</strong>到<strong>从节点</strong>的备份策略, 同步还是异步</p>
+<ul>
+<li>如果同步备份, 那么会保证每个操作后, 主从的数据都是一致的, 也就是强一致性, 但是如果<strong>从节点</strong>挂了, 使用同步的策略, 那<strong>主节点</strong>的请求是否要返回失败, 这就涉及可用性的问题.</li>
+<li>一般数据库的主流策略都是异步, 不追求数据的强一致性, 而是最终一致性, 重点保证可用性, 而实时性问题, 则通过一定手段进行避免.</li>
+</ul>
+<h2 id="mongodb复制集-1">MongoDB复制集</h2>
+<p>MongoDB的主从叫Primary和Secondary, 其复制集由一个Primary和多个Secondary组成, Primary可以进行读写操作, Secondary回放Primary发送的oplog, 进行数据备份.</p>
 <blockquote>
-<p>MongoDB主要还是针对OLTP场景, 并提供了适当的OLAP支持, 但是决定是否选择它, 最主要还是要了解其优劣.</p>
+<p>还有一种节点类型, 叫Arbiter, 仲裁者, 其主要负责选举投票, 而不进行数据备份, 也不能竞选Primary.</p>
 </blockquote>
-<h3 id="优势">优势</h3>
+<h3 id="典型的三节点部署">典型的三节点部署</h3>
+<p>主节点的选举条件是需要半数以上的投票节点投票, 一般节点数量都会设置为单数, 也就是2n+1, 
+最多支持挂掉n个节点, 集群仍然能正常工作, 与2(n+1)个节点能够容忍的数量是一样的, 
+所以一般节点数(具有投票权)都是单数</p>
+<p><img src="https://huija.github.io/images/replica-set-ps2.png" alt=""></p>
+<blockquote>
+<p>三节点部署的问题在于, 没法应对机房的整体故障, 比如你有2个机房, 主机房部署了2个节点, 
+从机房部署了一个节点, 一般情况下, 是没有问题的, 但是当主机房整体故障, 2个节点全部下线, 
+只剩余从机房一个节点, 无法选出Primary节点, 这时候只能提供读,不能提供写服务.</p>
+</blockquote>
+<h4 id="直接部署">直接部署</h4>
+<blockquote>
+<p>假设你已经看过了<a href="https://huija.github.io/mongodb-starter/">MongoDB入门</a>, 那么下面的复制集部署其实并不难</p>
+</blockquote>
+<p>主要步骤分为两步:</p>
 <ul>
-<li>Schema Less, 减少设计负担, 灵活应对业务变更进行字段增减; 模型的嵌套组合, 避免联表查询, 减少了磁盘IO次数.</li>
-<li>同样丰富的索引类型, B树, 文本索引, Hash索引, 2d坐标索引, 特殊的ttl索引(实现文档过期)等&hellip;MongoDB支持在二级key进行索引.</li>
-<li>单文档操作具有原子性, 覆盖足够的事务场景, 以及4.0已经支持的多文档事务(4.2以后分片集群也支持,所以也叫分布式事务)</li>
-<li>开源版就支持集群部署, 支持<strong>复制集</strong>和<strong>分片集</strong>, 对读写分离, 海量数据, 多云架构等各种分布式场景天然支持.</li>
-<li>丰富的插件系统, Spark Connector支持Spark分析数据, BI Connector支持模拟MySQL来进行SQL查询&hellip;</li>
-<li>其余功能, Grid/Fs文件存储, 聚合操作支持数据的Pipeline加工(有限的OLAP), 支持基于时间点恢复(PITR), 自带监控工具等.</li>
+<li>启动三个<strong>mongod</strong>实例, 我们单机模拟, 分别占用<strong>28017,28018,28019</strong>三个端口.</li>
+<li><strong>mongo shell</strong>进入某个<strong>mongod</strong>实例, 初始化复制集集群.</li>
 </ul>
-<h3 id="劣势">劣势</h3>
-<ul>
-<li>Schema Less, 过于灵活, 但并不意味着无设计, 完全的无设计只会影响软件的健壮性.</li>
-<li>大量的空间换时间的优化, 使得MongoDB在资源占用(内存, 磁盘)上居高不下, 需要更谨慎地创建索引.</li>
-<li>外键功能薄弱, 且联表的语法较为复杂, 在分片集群无法使用联表查询, 所以避免联表几乎是必须的.</li>
-<li>基于文档存储, 对SQL基本无支持, 原RDBMS数据如果迁移, 便意味着完全重构服务.</li>
-<li>不建议使用MongoDB的单机部署模式, 最少也应该上到复制集架构, 来实现DB的高可用.</li>
-<li>多文档事务性能不佳, 隔离级别的指定, 需要配置多项读写参数, 理解起来也较为复杂, 不推荐使用.</li>
-</ul>
-<h2 id="单机部署使用">单机部署使用</h2>
-<p>单机版本的MongoDB搭建十分简单, 直接看<a href="https://docs.mongodb.com/manual/administration/install-community/">官方文档</a>也能直接看懂,
-我个人比较推荐的是使用tgz压缩包进行部署, 也就是已经编译好的二进制包, 选择合适平台与版本下载, <a href="https://www.mongodb.com/try/download/community">下载传送门</a></p>
-<p>Linux为例</p>
-<pre><code class="language-shell">cd ~/programs
-wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-4.4.1.tgz
-tar zxvf mongodb-linux-x86_64-ubuntu2004-4.4.1.tgz -C .
-# 改名文件夹...
-cd mongodb-4.4.1
-mkdir data config
-cd config
-touch mongo.conf
+<p>配置三个实例的数据库集簇目录, 端口等</p>
+<pre><code class="language-shell">cd ~/programs/mongodb-4.4.1
+mkdir replica
+cd replica
+mkdir -p data/db{1,2,3}
+touch replica_1.conf replica_2.conf replica_3.conf
 </code></pre>
-<p>配置文件提供一个参考, 如下.</p>
-<pre><code class="language-yaml">storage:
-  dbPath: /home/huijia/programs/mongodb-4.4.1/data
+<p>每个配置的内容大致如下, 区别在集簇目录<strong>db1</strong>和端口<strong>28017</strong>上</p>
+<pre><code class="language-shell">storage:
+  dbPath: /home/huijia/programs/mongodb-4.4.1/replica/data/db1
   journal:
     enabled: true
 systemLog:
   destination: file
   logAppend: true
-  path: /home/huijia/programs/mongodb-4.4.1/log/mongod.log
+  path: /home/huijia/programs/mongodb-4.4.1/replica/data/db1/mongod.log
 processManagement:
   fork: true
-  pidFilePath: /home/huijia/programs/mongodb-4.4.1/mongod.pid
+  pidFilePath: /home/huijia/programs/mongodb-4.4.1/replica/data/db1/mongod.pid
 net:
-  port: 27017
+  port: 28017
   bindIp: 0.0.0.0
+replication:
+  replSetName: replicaset
 </code></pre>
-<p>启动</p>
-<pre><code class="language-shell">export PATH=$PATH:/home/huijia/programs/mongodb-4.4.1/bin
-mongod -f /home/huijia/programs/mongodb-4.4.1/config/mongo.conf
+<p>输好配置后可启动三个实例</p>
+<pre><code class="language-shell">mongod -f replica_1.conf
+mongod -f replica_2.conf
+mongod -f replica_3.conf
 </code></pre>
-<p>查看</p>
-<pre><code class="language-shell">$ lsof -i:27017
-COMMAND  PID   USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
-mongod  9217 huijia   12u  IPv4  28889      0t0  TCP *:27017 (LISTEN)
-</code></pre>
-<p>终止</p>
-<pre><code class="language-shell">pkill mongod
-</code></pre>
-<h3 id="crud操作">crud操作</h3>
-<p>简单进行下crud操作</p>
-<pre><code class="language-shell">$ mongo localhost:27017
+<p>进入某个实例, 初始化复制集群(_id与之前配置文件内的replSetName必须一致)</p>
+<pre><code class="language-shell">mongo localhost:28017
+&gt; rs.initiate({
+      &quot;_id&quot;: &quot;replicaset&quot;,
+      &quot;members&quot;: [
+          {
+              &quot;_id&quot;: 0,
+              &quot;host&quot;: &quot;127.0.0.1:28017&quot;
+          },
+          {
+              &quot;_id&quot;: 1,
+              &quot;host&quot;: &quot;127.0.0.1:28018&quot;
+          },
+          {
+              &quot;_id&quot;: 2,
+              &quot;host&quot;: &quot;127.0.0.1:28019&quot;
+          }
+      ]
+  })
+replicaset:PRIMARY&gt; rs.status()
 ...
-&gt; show dbs
-admin           0.000GB
-config          0.000GB
-local           0.000GB
-&gt; use demo
-switched to db demo
-&gt; show collections
-&gt; db.test.insert({&quot;x&quot;:1,&quot;y&quot;:2})
-WriteResult({ &quot;nInserted&quot; : 1 })
-&gt; db.test.insert({&quot;x&quot;:2,&quot;y&quot;:3,&quot;z&quot;:1})
-WriteResult({ &quot;nInserted&quot; : 1 })
-&gt; db.test.find({&quot;x&quot;:1})
-{ &quot;_id&quot; : ObjectId(&quot;608a9bc2a09bfa905f74fbaa&quot;), &quot;x&quot; : 1, &quot;y&quot; : 2 }
-&gt; db.test.find({&quot;x&quot;:2},{&quot;_id&quot;:0,&quot;x&quot;:1})
-{ &quot;x&quot; : 2 }
-&gt; db.test.update({&quot;x&quot;:1},{&quot;$set&quot;:{&quot;y&quot;:1}})
-WriteResult({ &quot;nMatched&quot; : 1, &quot;nUpserted&quot; : 0, &quot;nModified&quot; : 1 })
-&gt; db.test.find({&quot;x&quot;:1},{&quot;_id&quot;:0})
-{ &quot;x&quot; : 1, &quot;y&quot; : 1 }
-&gt; db.test.findAndModify({query:{&quot;x&quot;:1},update:{&quot;$set&quot;:{&quot;y&quot;:2}},new:true})
-{ &quot;_id&quot; : ObjectId(&quot;608a9bc2a09bfa905f74fbaa&quot;), &quot;x&quot; : 1, &quot;y&quot; : 2 }
-&gt; db.test.deleteOne({&quot;x&quot;:1})
-{ &quot;acknowledged&quot; : true, &quot;deletedCount&quot; : 1 }
-&gt; db.test.find({})
-{ &quot;_id&quot; : ObjectId(&quot;608a9bcea09bfa905f74fbab&quot;), &quot;x&quot; : 2, &quot;y&quot; : 3 }
-&gt; db.test.aggregate([{&quot;$match&quot;:{&quot;x&quot;:2}}, {&quot;$addFields&quot;:{&quot;z&quot;:[&quot;$x&quot;,&quot;$y&quot;]}}])
-{ &quot;_id&quot; : ObjectId(&quot;608a9bcea09bfa905f74fbab&quot;), &quot;x&quot; : 2, &quot;y&quot; : 3, &quot;z&quot; : [ 2, 3 ] }
-&gt; db.test.drop()
-true
+replicaset:PRIMARY&gt; rs.config()
+...
 </code></pre>
-<p>上面涉及了一些概念的皮毛:</p>
+<p>这样, 一个简单的复制集群就搭建好了.</p>
+<blockquote>
+<p>这里看起来简单, 实际隐藏了一个坑, 类似Kafka, 如果我们这边init的是ip, 那么客户端访问, 无论你设置的是ip还是域名, 
+到最后, 实际都是根据server返回的元数据进行访问, 也就是ip, 这一般没什么问题, 但是如果init的是域名, 
+那么客户端也会使用域名进行访问, 这时候, 一个内部全局可用的DNS服务, 是十分关键的, 当然, 这些也可以后面修改, 参考节点设置的tip.</p>
+</blockquote>
+<h4 id="设定鉴权">设定鉴权</h4>
+<p>MongoDB一直被人误解, 安全性低, 实际上完全是误解, 其实MongoDB的鉴权类似K8S等系统, 使用的是RBAC的鉴权模型</p>
+<blockquote>
+<p>MongoDB节点间的校验是通过证书进行, 客户端访问节点则是RBAC鉴权.</p>
+</blockquote>
+<pre><code class="language-shell">## 先mongo shell到primary节点创建管理员: 创建用户admin, 指定角色为root
+&gt; use admin
+&gt; db.createUser({user:&quot;admin&quot;,pwd:&quot;123456&quot;,roles:[{role:&quot;root&quot;,db:&quot;admin&quot;}]})
+## 关闭集群, 创建证书文件
+pkill mongod
+openssl rand -base64 753  &gt; crt.key
+chmod 400 crt.key
+## 每个mongod进程的conf配置都追加证书配置
+security:
+  authorization: enabled
+  clusterAuthMode: keyFile
+  keyFile: path to crt.key
+## 启动集群
+mongod -f replica_1.conf
+mongod -f replica_2.conf
+mongod -f replica_3.conf
+</code></pre>
+<blockquote>
+<p>如果顺利, 这时候, 应该启动成功了, 不顺利, 就可以去查看一下mongod的日志文件, 错误排查.</p>
+</blockquote>
+<p>鉴权进入, use不同DB, 创建细分user</p>
+<pre><code class="language-shell">mongo $域名:28017 -u admin -p 123456 --authenticationDatabase admin
+&gt; use demo
+&gt; db.createUser({user:&quot;demo&quot;,pwd:&quot;imstupid&quot;,roles:[{role:&quot;readWrite&quot;,db:&quot;demo&quot;}]})
+&gt; exit
+mongo $域名:28017 -u demo -p imstupid --authenticationDatabase demo
+&gt; ...(进行读写就好)
+</code></pre>
+<h2 id="clientserver机制">Client/Server机制</h2>
+<p>了解MongoDB客户端与节点的交互细节, 对于排查问题, 还是十分有益的.</p>
+<h3 id="client机制">Client机制</h3>
+<ol>
+<li>获取节点信息: 客户端SDK会先从集群获取到各节点信息, SDK会进行记录, 并心跳保持一致</li>
+<li>连接池设置: 为每个节点维护连接池, 可以设定最小值与最大值, 每个连接的建立都会进行鉴权</li>
+<li>请求流程: 选择节点, 获取连接, 发起请求, 获得结果, 释放连接.</li>
+</ol>
+<h4 id="读写配置">读写配置</h4>
+<p>主要涉及<strong>writeconcern</strong>, <strong>readconcern</strong>, <strong>readpreference</strong>三个配置项, 三者实际都是分布式意义.</p>
+<blockquote>
+<p>MongoDB虽然单机, 复制集, 分片集的API都是一样的, 但是最核心还是复制集.</p>
+</blockquote>
 <ul>
-<li>无需创建DB,Table这些,不同格式的BSON文档也可以存一个集合</li>
-<li>初步感受下MongoDB最原始的操作, insert, find, update, delete</li>
-<li>project代替select, findAndModify原子操作, update操作符, aggregate聚合操作等</li>
+<li>writeconcern: 含义是写入确认, 可以理解为mq系统内的消息已提交, 其主要参数有<strong>w,j</strong>, 其中<strong>w</strong>表示数据写到了多少机器上, 才算写入成功, n台机器可配置0-n,
+但是不建议配数字, 可以配置majority和all, 分别代表<strong>过半存活节点</strong>和<strong>所有存活节点</strong>才算确认, <strong>j</strong>表示是否要写入journal日志才算写入, 推荐直接设置true即可.</li>
+<li>readconcern: 含义是读确认, 类似MySQL隔离级别, 从低到高: available(瞎几把读)=&gt;local(读未提交)=&gt;majority(读已提交:可能读到旧的)=&gt;snapshot(可重复读:事务开始快照)=&gt;linearizable(线性读:等待更新提交)
+相比常规RDBMS, 这种读写级别分开, 实际上, 很不适应, 其中available追求性能干掉了一致性, linearizable追求一致性却又可能一直阻塞.</li>
+<li>readpreference: 与前两者不同, 这个配置项, 配置的是去哪个节点读取数据, 也就是读写分离相关的配置, primary(主库读)=&gt;primaryPreferred(主库偏好)=&gt;secondary(从库读)=&gt;secondaryPreferred(从库偏好)=&gt;nearest(响应优先)
+除了上述5个选项, 也可以给mongod进程打tag, 然后设置tag, 指定读取偏好, 类似K8S的Pod调度, MongoDB在驱动层实现了节点选择算法.</li>
 </ul>
-<h3 id="gui客户端">GUI客户端</h3>
-<p>个人推荐使用Mongo官方的Compass, 而非Navicat这种, <a href="https://www.mongodb.com/try/download/compass">下载传送门</a></p>
-<h2 id="总结">总结</h2>
-<p>MongoDB作为文档型数据库, 具有很独特的特点, 性能卓越, 功能丰富, 在分布式场景极为优秀, 是十分值得学习使用的数据库产品.</p>
+<blockquote>
+<p>一般场景, 读写都配置成majority, 追求写性能, 则可以将writeConcern设置为1, 追求读性能, 则使用readconcern默认的local就可以了</p>
+</blockquote>
+<blockquote>
+<p>虽然MongoDB支持事务, 但是事务就意味着锁, 意味着性能开销, 所以从模型设计时, 多文档的事务, 应当尽量避免掉, 当然, 如果必须要用, 也是能用的.</p>
+</blockquote>
+<h4 id="acid看mongo">ACID看Mongo</h4>
 <ul>
-<li>官方网站: <a href="https://www.mongodb.com/">https://www.mongodb.com/</a></li>
-<li>官方文档: <a href="https://docs.mongodb.com/manual/">https://docs.mongodb.com/manual/</a></li>
-<li>官方Jira: <a href="https://jira.mongodb.org/">https://jira.mongodb.org/</a></li>
-<li>github组织: <a href="https://github.com/mongodb">https://github.com/mongodb</a></li>
+<li>A原子性: 1.x支持单表单文档.4.0支持多文档事务(Transaction).</li>
+<li>C一致性: writeConcern,readConcern配置一致性需求</li>
+<li>I隔离性: readConcern读级别设置</li>
+<li>D持久性: journal落盘和replicas备份</li>
+</ul>
+<h3 id="server机制">Server机制</h3>
+<ol>
+<li>执行计划分析: 当请求过来, 先进行分析, 得出优解</li>
+<li>获取ticket: MongoDB内部的令牌桶机制, 一般根据硬件会动态变化, 进行并发限制</li>
+<li>执行请求: 加载索引/数据到缓存,检索后返回数据</li>
+<li>释放ticket</li>
+<li>如果是分片, 还需要额外进行不同分片的结果整合, 不过复制集不需要.</li>
+</ol>
+<h2 id="节点选举">节点选举</h2>
+<p>MongoDB的主节点选举, 类似Redis, 使用的是Raft协议.</p>
+<h3 id="cap与base">CAP与BASE</h3>
+<p>CAP理论, 三者只能有其二, 不可能三者同时存在, 一般保留P, CA选一个.</p>
+<ul>
+<li>C: Consistency, 一致性, 多副本数据的一致性</li>
+<li>A: Availability, 可用性, 功能可用, 能较快的给与用户读写响应(成功/失败)</li>
+<li>P: Partition tolerance, 分区容错, 网络分区故障的情况下, 不发生脑裂</li>
+</ul>
+<p>BASE理论则是对于CAP理论, 一个公认的平衡实现</p>
+<ul>
+<li>BA: Basically Available, 基本可用, 运行故障时损失部分可用度, 比如挂了一半以上或者选举中, 不能写入.</li>
+<li>S: Soft state, 软状态, 其实就是数据存在中间状态, 可以理解为异步复制代替同步复制.</li>
+<li>E: Eventually consistent, 最终一致性, 经历一定时间的软状态之后, 各个副本之间可以达到最终一致性.</li>
+</ul>
+<blockquote>
+<p>Paxos，Raft，ZAB等常见的分布式一致性算法都是符合BASE理论。</p>
+</blockquote>
+<h3 id="raft协议">Raft协议</h3>
+<p>网上博客很多, 推荐在网站: <a href="http://thesecretlivesofdata.com/raft/">http://thesecretlivesofdata.com/raft/</a> 体验一下raft的选举流程, 直观地理解raft协议.</p>
+<blockquote>
+<p>主要的相关概念: 节点状态(Leader-Candidate-Follower), 节点间心跳&amp;两个超时(随机超时), 任期&amp;拉票/投票&amp;半数以上</p>
+</blockquote>
+<h3 id="节点设置">节点设置</h3>
+<p>通过下面的命令查看成员设置.</p>
+<pre><code class="language-shell">replicaset:PRIMARY&gt; rs.config().members
+</code></pre>
+<ul>
+<li>host: ip/hostname : port</li>
+<li>hidden: 隐藏复制节点, 对外不可见, 优先级为 0(作用是存粹的备份)</li>
+<li>priority: 被投票为主节点的优先级, 0-10</li>
+<li>votes: 是否具有投票权, 默认1表示有, 设置为0, 就没有</li>
+<li>slaveDelay: 延迟固定时间后才对主节点进行备份(主要是防止误操作删除数据,也可以模拟网络延迟)</li>
+<li>tags: 前面readPreference可配置的, 读偏好tag</li>
+<li>arbiterOnly: 仅仲裁人, 默认false, 还得存出局</li>
+<li>buildIndexes: 是否创建索引</li>
+</ul>
+<p>而配置的方法也十分直观, 使用js的语法即可, 比如修改某个节点的同步延迟, 以及选举优先级.</p>
+<pre><code class="language-shell">replicaset:PRIMARY&gt; conf=rs.conf()
+replicaset:PRIMARY&gt; conf.members[2].slaveDelay=5
+replicaset:PRIMARY&gt; conf.members[2].priority=0
+replicaset:PRIMARY&gt; rs.reconfig(conf)
+</code></pre>
+<h3 id="进阶-两地三中心部署">进阶: 两地三中心部署</h3>
+<p>两地三中心, 也就是在三个数据中心, 其中两个数据中心, 距离较近(同城市/省), 分别部署2个节点(高优先选举权), 最后一个数据中心距离较远(同国家),
+部署一个从节点(低优先选举权), 这样, 对于一般情况下, 无论是读写, 都在靠近的两个数据中心流转, 而即使某个主要的数据中心下线, 还有3个节点, 相当于降级到了三节点部署, 
+也是没有问题的, 只有当两个机房同时出现下线, 才会导致不可用, 这基本已经属于极端的自然灾害场景了.</p>
+<p><img src="https://huija.github.io/images/replica-set-ps2.png" alt=""></p>
+<blockquote>
+<p>两地三中心, 基本可以说保证了5个9的SLA.</p>
+</blockquote>
+<h2 id="集群监控">集群监控</h2>
+<p>MongoDB集群支持自动failover,但是监控是必不可少的.</p>
+<h3 id="mongodb-ops-manager">MongoDB Ops Manager</h3>
+<p>最完善的MongoDB管理系统, 但是只有商业版本才提供.</p>
+<h3 id="内置工具">内置工具</h3>
+<ul>
+<li>mongo shell内支持<code>db.serverStatus()</code>来查看节点的监控信息.</li>
+<li>mongodb安装包也带了一些命令: <code>mongostat</code>, <code>mongotop</code>, 两者名字一看就知道了, 前者是IO,内存监控, 后者是语句响应时间监控</li>
+</ul>
+<h3 id="日志监控">日志监控</h3>
+<p>mongod配置了日志文件, 可以配合<code>planSummary: COLLSCAN</code>等关键词, 监控慢查询.</p>
+<blockquote>
+<p>上述是比较官方的监控方法, 也有一些三方工具如mtools等.</p>
+</blockquote>
+<h2 id="总结">总结</h2>
+<p>MongoDB复制集是MongoDB的核心架构, 是其最稳定, 最完善, 最核心的部分, 开源版本就直接支持.</p>
+<ul>
+<li>WriteConcern: <a href="https://docs.mongodb.com/manual/reference/write-concern/">https://docs.mongodb.com/manual/reference/write-concern/</a></li>
+<li>ReadConcern: <a href="https://docs.mongodb.com/manual/reference/read-concern/">https://docs.mongodb.com/manual/reference/read-concern/</a></li>
+<li>ReadPreference: <a href="https://docs.mongodb.com/manual/core/read-preference/">https://docs.mongodb.com/manual/core/read-preference/</a></li>
+<li>Raft协议: <a href="http://thesecretlivesofdata.com/raft/">http://thesecretlivesofdata.com/raft/</a></li>
+<li>MongoDB选举: <a href="https://www.jianshu.com/p/916e5e443ad7">https://www.jianshu.com/p/916e5e443ad7</a></li>
+<li>复制集配置: <a href="https://docs.mongodb.com/manual/reference/replica-configuration/">https://docs.mongodb.com/manual/reference/replica-configuration/</a></li>
+<li>mtools: <a href="https://github.com/rueckstiess/mtools">https://github.com/rueckstiess/mtools</a></li>
 </ul>
 
   </main>
