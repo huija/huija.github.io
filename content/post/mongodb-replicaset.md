@@ -238,7 +238,7 @@ replicaset:PRIMARY> rs.reconfig(conf)
 部署一个从节点(低优先选举权), 这样, 对于一般情况下, 无论是读写, 都在靠近的两个数据中心流转, 而即使某个主要的数据中心下线, 还有3个节点, 相当于降级到了三节点部署, 
 也是没有问题的, 只有当两个机房同时出现下线, 才会导致不可用, 这基本已经属于极端的自然灾害场景了.
 
-![](https://huija.github.io/images/replica-set-ps2.png)
+![](https://huija.github.io/images/replica-set-ps4.png)
 
 > 两地三中心, 基本可以说保证了5个9的SLA.
 
