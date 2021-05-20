@@ -29,6 +29,7 @@ params:
   search: true
   showThemeSwitcher: true
   moveFooterToHeader: false
+  logoAlt: 佛祖保佑,永不BUG
   customCss:
     - css/custom_01.css
     - css/custom_02.css
