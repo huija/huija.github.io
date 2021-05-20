@@ -256,3 +256,4 @@ db.settings.update(
 ## 总结
 MongoDB分片集, 开源产品就支持, 而且十分强大.
 - 分片集搭建: https://docs.mongodb.com/manual/tutorial/deploy-shard-cluster/
+- 分片的独立性需求: https://segmentfault.com/a/1190000020467414
