@@ -5,16 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <meta name="generator" content="Hugo 0.82.0" />
-  <link rel="canonical" href="/mongodb-starter/">
+  <meta name="generator" content="Hugo 0.100.0-DEV" />
+  <link rel="canonical" href="https://huija.github.io/mongodb-starter/" />
 
   
+    
+    <meta name="description" content="MongoDB入门 MongoDB是面向文档的数据库, 有区别于传统的RDBMS(Oracle,MySQL,PostgreSQL…), 是一个基于文档(BSON)存储的开源数据库系统.
+最直观感受 表在MongoDB内叫集合, 英文名Collection, 表示一批同类文档的集合 每一行数据在MongoDB内可以叫一个文档, 英文Document, 存储格式Binary Json, 可以简单类比为Json MongoDB是NoSQL数据库, 有自己的语法规则, 也就是不使用SQL进行CRUD(但是其BI Connector支持模拟MySQL进行查询) MongoDB推崇Schema Less, 无需提前设计表的结构, 同一个集合内的文档可以有不同的字段 理解Document概念 文档是文档型数据库的数据存储格式, 从根本上影响使用人员的方方面面.
+传统的RDBMS是基于Relation Model, 需要开发人员对现实业务进行抽象, 根据范式标准设计表结构, 使用联表查询来表示完整的事物结构, 关键词: 主键, 外键, 关系模型, 三范式. 文档的存储可以理解为存了一个Json, 特性是支持对象模型的灵活组合, 一般情况下, 无需进行过度的设计拆分, 此外, 可以灵活地增删列是其一大核心优势, 关键词: 组合, Schema Less 业务设计举例 商品, 出入库设计
+传统RDBMS会设计为, ‘商品表’&#43;‘出入库表’, 以商品ID作为外键进行关联 作为文档型数据库, MongoDB只需要一个’商品表’, 而出入库记录作为商品表的一个数组类型字段直接存在一起. Binary Json MongoDB自己设计使用的Bson, 类似Json格式, 支持更多的数据类型: https://docs.mongodb.com/manual/reference/bson-types/
+Bson实际就是一种buffer编码规则, 对外呈现Json格式, 客户端以Bson为参数, 对MongoDB进行RPC调用, 然后得到同样为Bson格式的返回结果.
+_id字段 每一行文档都有一个自己的唯一标志: _id, 有点类似于RDBMS内的Row Num, 不推荐用户自己进行定义, 其具有自己的生成规则, 默认是ObjectId类型, 其本质是长度12的byte数组, 前4个byte是时间戳, 中间5个byte是当前进程标志, 最后3个byte是程序内的计数器.">
+  
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://huija.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://huija.github.io/favicon-32x32.png"> 
+  <link rel="icon" type="image/png" sizes="16x16" href="https://huija.github.io/favicon-16x16.png"> 
+  <link rel="manifest" href="https://huija.github.io/site.webmanifest"> 
+  <link rel="mask-icon" href="https://huija.github.io/safari-pinned-tab.svg" color="#000000"> 
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="theme-color" content="#ffffff">
 
@@ -22,6 +30,24 @@
     body {
       visibility: hidden;
       opacity: 0;
+    }
+  </style>
+
+  <style id="darkTheme">
+    .intro-and-nav,
+    .main-and-footer {
+      filter: invert(100%);
+    }
+
+    * {
+      background-color: inherit
+    }
+
+    img:not([src*=".svg"]),
+    .colors,
+    iframe,
+    .demo-container {
+      filter: invert(100%);
     }
   </style>
 
@@ -151,9 +177,12 @@
         href="https://huija.github.io"
         aria-label="Huija&#39;s Blog home page"
       >
-        <img 
-          src="/images/logo.svg" 
-          alt="佛祖保佑,永不BUG">
+        
+          <img 
+            src="/images/logo.svg" 
+            alt="佛祖保佑,永不BUG"
+          >
+        
       </a>
       <p class="library-desc">
          欢迎扫码关注公众号, <strong>从入门到删库跑路</strong>！ <br/> ありがとうございました！ <br/>  ( •̀ ω •́ )✧ 
@@ -296,69 +325,38 @@
         </ul>
       </div>
     
-    
-    
-      
 
+    
   <nav class="toc" aria-labelledby="toc-heading">
-    <h2 id="toc-heading">Table of contents</h2>
-    <ol>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#%e6%9c%80%e7%9b%b4%e8%a7%82%e6%84%9f%e5%8f%97">
-            最直观感受
-          </a>
-        </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#%e7%90%86%e8%a7%a3document%e6%a6%82%e5%bf%b5">
-            理解Document概念
-          </a>
-        </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#%e4%b8%8erdbms%e6%af%94%e8%be%83">
-            与RDBMS比较
-          </a>
-        </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#%e5%8d%95%e6%9c%ba%e9%83%a8%e7%bd%b2%e4%bd%bf%e7%94%a8">
-            单机部署使用
-          </a>
-        </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#%e6%80%bb%e7%bb%93">
-            总结
-          </a>
-        </li>
-      
-    </ol>
+    <strong id="toc-heading">Table of Contents</strong>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#最直观感受">最直观感受</a></li>
+    <li><a href="#理解document概念">理解Document概念</a>
+      <ul>
+        <li><a href="#业务设计举例">业务设计举例</a></li>
+        <li><a href="#binary-json">Binary Json</a></li>
+        <li><a href="#_id字段">_id字段</a></li>
+      </ul>
+    </li>
+    <li><a href="#与rdbms比较">与RDBMS比较</a>
+      <ul>
+        <li><a href="#优势">优势</a></li>
+        <li><a href="#劣势">劣势</a></li>
+      </ul>
+    </li>
+    <li><a href="#单机部署使用">单机部署使用</a>
+      <ul>
+        <li><a href="#crud操作">crud操作</a></li>
+        <li><a href="#gui客户端">GUI客户端</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
   </nav>
 
 
-    
 
     <h1 id="mongodb入门">MongoDB入门</h1>
 <p>MongoDB是面向文档的数据库, 有区别于传统的RDBMS(Oracle,MySQL,PostgreSQL&hellip;), 是一个基于文档(<code>BSON</code>)存储的开源数据库系统.</p>
@@ -379,7 +377,7 @@
 <p><strong>商品, 出入库设计</strong></p>
 <ul>
 <li>传统RDBMS会设计为, &lsquo;商品表&rsquo;+&lsquo;出入库表&rsquo;, 以商品ID作为外键进行关联</li>
-<li>作为文档型数据库, MongoDB只需要一个&rsquo;商品表', 而出入库记录作为商品表的一个数组类型字段直接存在一起.</li>
+<li>作为文档型数据库, MongoDB只需要一个&rsquo;商品表&rsquo;, 而出入库记录作为商品表的一个数组类型字段直接存在一起.</li>
 </ul>
 <h3 id="binary-json">Binary Json</h3>
 <p>MongoDB自己设计使用的Bson, 类似Json格式, 支持更多的数据类型: <a href="https://docs.mongodb.com/manual/reference/bson-types/">https://docs.mongodb.com/manual/reference/bson-types/</a></p>
@@ -559,9 +557,9 @@ disqusComments.style.display = 'block';
 
 
 
-<script src="/js/search.da4e0819db35e5fc5289562d46cf4a2173684e337d69d997639a24b79ecd6416.js"></script>
+<script src="/js/search.7aef046a0cc8b0c532f1d20087b920459bc868c936bb48a6ae221eceefca2d07.js"></script>
 
-<link rel="stylesheet" href="/css/search.54f9a90ceddfdaa3e66698090e7d4a7e7a7f217c85bc79c48ed09c8cb3ee6777.css"></link>
+<link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
 

@@ -5,16 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-  <meta name="generator" content="Hugo 0.82.0" />
-  <link rel="canonical" href="/mongodb-replicaset/">
+  <meta name="generator" content="Hugo 0.100.0-DEV" />
+  <link rel="canonical" href="https://huija.github.io/mongodb-replicaset/" />
 
   
+    
+    <meta name="description" content="MongoDB复制集 MongoDB复制集是MongoDB分布式系统的核心.
+mongodb的api对于单点,复制集,分片集群都通用的, 这也就意味着, 改变底层数据库的部署架构, 客户端代码基本无需改动.
+浅谈复制集 先撇开MongoDB单独来讲复制集群, 顾名思义, 就是从原先的机器复制一份, 一起部署为一个集群, 在分布式场景是很常见的部署架构, 以数据库们为例, 就有MySQL基于binlog的主从部署, PostgreSQL基于WAL日志的同步/异步流复制, Redis的主从复制等.
+复制集的意义 复制集本身, 解决的根本问题是, 单机部署的单点故障问题, 当主节点挂掉, 可以转正从节点, 也就是数据冗余备份以及高可用. 衍生出来的, 是可以进行读写分流, 并可以针对读的流量进行横向扩展, 也就是可伸缩性与负载均衡. 复制集的问题 复制集的最核心的问题集中于数据消息从主节点到从节点的备份策略, 同步还是异步
+如果同步备份, 那么会保证每个操作后, 主从的数据都是一致的, 也就是强一致性, 但是如果从节点挂了, 使用同步的策略, 那主节点的请求则需要返回失败, 这就涉及集群可用性的问题. 一般数据库的主流策略都是异步, 不追求数据的强一致性, 而是最终一致性, 重点保证可用性, 而实时性问题, 则通过一定手段进行避免. 次要的问题: failover障碍转移, 主节点选举, 数据消息的协议等.
+MongoDB复制集 MongoDB的主从叫Primary和Secondary, 其复制集由一个Primary和多个Secondary组成, Primary可以进行读写操作, Secondary回放Primary发送的oplog, 进行数据备份.
+还有一种节点类型, 叫Arbiter, 仲裁者, 其主要负责选举投票, 而不进行数据备份, 也不能竞选Primary.
+典型的三节点部署 MogoDB主节点的选举条件是需要半数以上的投票节点投票, 一般节点数量都会设置为单数, 也就是2n&#43;1, 该集群最多支持挂掉n个节点, 集群仍然能选出主节点并正常工作, 与2(n&#43;1)个节点能够容忍的数量是一样的, 所以一般节点数(具有投票权)都是单数
+三节点部署的问题在于, 没法应对机房的整体故障, 比如你有2个机房, 主机房部署了2个节点, 从机房部署了一个节点, 一般情况下, 是没有问题的, 但是当主机房整体故障, 2个节点全部下线, 只剩余从机房一个节点, 这时候无法选出Primary节点, 只能提供读, 不能提供写服务.">
+  
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-  <link rel="manifest" href="/site.webmanifest">
-  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
+  <link rel="apple-touch-icon" sizes="180x180" href="https://huija.github.io/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="https://huija.github.io/favicon-32x32.png"> 
+  <link rel="icon" type="image/png" sizes="16x16" href="https://huija.github.io/favicon-16x16.png"> 
+  <link rel="manifest" href="https://huija.github.io/site.webmanifest"> 
+  <link rel="mask-icon" href="https://huija.github.io/safari-pinned-tab.svg" color="#000000"> 
   <meta name="msapplication-TileColor" content="#ffffff">
   <meta name="theme-color" content="#ffffff">
 
@@ -22,6 +33,24 @@
     body {
       visibility: hidden;
       opacity: 0;
+    }
+  </style>
+
+  <style id="darkTheme">
+    .intro-and-nav,
+    .main-and-footer {
+      filter: invert(100%);
+    }
+
+    * {
+      background-color: inherit
+    }
+
+    img:not([src*=".svg"]),
+    .colors,
+    iframe,
+    .demo-container {
+      filter: invert(100%);
     }
   </style>
 
@@ -151,9 +180,12 @@
         href="https://huija.github.io"
         aria-label="Huija&#39;s Blog home page"
       >
-        <img 
-          src="/images/logo.svg" 
-          alt="佛祖保佑,永不BUG">
+        
+          <img 
+            src="/images/logo.svg" 
+            alt="佛祖保佑,永不BUG"
+          >
+        
       </a>
       <p class="library-desc">
          欢迎扫码关注公众号, <strong>从入门到删库跑路</strong>！ <br/> ありがとうございました！ <br/>  ( •̀ ω •́ )✧ 
@@ -296,79 +328,60 @@
         </ul>
       </div>
     
-    
-    
-      
 
+    
   <nav class="toc" aria-labelledby="toc-heading">
-    <h2 id="toc-heading">Table of contents</h2>
-    <ol>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#%e6%b5%85%e8%b0%88%e5%a4%8d%e5%88%b6%e9%9b%86">
-            浅谈复制集
-          </a>
+    <strong id="toc-heading">Table of Contents</strong>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#浅谈复制集">浅谈复制集</a>
+      <ul>
+        <li><a href="#复制集的意义">复制集的意义</a></li>
+        <li><a href="#复制集的问题">复制集的问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#mongodb复制集-1">MongoDB复制集</a>
+      <ul>
+        <li><a href="#典型的三节点部署">典型的三节点部署</a>
+          <ul>
+            <li><a href="#直接部署">直接部署</a></li>
+            <li><a href="#设定鉴权">设定鉴权</a></li>
+          </ul>
         </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#mongodb%e5%a4%8d%e5%88%b6%e9%9b%86-1">
-            MongoDB复制集
-          </a>
+      </ul>
+    </li>
+    <li><a href="#clientserver机制">Client/Server机制</a>
+      <ul>
+        <li><a href="#client机制">Client机制</a>
+          <ul>
+            <li><a href="#读写配置">读写配置</a></li>
+            <li><a href="#acid看mongo集群">ACID看Mongo集群</a></li>
+          </ul>
         </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#clientserver%e6%9c%ba%e5%88%b6">
-            Client/Server机制
-          </a>
-        </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#%e8%8a%82%e7%82%b9%e9%80%89%e4%b8%be">
-            节点选举
-          </a>
-        </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#%e9%9b%86%e7%be%a4%e7%9b%91%e6%8e%a7">
-            集群监控
-          </a>
-        </li>
-      
-        <li>
-          
-          
-          
-          
-          <a href="#%e6%80%bb%e7%bb%93">
-            总结
-          </a>
-        </li>
-      
-    </ol>
+        <li><a href="#server机制">Server机制</a></li>
+      </ul>
+    </li>
+    <li><a href="#节点选举">节点选举</a>
+      <ul>
+        <li><a href="#cap与base">CAP与BASE</a></li>
+        <li><a href="#raft协议">Raft协议</a></li>
+        <li><a href="#节点设置">节点设置</a></li>
+        <li><a href="#进阶-两地三中心部署">进阶: 两地三中心部署</a></li>
+      </ul>
+    </li>
+    <li><a href="#集群监控">集群监控</a>
+      <ul>
+        <li><a href="#mongodb-ops-manager">MongoDB Ops Manager</a></li>
+        <li><a href="#内置工具">内置工具</a></li>
+        <li><a href="#日志监控">日志监控</a></li>
+      </ul>
+    </li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
   </nav>
 
 
-    
 
     <h1 id="mongodb复制集">MongoDB复制集</h1>
 <p>MongoDB复制集是MongoDB分布式系统的核心.</p>
@@ -673,9 +686,9 @@ disqusComments.style.display = 'block';
 
 
 
-<script src="/js/search.da4e0819db35e5fc5289562d46cf4a2173684e337d69d997639a24b79ecd6416.js"></script>
+<script src="/js/search.7aef046a0cc8b0c532f1d20087b920459bc868c936bb48a6ae221eceefca2d07.js"></script>
 
-<link rel="stylesheet" href="/css/search.54f9a90ceddfdaa3e66698090e7d4a7e7a7f217c85bc79c48ed09c8cb3ee6777.css"></link>
+<link rel="stylesheet" href="/css/search.fe0cd54a21628574bff49d721c827d1bb165ab56b0f22dd55ae78addbe61c309.css"></link>
 
 
 
