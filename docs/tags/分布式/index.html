@@ -330,11 +330,16 @@
     issue-term="title" theme="github-light"
     crossorigin="anonymous" async>
     </script>
+<style type="text/css">
+    .utterances-frame {
+        background-color: transparent;
+    }
+</style>
 <script>
-    document.getElementById('themer').addEventListener("click", () => {
+    document.getElementById('themer').addEventListener('click', () => {
         const message = {
             type: 'set-theme',
-            theme: localStorage.getItem('darkTheme') === 'true' ? 'github-light' : 'photon-dark'
+            theme: document.getElementById('darkTheme').disabled ? 'photon-dark' : 'github-light'
         };
         const utteranc = document.querySelector('.utterances-frame');
         utteranc.contentWindow.postMessage(message, 'https://utteranc.es');
