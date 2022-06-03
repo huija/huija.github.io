@@ -14,4 +14,4 @@ toc: true
 - ⚡ WeChat Public Account: `从入门到删库跑路`
 - ⛵ Github: [https://github.com/huija](https://github.com/huija)
 
-![](https://huija.github.io/images/dog.jpg)
+![🐕](https://huija.github.io/images/dog.jpg)

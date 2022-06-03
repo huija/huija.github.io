@@ -20,7 +20,7 @@ imaging:
 params:
   description: 欢迎扫码关注公众号, **从入门到删库跑路**！ <br/> ありがとうございました！ <br/>  ( •̀ ω •́ )✧
   homeMetaContent: Huija's Blog
-  footer: Made with [Hugo](https://gohugo.io/). Themed by [Cupper](https://github.com/zwbetz-gh/cupper-hugo-theme). Deployed to [Github Pages](https://github.com/huija/huija.github.io).
+  footer: Made with [Hugo](https://gohugo.io/). Themed by [Cupper](https://github.com/huija/cupper-hugo-theme). Deployed to [Github Pages](https://github.com/huija/huija.github.io).
   # For more date formats see https://gohugo.io/functions/format/
   dateFormat: Jan 2, 2006
   codePenUser: someUser

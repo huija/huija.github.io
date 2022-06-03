@@ -14,4 +14,4 @@ toc: true
 - ⚡ 拼命去争取成功，但不要期望一定会成功。
 - ⛵ 会当水击三千里。
 
-![](https://huija.github.io/images/dog.jpg)
+![🐕](https://huija.github.io/images/dog.jpg)
