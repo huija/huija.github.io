@@ -3,8 +3,8 @@ languageCode: zh-cn
 defaultContentLanguage: en
 title: Huija's Blog
 theme: cupper-hugo-theme
-googleAnalytics: UA-123456789-1
-disqusShortname: yourdiscussshortname
+#googleAnalytics: UA-123456789-1
+#disqusShortname: yourdiscussshortname
 enableGitInfo: true
 publishDir: docs
 
@@ -36,6 +36,11 @@ params:
   customJs:
     - js/custom_01.js
     - js/custom_02.js
+  utteranc:
+    enable: true
+    repo: huija/hugoblogtalks
+    issueTerm: pathname
+    theme: github-light
 
 menu:
   nav:
