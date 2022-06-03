@@ -262,6 +262,19 @@
   </ul>
 </nav>
     
+      <footer role="contentinfo">
+  <div >
+    <label for="themer">
+      dark theme: <input type="checkbox" id="themer" class="vh">
+      
+      <span aria-hidden="true"></span>
+    </label>
+  </div>
+  
+  Made with <a href="https://gohugo.io/">Hugo</a>. Themed by <a href="https://github.com/huija/cupper-hugo-theme">Cupper</a>. Deployed to <a href="https://github.com/huija/huija.github.io">Github Pages</a>.
+  
+</footer>
+    
   </div>
 </header>
 
@@ -299,42 +312,6 @@
   </ul>
 </main>
 
-          
-            <footer role="contentinfo">
-  <div >
-    <label for="themer">
-      dark theme: <input type="checkbox" id="themer" class="vh">
-      
-      <span aria-hidden="true"></span>
-    </label>
-  </div>
-  
-<script src="https://utteranc.es/client.js"
-    repo="huija/huija.github.io"
-    issue-term="title" theme="github-light"
-    crossorigin="anonymous" async>
-    </script>
-<style type="text/css">
-    .utterances-frame {
-        background-color: transparent;
-    }
-</style>
-<script>
-    document.getElementById('themer').addEventListener('click', () => {
-        const message = {
-            type: 'set-theme',
-            theme: document.getElementById('darkTheme').disabled ? 'photon-dark' : 'github-light'
-        };
-        const utteranc = document.querySelector('.utterances-frame');
-        utteranc.contentWindow.postMessage(message, 'https://utteranc.es');
-    })
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
-        utterances.</a></noscript>
-  
-  Made with <a href="https://gohugo.io/">Hugo</a>. Themed by <a href="https://github.com/huija/cupper-hugo-theme">Cupper</a>. Deployed to <a href="https://github.com/huija/huija.github.io">Github Pages</a>.
-  
-</footer>
           
         </div>
       </div>

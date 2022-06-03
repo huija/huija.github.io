@@ -28,7 +28,7 @@ params:
   hideHeaderLinks: false
   search: true
   showThemeSwitcher: true
-  moveFooterToHeader: false
+  moveFooterToHeader: true
   logoAlt: 佛祖保佑,永不BUG
   customCss:
     - css/custom_01.css
