@@ -194,7 +194,7 @@
   <h2 class="vh">Main navigation</h2>
   <button id="menu-button" aria-expanded="false">
     <svg viewBox="0 0 50 50" aria-hidden="true" focusable="false">
-      <use xlink:href="#menu"></use>
+      <use href="#menu"></use>
     </svg>
     Menu
   </button>
@@ -208,7 +208,7 @@
       
       <a href="/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
-          <use xlink:href="#bookmark"></use>
+          <use href="#bookmark"></use>
         </svg>
         <span class="text">Home</span>
       </a>
@@ -221,7 +221,7 @@
       
       <a href="/post/" aria-current="page">
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
-          <use xlink:href="#bookmark"></use>
+          <use href="#bookmark"></use>
         </svg>
         <span class="text">Blog</span>
       </a>
@@ -234,7 +234,7 @@
       
       <a href="/tags/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
-          <use xlink:href="#bookmark"></use>
+          <use href="#bookmark"></use>
         </svg>
         <span class="text">Tags</span>
       </a>
@@ -247,7 +247,7 @@
       
       <a href="/about/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
-          <use xlink:href="#bookmark"></use>
+          <use href="#bookmark"></use>
         </svg>
         <span class="text">About</span>
       </a>
@@ -260,7 +260,7 @@
       
       <a href="/index.xml" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
-          <use xlink:href="#bookmark"></use>
+          <use href="#bookmark"></use>
         </svg>
         <span class="text">RSS</span>
       </a>
@@ -275,60 +275,60 @@
       <div class="main-and-footer">
         <div>
           
-  <main id="main">
-    <h1>
-      <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
-        <use xlink:href="#bookmark"></use>
-      </svg>
-      MongoDB分片集
-    </h1>
+<main id="main">
+  <h1>
+    <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+      <use href="#bookmark"></use>
+    </svg>
+    MongoDB分片集
+  </h1>
 
-    <div class="date">
+  <div class="date">
+    
+    
+    <strong>Publish date: </strong>May 19, 2021
+    
+    
+    <br>
+    <strong>Last updated: </strong>Jun 3, 2022
+    
+    
+  </div>
+
+  
+  <div class="tags">
+    <strong>Tags: </strong>
+    <ul aria-label="">
       
-      
-      <strong>Publish date: </strong>May 19, 2021
-      
+      <li>
+        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+          <use href="#tag"></use>
+        </svg>
         
-          <br>
-          <strong>Last updated: </strong>May 20, 2021
-        
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
+      </li>
       
-    </div>
+      <li>
+        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+          <use href="#tag"></use>
+        </svg>
+        
+        <a href="/tags/mongodb/">MongoDB</a>
+      </li>
+      
+      <li>
+        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+          <use href="#tag"></use>
+        </svg>
+        
+        <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
+      </li>
+      
+    </ul>
+  </div>
+  
 
-    
-      <div class="tags">
-        <strong>Tags: </strong>
-        <ul aria-label="tags">
-          
-            <li>
-              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-                <use xlink:href="#tag"></use>
-              </svg>
-              
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a>
-            </li>
-          
-            <li>
-              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-                <use xlink:href="#tag"></use>
-              </svg>
-              
-              <a href="/tags/mongodb/">MongoDB</a>
-            </li>
-          
-            <li>
-              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-                <use xlink:href="#tag"></use>
-              </svg>
-              
-              <a href="/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</a>
-            </li>
-          
-        </ul>
-      </div>
-    
-
-    
+  
   <nav class="toc" aria-labelledby="toc-heading">
     <strong id="toc-heading">Table of Contents</strong>
     <nav id="TableOfContents">
@@ -372,7 +372,7 @@
 
 
 
-    <p>MongoDB分片集, 能够应对普通复制集无法应对的海量数据场景, 以及地理数据分布场景.</p>
+  <p>MongoDB分片集, 能够应对普通复制集无法应对的海量数据场景, 以及地理数据分布场景.</p>
 <blockquote>
 <p>分片集是基于复制集基础上的, 从架构角度, 复制集可以平滑地过度到分片集, 而无需修改代码,
 但是简单地这么思考, 其实并不正确, 分片集群, 相比复制集有得也有失, 是有所掣肘的.</p>
@@ -613,11 +613,19 @@ db.settings.update(
 <li>分片的独立性需求: <a href="https://segmentfault.com/a/1190000020467414">https://segmentfault.com/a/1190000020467414</a></li>
 </ul>
 
-  </main>
-  <div id="disqus-container">
+</main>
+<div id="disqus-container">
   
 </div>
 
+
+<script src="https://utteranc.es/client.js"
+    repo="huija/huija.github.io"
+    issue-term="title" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+<noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+        utterances.</a></noscript>
 
           
             <footer role="contentinfo">

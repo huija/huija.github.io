@@ -1,4 +1,5 @@
 #!/bin/bash
+# git submodule add git@github.com:huija/cupper-hugo-theme.git themes/cupper-hugo-theme
 # git submodule update --init --recursive
 git submodule update --remote --merge
 
