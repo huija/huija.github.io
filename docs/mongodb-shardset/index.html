@@ -654,11 +654,21 @@ db.settings.update(
     document.onreadystatechange = () => {
         if (document.readyState == "complete") {
             
-            changeTheme(document.getElementById("darkTheme").disabled ? "github-light" : "photon-dark");
+            
+            setTimeout(() => {
+                if (!document.getElementById("darkTheme").disabled) {
+                    changeTheme("photon-dark");
+                }
+            }, 1000);
             
             const utteranc = document.querySelector(".utterances-frame");
             utteranc.onload = () => {
-                changeTheme(document.getElementById("darkTheme").disabled ? "github-light" : "photon-dark");
+                
+                setTimeout(() => {
+                    if (!document.getElementById("darkTheme").disabled) {
+                        changeTheme("photon-dark");
+                    }
+                }, 1000);
             };
             
             document.getElementById("themer").addEventListener("click", () => {
