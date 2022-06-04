@@ -536,14 +536,29 @@ true
     }
 </style>
 <script>
-    document.getElementById('themer').addEventListener('click', () => {
+    var changeTheme = (theme) => {
         const message = {
-            type: 'set-theme',
-            theme: document.getElementById('darkTheme').disabled ? 'photon-dark' : 'github-light'
+            type: "set-theme",
+            theme
         };
-        const utteranc = document.querySelector('.utterances-frame');
-        utteranc.contentWindow.postMessage(message, 'https://utteranc.es');
-    })
+        const utteranc = document.querySelector(".utterances-frame");
+        utteranc.contentWindow.postMessage(message, "https://utteranc.es");
+    };
+    document.onreadystatechange = () => {
+        if (document.readyState == "complete") {
+            
+            changeTheme(document.getElementById("darkTheme").disabled ? "github-light" : "photon-dark");
+            
+            const utteranc = document.querySelector(".utterances-frame");
+            utteranc.onload = () => {
+                changeTheme(document.getElementById("darkTheme").disabled ? "github-light" : "photon-dark");
+            };
+            
+            document.getElementById("themer").addEventListener("click", () => {
+                changeTheme(document.getElementById("darkTheme").disabled ? "photon-dark" : "github-light");
+            });
+        }
+    };
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
         utterances.</a></noscript>
