@@ -6,12 +6,9 @@ tags: []
 toc: true
 ---
 
-- 🔭 I’m currently working on `JiangSu-WuXi`
-- 🌱 I’m currently learning `Kubernetes`
-- 💬 Ask me: `Wechat:zhj1150555483`
-- 📫 Reach me: [zhj3212j@outlook.com](mailto:zhj3212j@outlook.com)
-- 😄 Skills: `Go,Java,Linux,MySQL,Redis,Mongo,Kafka,PG...`
-- ⚡ WeChat Public Account: `从入门到删库跑路`
-- ⛵ Github: [https://github.com/huija](https://github.com/huija)
+* 🔭 I’m currently working on `JiangSu-WuXi`
+* 💬 Ask me: `Wechat:zhj1150555483`
+* 📫 Reach me: [zhj3212j@outlook.com](mailto:zhj3212j@outlook.com)
+* ⚡ WeChat Public Account: `从入门到删库跑路`
 
 ![🐕](https://huija.github.io/images/dog.jpg)

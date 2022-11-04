@@ -15,12 +15,14 @@
     padding: 0;
     box-sizing: border-box;
 }
-html {
+html,
+body {
     font-size: calc(1em + 0.33vw);
     font-family: Arial, Helvetica Neue, sans-serif;
     line-height: 1.5;
     color: #111;
     background-color: #fefefe;
+    overscroll-behavior: none;
 }
 template {
   display: none !important;
@@ -914,9 +916,6 @@ h1 svg {
     }
     .main-and-footer {
         margin: 0;
-    }
-    main {
-      min-height: auto;
     }
     #patterns-list {
       margin-top: 0.5rem;
