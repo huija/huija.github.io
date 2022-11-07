@@ -11,10 +11,8 @@ toc: true
 ## 原文信息
 
 * 地址： [Go: What's New in March 2010](https://go.dev/blog/hello-world)
-
 * 作者：Andrew Gerrand
-
-* 时间：18 March 2010
+* 时间：2010年3月18号
 
 ## 中文译文
 
@@ -30,7 +28,9 @@ Go发行（2009年11月）已经过去几个月了，所以让我们谈谈自那
 获取更多信息。
 
 [Godoc](https://go.dev/cmd/godoc/)现在能更好地支持第三方库，并且有一个新的工具
--[goinstall](https://go.dev/cmd/goinstall)- 已经被发布，它能够让使用者更简单地安装这些第三方库。此外，我们也开始开发一个package的跟踪系统，来更轻松地找到你需要的库。你可以在[Packages page](http://godashboard.appspot.com/package)看到这些包的开始部分。
+-[goinstall](https://go.dev/cmd/goinstall)-
+已经被发布，它能够让使用者更简单地安装这些第三方库。此外，我们也开始开发一个package的跟踪系统，来更轻松地找到你需要的库。你可以在[Packages page](http://godashboard.appspot.com/package)
+看到这些包的开始部分。
 
 超过4w行的代码已经被加入到了[标准库](https://go.dev/pkg/)内， 包括许多全新的packages，其中相当一部分的代码是由外部贡献者编写。
 
@@ -38,9 +38,14 @@ Go发行（2009年11月）已经过去几个月了，所以让我们谈谈自那
 freenode）启动以来，一个充满活力的社区已经蓬勃发展了起来。我们正式为这个项目增加了50多人。他们的贡献包括从bug修复和文档更正到核心包的编写和对其他操作系统的支持（Go目前支持FreeBSD,
 并且Windows port正在处理）。我们认为这些社区贡献是迄今为止最成功的（一趴）。
 
-我们也收到了一些好评。这篇[recent article in PC World](http://www.pcworld.idg.com.au/article/337773/google_go_captures_developers_imaginations/)总结了围绕该项目的热情。一些博客朋友已经开始记录他们之于这门语言的体验(比如 [这里](http://golang.tumblr.com/0), [这里](http://www.infi.nl/blog/view/id/47),还有 [这里](http://freecella.blogspot.com/2010/01/gospecify-basic-setup-of-projects.html))。总体上我们的用户的反映非常积极，一个初学者评论道[“I came away extremely impressed. Go walks an elegant line between simplicity and power."](https://groups.google.com/group/golang-nuts/browse_thread/thread/5fabdd59f8562ed2)。
+我们也收到了一些好评。这篇[recent article in PC World](http://www.pcworld.idg.com.au/article/337773/google_go_captures_developers_imaginations/)
+总结了围绕该项目的热情。一些博客朋友已经开始记录他们之于这门语言的体验(比如 [这里](http://golang.tumblr.com/0)
+, [这里](http://www.infi.nl/blog/view/id/47)
+,还有 [这里](http://freecella.blogspot.com/2010/01/gospecify-basic-setup-of-projects.html))
+。总体上我们的用户的反映非常积极，一个初学者评论道[“I came away extremely impressed. Go walks an elegant line between simplicity and power."](https://groups.google.com/group/golang-nuts/browse_thread/thread/5fabdd59f8562ed2)
+。
 
 至于未来：我们已经听取了无数的声音告诉我们他们需要什么，现在正专注于让Go准备好迎接高光时刻。我们正在改进垃圾收集器、运行时调度程序、工具链和标准库，并探索新的语言特性。2010年对Go来说将是激动人心的一年，我们期待着与社区合作，使它成为一个成功的一年。
 
-**下一篇文章：**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/tags/official-blog/)\
+**下一篇文章：**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/tags/go-protobuf/)\
 **[博客地址](https://huija.github.io/)**

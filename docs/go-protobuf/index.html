@@ -6,11 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.100.0-DEV" />
-  <link rel="canonical" href="https://huija.github.io/post/" />
+  <link rel="canonical" href="https://huija.github.io/go-protobuf/" />
 
   
     
-    <meta name="description" content="Posts">
+    <meta name="description" content="第三方库: goprotobuf and beyond 原文信息 地址：Third-party libraries: goprotobuf and beyond 作者：Andrew Gerrand 时间：2010年4月20号 中午译文 On March 24, Rob Pike announcedgoprotobuf, the Go bindings of Google’s data interchange formatProtocol Buffers, called protobufs for short. With this announcement, Go joins C&#43;&#43;, Java, and Python as languages providing official protobuf implementations. This marks an important milestone in enabling the interoperability between existing systems and those built in Go.
+The goprotobuf project consists of two parts: a ‘protocol compiler plugin’ that generates Go source files that, once compiled, can access and manage protocol buffers; and a Go package that implements run-time support for encoding ( marshaling), decoding (unmarshaling), and accessing protocol buffers.">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://huija.github.io/apple-touch-icon.png">
@@ -60,7 +61,7 @@
 
   
   
-  <title>Posts | Huija&#39;s Blog</title>
+  <title>Third-party libraries: goprotobuf and beyond | Huija&#39;s Blog</title>
 </head>
 
   <body>
@@ -282,51 +283,151 @@
         <div>
           
 <main id="main">
-  <h1>Posts</h1>
+  <h1>
+    <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+      <use href="#bookmark"></use>
+    </svg>
+    Third-party libraries: goprotobuf and beyond
+  </h1>
+
+  <div class="date">
+    
+    
+    <strong>Publish date: </strong>Nov 7, 2022
+    
+    
+    
+  </div>
+
   
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
+  <div class="tags">
+    <strong>Tags: </strong>
+    <ul aria-label="">
+      
+      <li>
+        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+          <use href="#tag"></use>
+        </svg>
+        
+        <a href="/tags/go/">go</a>
+      </li>
+      
+      <li>
+        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+          <use href="#tag"></use>
+        </svg>
+        
+        <a href="/tags/official-blog/">official blog</a>
+      </li>
+      
+    </ul>
+  </div>
   
-  <ul class="patterns-list" id="list">
-    
-    <li>
-      <h2>
-        <a href="/go-protobuf/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Third-party libraries: goprotobuf and beyond
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/go-hello-world/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Go: What&#39;s New in March 2010
-        </a>
-      </h2>
-    </li>
-    
+
+  
+  <nav class="toc" aria-labelledby="toc-heading">
+    <strong id="toc-heading">Table of Contents</strong>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#原文信息">原文信息</a></li>
+    <li><a href="#中午译文">中午译文</a></li>
   </ul>
+</nav>
+  </nav>
+
+
+
+  <h1 id="第三方库-goprotobuf-and-beyond">第三方库: goprotobuf and beyond</h1>
+<h2 id="原文信息">原文信息</h2>
+<ul>
+<li>地址：<a href="https://go.dev/blog/protobuf">Third-party libraries: goprotobuf and beyond</a></li>
+<li>作者：Andrew Gerrand</li>
+<li>时间：2010年4月20号</li>
+</ul>
+<h2 id="中午译文">中午译文</h2>
+<p>On March 24, Rob Pike announced<a href="http://code.google.com/p/goprotobuf/">goprotobuf</a>, the Go bindings of Google’s data
+interchange format<a href="http://code.google.com/apis/protocolbuffers/docs/overview.html">Protocol Buffers</a>, called protobufs
+for short. With this announcement, Go joins C++, Java, and Python as languages providing official protobuf
+implementations. This marks an important milestone in enabling the interoperability between existing systems and those
+built in Go.</p>
+<p>The goprotobuf project consists of two parts: a ‘protocol compiler plugin’ that generates Go source files that, once
+compiled, can access and manage protocol buffers; and a Go package that implements run-time support for encoding (
+marshaling), decoding (unmarshaling), and accessing protocol buffers.</p>
+<p>To use goprotobuf, you first need to have both Go and<a href="http://code.google.com/p/protobuf/">protobuf</a>installed. You can
+then install the ‘proto’ package with<a href="https://go.dev/cmd/goinstall/">goinstall</a>:</p>
+<pre><code class="language-bash">goinstall goprotobuf.googlecode.com/hg/proto
+</code></pre>
+<p>And then install the protobuf compiler plugin:</p>
+<pre><code class="language-bash">cd $GOROOT/src/pkg/goprotobuf.googlecode.com/hg/compiler
+make install
+</code></pre>
+<p>For more detail see the project’s<a href="http://code.google.com/p/goprotobuf/source/browse/README">README</a>file.</p>
+<p>This is one of a growing list of third-party<a href="http://godashboard.appspot.com/package">Go projects</a>. Since the
+announcement of goprotobuf, the X Go bindings have been spun off from the standard library to
+the<a href="http://code.google.com/p/x-go-binding/">x-go-binding</a>project, and work has begun on
+a<a href="http://www.freetype.org/">Freetype</a>port,<a href="http://code.google.com/p/freetype-go/">freetype-go</a>. Other popular
+third-party projects include the lightweight web framework<a href="http://github.com/hoisie/web.go">web.go</a>, and the Go GTK
+bindings<a href="http://github.com/mattn/go-gtk">gtk-go</a>.</p>
+<p>We wish to encourage the development of other useful packages by the open source community. If you’re working on
+something, don’t keep it to yourself - let us know through our mailing
+list<a href="http://groups.google.com/group/golang-nuts">golang-nuts</a>.</p>
+<p><strong>Next article:</strong><a href="https://huija.github.io/tags/official-blog/">JSON-RPC: a tale of interfaces</a><br>
+<strong>Previous article:</strong><a href="https://huija.github.io/go-hello-world/">Go: What&rsquo;s New in March 2010</a><br>
+<strong><a href="https://go.dev/blog/all">Blog Index</a></strong></p>
+
 </main>
+<div id="disqus-container">
+  
+</div>
+
+
+<script src="https://utteranc.es/client.js"
+    repo="huija/huija.github.io"
+    issue-term="title" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+<style type="text/css">
+    .utterances-frame {
+        background-color: transparent;
+    }
+</style>
+<script>
+    var changeTheme = (theme) => {
+        const message = {
+            type: "set-theme",
+            theme
+        };
+        const utteranc = document.querySelector(".utterances-frame");
+        utteranc.contentWindow.postMessage(message, "https://utteranc.es");
+    };
+    document.onreadystatechange = () => {
+        if (document.readyState == "complete") {
+            
+            
+            setTimeout(() => {
+                if (!document.getElementById("darkTheme").disabled) {
+                    changeTheme("photon-dark");
+                }
+            }, 1000);
+            
+            const utteranc = document.querySelector(".utterances-frame");
+            utteranc.onload = () => {
+                
+                setTimeout(() => {
+                    if (!document.getElementById("darkTheme").disabled) {
+                        changeTheme("photon-dark");
+                    }
+                }, 1000);
+            };
+            
+            document.getElementById("themer").addEventListener("click", () => {
+                changeTheme(document.getElementById("darkTheme").disabled ? "photon-dark" : "github-light");
+            });
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+        utterances.</a></noscript>
 
           
         </div>
