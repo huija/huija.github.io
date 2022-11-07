@@ -6,63 +6,41 @@ tags: ["go","official blog"]
 toc: true
 ---
 
-# Go: What's New in March 2010
+# Go: 2010年3月有什么新消息
 
 ## 原文信息
 
-- 地址： [Go: What's New in March 2010 - The Go Programming Language](https://go.dev/blog/hello-world)
+* 地址： [Go: What's New in March 2010](https://go.dev/blog/hello-world)
 
-- 作者：Andrew Gerrand
+* 作者：Andrew Gerrand
 
-- 时间：18 March 2010
+* 时间：18 March 2010
 
-## 中文译文（TODO）
+## 中文译文
 
-Welcome to the official Go Blog. We, the Go team, hope to use this blog to keep the world up-to-date on the development
-of the Go programming language and the growing ecosystem of libraries and applications surrounding it.
+欢迎来到Go的官方博客。我们（Go团队）希望通过发布这些博客，让全世界了解到关于Go编程语言的最新开发状况以及围绕Go语言不断成长的最新生态和应用。
 
-It’s been a few months since we launched (November last year), so let’s talk about what’s been happening in Go World
-since then.
+Go发行（2009年11月）已经过去几个月了，所以让我们谈谈自那以后，Go的世界发生了什么。
 
-The core team at Google has continued to develop the language, compilers, packages, tools, and documentation. The
-compilers now produce code that is in some cases between 2x and an order of magnitude faster than at release. We have
-put together some graphs of a selection of[Benchmarks](http://godashboard.appspot.com/benchmarks), and
-the[Build Status](http://godashboard.appspot.com/)page tracks the reliability of each changeset submitted to the
-repository.
+谷歌的核心团队继续开发语言、编译器、包、工具和文档。编译器现在生成的代码在某些情况下比首次release时快1到2倍。我们已经将一些Benchmark的性能测试图表和编译状态放在一起，来追踪每一个对于Go语言的更改的可靠性。
 
-We have made syntax changes to make the language more concise, regular, and flexible. Semicolons have
-been[almost entirely removed](http://groups.google.com/group/golang-nuts/t/5ee32b588d10f2e9)from the language.
-The[…T syntax](https://go.dev/doc/go_spec.html#Function_types)makes it simpler to handle an arbitrary number of typed
-function parameters. The syntax x[lo:] is now shorthand for x[lo:len(x)]. Go also now natively supports complex numbers.
-See the[release notes](https://go.dev/doc/devel/release.html)for more.
+我们对语法进行了修改，使语言更加简洁、规范和灵活。分号在Go语言内[基本被全部删除](https://groups.google.com/g/golang-nuts/c/XuMrWI0Q8uk?pli=1)
+。[…T](https://go.dev/ref/spec#Function_types)语法能够更容易地处理任意数量的方法参数。`x[lo:]`
+切片语法，现在是`x[lo:len(x)]`的缩写。Go现在也原生支持复数。查看[release notes](https://go.dev/doc/devel/release.html)
+获取更多信息。
 
-[Godoc](https://go.dev/cmd/godoc/)now provides better support for third-party libraries, and a new tool
--[goinstall](https://go.dev/cmd/goinstall)- has been released to make it easy to install them. Additionally, we’ve
-started working on a package tracking system to make it easier to find what you need. You can view the beginnings of
-this on the[Packages page](http://godashboard.appspot.com/package).
+[Godoc](https://go.dev/cmd/godoc/)现在能更好地支持第三方库，并且有一个新的工具
+-[goinstall](https://go.dev/cmd/goinstall)- 已经被发布，它能够让使用者更简单地安装这些第三方库。此外，我们也开始开发一个package的跟踪系统，来更轻松地找到你需要的库。你可以在[Packages page](http://godashboard.appspot.com/package)看到这些包的开始部分。
 
-More than 40,000 lines of code have been added to[the standard library](https://go.dev/pkg/), including many entirely
-new packages, a sizable portion written by external contributors.
+超过4w行的代码已经被加入到了[标准库](https://go.dev/pkg/)内， 包括许多全新的packages，其中相当一部分的代码是由外部贡献者编写。
 
-Speaking of third parties, since launch a vibrant community has flourished on
-our[mailing list](http://groups.google.com/group/golang-nuts/)and irc channel (#go-nuts on freenode). We have officially
-added more than 50 people to the project. Their contributions range from bug fixes and documentation corrections to core
-packages and support for additional operating systems (Go is now supported under FreeBSD, and
-a[Windows port](http://code.google.com/p/go/wiki/WindowsPort)is underway). We regard these community contributions our
-greatest success so far.
+说到第三方，自从我们的[邮件列表](http://groups.google.com/group/golang-nuts/)和irc频道（#go-nuts on
+freenode）启动以来，一个充满活力的社区已经蓬勃发展了起来。我们正式为这个项目增加了50多人。他们的贡献包括从bug修复和文档更正到核心包的编写和对其他操作系统的支持（Go目前支持FreeBSD,
+并且Windows port正在处理）。我们认为这些社区贡献是迄今为止最成功的（一趴）。
 
-We’ve received some good reviews, too.
-This[recent article in PC World](http://www.pcworld.idg.com.au/article/337773/google_go_captures_developers_imaginations/)
-summarized the enthusiasm surrounding the project. Several bloggers have begun documenting their experiences in the
-language (see[here](http://golang.tumblr.com/),[here](http://www.infi.nl/blog/view/id/47),
-and[here](http://freecella.blogspot.com/2010/01/gospecify-basic-setup-of-projects.html)for example) The general reaction
-of our users has been very positive; one first-timer
-remarked[“I came away extremely impressed. Go walks an elegant line between simplicity and power."](https://groups.google.com/group/golang-nuts/browse_thread/thread/5fabdd59f8562ed2)
+我们也收到了一些好评。这篇[recent article in PC World](http://www.pcworld.idg.com.au/article/337773/google_go_captures_developers_imaginations/)总结了围绕该项目的热情。一些博客朋友已经开始记录他们之于这门语言的体验(比如 [这里](http://golang.tumblr.com/0), [这里](http://www.infi.nl/blog/view/id/47),还有 [这里](http://freecella.blogspot.com/2010/01/gospecify-basic-setup-of-projects.html))。总体上我们的用户的反映非常积极，一个初学者评论道[“I came away extremely impressed. Go walks an elegant line between simplicity and power."](https://groups.google.com/group/golang-nuts/browse_thread/thread/5fabdd59f8562ed2)。
 
-As to the future: we have listened to the myriad voices telling us what they need, and are now focused on getting Go
-ready for the prime time. We are improving the garbage collector, runtime scheduler, tools, and standard libraries, as
-well as exploring new language features. 2010 will be an exciting year for Go, and we look forward to collaborating with
-the community to make it a successful one.
+至于未来：我们已经听取了无数的声音告诉我们他们需要什么，现在正专注于让Go准备好迎接高光时刻。我们正在改进垃圾收集器、运行时调度程序、工具链和标准库，并探索新的语言特性。2010年对Go来说将是激动人心的一年，我们期待着与社区合作，使它成为一个成功的一年。
 
-**Next article:**[Third-party libraries: goprotobuf and beyond](https://go.dev/blog/protobuf)  
-**[Blog Index](https://go.dev/blog/all)**
+**下一篇文章：**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/tags/official-blog/)\
+**[博客地址](https://huija.github.io/)**
