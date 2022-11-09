@@ -2,11 +2,11 @@
 title: "Third-party libraries: goprotobuf and beyond"
 date: 2022-11-07T22:55:33+08:00
 draft: true
-tags: ["go","official blog"]
+tags: ["go","go official blog"]
 toc: true
 ---
 
-# 第三方库: goprotobuf and beyond
+# 第三方库: goprotobuf及以后
 
 ## 原文信息
 
@@ -14,45 +14,40 @@ toc: true
 * 作者：Andrew Gerrand
 * 时间：2010年4月20号
 
-## 中午译文
+## 中文译文
 
-On March 24, Rob Pike announced[goprotobuf](http://code.google.com/p/goprotobuf/), the Go bindings of Google’s data
-interchange format[Protocol Buffers](http://code.google.com/apis/protocolbuffers/docs/overview.html), called protobufs
-for short. With this announcement, Go joins C++, Java, and Python as languages providing official protobuf
-implementations. This marks an important milestone in enabling the interoperability between existing systems and those
-built in Go.
+（2010年）3月24号，Rob Pike发布了[goprotobuf](http://code.google.com/p/goprotobuf/)
+，是谷歌数据交换格式[Protocol Buffers](http://code.google.com/apis/protocolbuffers/docs/overview.html)的Go语言实现，Protocol
+Buffers简称protobufs。随着goprotobuf的发布，Go加入了c++、Java和Python的行列，成为官方提供protobuf实现的语言之一。这标志着能够实现现有系统和Go构建的系统之间的互操作性的一个重要里程碑。
 
-The goprotobuf project consists of two parts: a ‘protocol compiler plugin’ that generates Go source files that, once
-compiled, can access and manage protocol buffers; and a Go package that implements run-time support for encoding (
-marshaling), decoding (unmarshaling), and accessing protocol buffers.
+goprotobuf项目包含两个部分：一个是“协议编译器插件（protocol compiler plugin）”，用于生成Go的源码文件，编译后（的代码）可以访问和管理协议缓存区；另一个是Go
+package, 对编解码以及访问协议缓存区提供了运行时的支持。
 
-To use goprotobuf, you first need to have both Go and[protobuf](http://code.google.com/p/protobuf/)installed. You can
-then install the ‘proto’ package with[goinstall](https://go.dev/cmd/goinstall/):
+想要使用goprotobuf的话，你首先需要同时安装Go和[protobuf](http://code.google.com/p/protobuf/)
+。然后你可以通过[goinstall](https://go.dev/cmd/goinstall/)来安装“proto”这个packge：
 
 ```bash
 goinstall goprotobuf.googlecode.com/hg/proto
 ```
 
-And then install the protobuf compiler plugin:
+接着安装"protocol compiler plugin"：
 
 ```bash
 cd $GOROOT/src/pkg/goprotobuf.googlecode.com/hg/compiler
 make install
 ```
 
-For more detail see the project’s[README](http://code.google.com/p/goprotobuf/source/browse/README)file.
+更多细节参考项目的[README](http://code.google.com/p/goprotobuf/source/browse/README)文件。
 
-This is one of a growing list of third-party[Go projects](http://godashboard.appspot.com/package). Since the
-announcement of goprotobuf, the X Go bindings have been spun off from the standard library to
-the[x-go-binding](http://code.google.com/p/x-go-binding/)project, and work has begun on
-a[Freetype](http://www.freetype.org/)port,[freetype-go](http://code.google.com/p/freetype-go/). Other popular
-third-party projects include the lightweight web framework[web.go](http://github.com/hoisie/web.go), and the Go GTK
-bindings[gtk-go](http://github.com/mattn/go-gtk).
+goprotobuf是不断增长的第三方Go项目列表中的一个。在goprotobuf发布之后，X
+Go绑定已经从标准库分离到[x-go-binding](http://code.google.com/p/x-go-binding/)
+项目，并且已经开始了一个[Freetype](http://www.freetype.org/)的项目，[freetype-go](http://code.google.com/p/freetype-go/)
+。还有（很多）其他流行的第三方项目，包含轻量化的web框架[web.go](http://github.com/hoisie/web.go)
+，Go语音的GTK实现[gtk-go](http://github.com/mattn/go-gtk)。
 
-We wish to encourage the development of other useful packages by the open source community. If you’re working on
-something, don’t keep it to yourself - let us know through our mailing
-list[golang-nuts](http://groups.google.com/group/golang-nuts).
+我们希望去鼓励开源社区开发其他有用的包。如果你有正在做的工作，请不要藏在自己的心里 -
+通过我们的邮件列表[golang-nuts](http://groups.google.com/group/golang-nuts)让我们知道。
 
-**Next article:**[JSON-RPC: a tale of interfaces](https://huija.github.io/tags/official-blog/)\
+**Next article:**[JSON-RPC: a tale of interfaces](https://huija.github.io/tags/go-official-blog/)\
 **Previous article:**[Go: What's New in March 2010](https://huija.github.io/go-hello-world/)\
-**[Blog Index](https://go.dev/blog/all)**
+**[Blog Index](https://huija.github.io/tags/go-official-blog/)**

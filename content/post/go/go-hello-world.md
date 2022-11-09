@@ -2,7 +2,7 @@
 title: "Go: What's New in March 2010"
 date: 2022-11-06T00:18:31+08:00
 draft: true
-tags: ["go","official blog"]
+tags: ["go","go official blog"]
 toc: true
 ---
 
@@ -36,7 +36,7 @@ Go发行（2009年11月）已经过去几个月了，所以让我们谈谈自那
 
 说到第三方，自从我们的[邮件列表](http://groups.google.com/group/golang-nuts/)和irc频道（#go-nuts on
 freenode）启动以来，一个充满活力的社区已经蓬勃发展了起来。我们正式为这个项目增加了50多人。他们的贡献包括从bug修复和文档更正到核心包的编写和对其他操作系统的支持（Go目前支持FreeBSD,
-并且Windows port正在处理）。我们认为这些社区贡献是迄今为止最成功的（一趴）。
+并且Windows的适配也正在处理）。我们认为这些社区贡献是迄今为止最成功的（一趴）。
 
 我们也收到了一些好评。这篇[recent article in PC World](http://www.pcworld.idg.com.au/article/337773/google_go_captures_developers_imaginations/)
 总结了围绕该项目的热情。一些博客朋友已经开始记录他们之于这门语言的体验(比如 [这里](http://golang.tumblr.com/0)
@@ -48,4 +48,4 @@ freenode）启动以来，一个充满活力的社区已经蓬勃发展了起来
 至于未来：我们已经听取了无数的声音告诉我们他们需要什么，现在正专注于让Go准备好迎接高光时刻。我们正在改进垃圾收集器、运行时调度程序、工具链和标准库，并探索新的语言特性。2010年对Go来说将是激动人心的一年，我们期待着与社区合作，使它成为一个成功的一年。
 
 **下一篇文章：**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/tags/go-protobuf/)\
-**[博客地址](https://huija.github.io/)**
+**[博客地址](https://huija.github.io/tags/go-official-blog/)**
