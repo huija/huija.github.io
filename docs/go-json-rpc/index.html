@@ -6,11 +6,21 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.82.0" />
-  <link rel="canonical" href="https://huija.github.io/tags/" />
+  <link rel="canonical" href="https://huija.github.io/go-json-rpc/" />
 
   
     
-    <meta name="description" content="Tags">
+    <meta name="description" content="JSON-RPC: 接口的故事 原文信息  地址：JSON-RPC: a tale of interfaces 作者：Andrew Gerrand 时间：2010年4月27号  中文译文 这里（这篇文章）我们提供一个例子，Go的interfaces 重构代码后会让代码更加灵活并具有更好的拓展性。
+最初，标准库里面的RPC package使用了一个叫gob 的自定义连接（传输）格式。对于一个特定的应用，我们希望能使用JSON作为一个可选连接（传输）格式。
+我们先定义了一对interface去描述存在的连接（传输）格式，一个给到客户端，一个给到服务端(如下所示)。
+type ServerCodec interface {ReadRequestHeader(*Request) errorReadRequestBody(interface{}) errorWriteResponse(*Response, interface{}) errorClose() error} 在服务端代码，我们将两个内部方法的声明进行改变，输入参数从之前的gob.Encoder变为ServerCodec。下面就是其中一个内部方法。
+func sendResponse(sending *sync.Mutex, req *Request, reply interface{}, enc *gob.Encoder, errmsg string) 修改后
+func sendResponse(sending *sync.Mutex, req *Request, reply interface{}, enc ServerCodec, errmsg string) 然后我们编写了一个简单的gobServerCodec代码块来再现原来的功能。并基于此很容易构建了 jsonServerCodec。
+在对客户端代码进行了类似的改造后，我们完成了需要在RPC包上做的全面工作。
+整个练习耗费大概20分钟！在整理测试新代码后，最终的代码修改 被提交
+在Java或c&#43;&#43;等面向继承的语言中，比较容易想到的方法是，泛化RPC类，并创建JsonRPC和GobRPC子类。但是，如果您想进一步泛化该层次结构，则此方法将变得棘手。（例如，你需要实现一个替代的RPC标准）。在Go包中，我们采用了一种概念上更简单、需要编写或更改的代码更少的方法。
+ 其实就是组合相比继承的优点，但是翻译过来感觉有点说的简单了。
+ 任何代码库的一个重要品质都是可维护性。随着需求的变化，很有必要把代码适配得轻松、干净，以免它变得难以阅读和工作。我们相信Go的轻量级、面向组合的类型系统提供了一种构建可伸缩代码的方法。">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://huija.github.io/apple-touch-icon.png">
@@ -60,7 +70,7 @@
 
   
   
-  <title>Tags | Huija&#39;s Blog</title>
+  <title>JSON-RPC: a tale of interfaces | Huija&#39;s Blog</title>
 </head>
 
   <body>
@@ -212,7 +222,7 @@
       
       
       
-      <a href="/post/" >
+      <a href="/post/" aria-current="page">
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -225,7 +235,7 @@
       
       
       
-      <a href="/tags/" aria-current="page">
+      <a href="/tags/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -281,34 +291,157 @@
       <div class="main-and-footer">
         <div>
           
-  <main id="main">
-    <h1>Tags</h1>
-    <ul class="patterns-list">
+<main id="main">
+  <h1>
+    <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+      <use href="#bookmark"></use>
+    </svg>
+    JSON-RPC: a tale of interfaces
+  </h1>
+
+  <div class="date">
+    
+    
+    <strong>Publish date: </strong>Nov 10, 2022
+    
+    
+    <br>
+    <strong>Last updated: </strong>Nov 14, 2022
+    
+    
+  </div>
+
+  
+  <div class="tags">
+    <strong>Tags: </strong>
+    <ul aria-label="">
       
-        <li>
-          <h2>
-            <a href="/tags/go/">
-              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-                <use href="#tag"></use>
-              </svg>
-              (4) go
-            </a>
-          </h2>
-        </li>
+      <li>
+        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+          <use href="#tag"></use>
+        </svg>
+        
+        <a href="/tags/go/">go</a>
+      </li>
       
-        <li>
-          <h2>
-            <a href="/tags/go-official-blog/">
-              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-                <use href="#tag"></use>
-              </svg>
-              (4) go official blog
-            </a>
-          </h2>
-        </li>
+      <li>
+        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+          <use href="#tag"></use>
+        </svg>
+        
+        <a href="/tags/go-official-blog/">go official blog</a>
+      </li>
       
     </ul>
-  </main>
+  </div>
+  
+
+  
+  <nav class="toc" aria-labelledby="toc-heading">
+    <strong id="toc-heading">Table of Contents</strong>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#原文信息">原文信息</a></li>
+    <li><a href="#中文译文">中文译文</a></li>
+  </ul>
+</nav>
+  </nav>
+
+
+
+  <h1 id="json-rpc-接口的故事">JSON-RPC: 接口的故事</h1>
+<h2 id="原文信息">原文信息</h2>
+<ul>
+<li>地址：<a href="https://go.dev/blog/json-rpc">JSON-RPC: a tale of interfaces</a></li>
+<li>作者：Andrew Gerrand</li>
+<li>时间：2010年4月27号</li>
+</ul>
+<h2 id="中文译文">中文译文</h2>
+<p>这里（这篇文章）我们提供一个例子，Go的<a href="https://go.dev/doc/effective_go.html#interfaces_and_types">interfaces</a>
+重构代码后会让代码更加灵活并具有更好的拓展性。</p>
+<p>最初，标准库里面的<a href="https://go.dev/pkg/net/rpc/">RPC package</a>使用了一个叫<a href="https://go.dev/pkg/encoding/gob/">gob</a>
+的自定义连接（传输）格式。对于一个特定的应用，我们希望能使用<a href="https://go.dev/pkg/encoding/json/">JSON</a>作为一个可选连接（传输）格式。</p>
+<p>我们先定义了一对interface去描述存在的连接（传输）格式，一个给到客户端，一个给到服务端(如下所示)。</p>
+<pre><code class="language-go">type ServerCodec interface {
+ReadRequestHeader(*Request) error
+ReadRequestBody(interface{}) error
+WriteResponse(*Response, interface{}) error
+Close() error
+}
+</code></pre>
+<p>在服务端代码，我们将两个内部方法的声明进行改变，输入参数从之前的<code>gob.Encoder</code>变为<code>ServerCodec</code>。下面就是其中一个内部方法。</p>
+<pre><code class="language-go">func sendResponse(sending *sync.Mutex, req *Request, reply interface{}, enc *gob.Encoder, errmsg string)
+</code></pre>
+<p>修改后</p>
+<pre><code class="language-go">func sendResponse(sending *sync.Mutex, req *Request, reply interface{}, enc ServerCodec, errmsg string)
+</code></pre>
+<p>然后我们编写了一个简单的<code>gobServerCodec</code>代码块来再现原来的功能。并基于此很容易构建了
+<code>jsonServerCodec</code>。</p>
+<p>在对客户端代码进行了类似的改造后，我们完成了需要在RPC包上做的全面工作。</p>
+<p>整个练习耗费大概20分钟！在整理测试新代码后，最终的<a href="https://github.com/golang/go/commit/dcff89057bc0e0d7cb14cf414f2df6f5fb1a41ec">代码修改</a>
+被提交</p>
+<p>在Java或c++等面向继承的语言中，比较容易想到的方法是，泛化RPC类，并创建JsonRPC和GobRPC子类。但是，如果您想进一步泛化该层次结构，则此方法将变得棘手。（例如，你需要实现一个替代的RPC标准）。在Go包中，我们采用了一种概念上更简单、需要编写或更改的代码更少的方法。</p>
+<blockquote>
+<p>其实就是组合相比继承的优点，但是翻译过来感觉有点说的简单了。</p>
+</blockquote>
+<p>任何代码库的一个重要品质都是可维护性。随着需求的变化，很有必要把代码适配得轻松、干净，以免它变得难以阅读和工作。我们相信Go的轻量级、面向组合的类型系统提供了一种构建可伸缩代码的方法。</p>
+<p><strong>Next article:</strong><a href="https://huija.github.io/go-new-talk-and-tutorials/">New Talk and Tutorials</a><br>
+<strong>Previous article:</strong><a href="https://huija.github.io/go-protobuf/">Third-party libraries: goprotobuf and beyond</a><br>
+<strong><a href="https://huija.github.io/tags/go-official-blog/">Blog Index</a></strong></p>
+
+</main>
+<div id="disqus-container">
+  
+</div>
+
+
+<script src="https://utteranc.es/client.js"
+    repo="huija/huija.github.io"
+    issue-term="title" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+<style type="text/css">
+    .utterances-frame {
+        background-color: transparent;
+    }
+</style>
+<script>
+    var changeTheme = (theme) => {
+        const message = {
+            type: "set-theme",
+            theme
+        };
+        const utteranc = document.querySelector(".utterances-frame");
+        utteranc.contentWindow.postMessage(message, "https://utteranc.es");
+    };
+    document.onreadystatechange = () => {
+        if (document.readyState == "complete") {
+            
+            
+            setTimeout(() => {
+                if (!document.getElementById("darkTheme").disabled) {
+                    changeTheme("photon-dark");
+                }
+            }, 1000);
+            
+            const utteranc = document.querySelector(".utterances-frame");
+            utteranc.onload = () => {
+                
+                setTimeout(() => {
+                    if (!document.getElementById("darkTheme").disabled) {
+                        changeTheme("photon-dark");
+                    }
+                }, 1000);
+            };
+            
+            document.getElementById("themer").addEventListener("click", () => {
+                changeTheme(document.getElementById("darkTheme").disabled ? "photon-dark" : "github-light");
+            });
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+        utterances.</a></noscript>
 
           
         </div>

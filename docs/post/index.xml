@@ -6,20 +6,53 @@
     <description>Recent content in Posts on Huija&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 07 Nov 2022 22:55:33 +0800</lastBuildDate><atom:link href="https://huija.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 14 Nov 2022 13:40:51 +0800</lastBuildDate><atom:link href="https://huija.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go New Talk and Tutorials</title>
+      <link>https://huija.github.io/go-new-talk-and-tutorials/</link>
+      <pubDate>Mon, 14 Nov 2022 13:40:51 +0800</pubDate>
+      
+      <guid>https://huija.github.io/go-new-talk-and-tutorials/</guid>
+      <description>Go New Talk and Tutorials 原文信息  地址：Go New Talk and Tutorials 作者：Andrew Gerrand 时间：2010年5月5号  中文译文 Rob Pike最近在斯坦福大学的计算机系统研讨会(EE380) 做了一个演讲，演讲的名字叫 Another Go at Language Design ，这个演讲概述了Go语言的设计之痒以及Go是如何解决这些问题的。你可以在youtube 看到演讲视频，以及从斯坦福大学网下载（资料）。
+上周的发布，包括一个代码实验“编写网页应用” ，其中详细说明了一个简单wiki程序的架构。对于一些Go语言的概念而言，这是一个实用性的介绍，也是一系列Go代码实验的第一趴。
+最后，我们经常被问到“Go的packages是如何工作的？”，相较于解释说明，展示是更加容易的，所以我在Go Packages录屏 统一演示了编写、构建、安装和重新分发Go包的过程。我很乐意近期在gocoding YouTube channel 发布更多关于Go编程主题的文章。
+Next article:Upcoming Google I/O Go Events
+Previous article:JSON-RPC: a tale of interfaces
+Blog Index</description>
+    </item>
+    
+    <item>
+      <title>JSON-RPC: a tale of interfaces</title>
+      <link>https://huija.github.io/go-json-rpc/</link>
+      <pubDate>Thu, 10 Nov 2022 11:40:17 +0800</pubDate>
+      
+      <guid>https://huija.github.io/go-json-rpc/</guid>
+      <description>JSON-RPC: 接口的故事 原文信息  地址：JSON-RPC: a tale of interfaces 作者：Andrew Gerrand 时间：2010年4月27号  中文译文 这里（这篇文章）我们提供一个例子，Go的interfaces 重构代码后会让代码更加灵活并具有更好的拓展性。
+最初，标准库里面的RPC package使用了一个叫gob 的自定义连接（传输）格式。对于一个特定的应用，我们希望能使用JSON作为一个可选连接（传输）格式。
+我们先定义了一对interface去描述存在的连接（传输）格式，一个给到客户端，一个给到服务端(如下所示)。
+type ServerCodec interface {ReadRequestHeader(*Request) errorReadRequestBody(interface{}) errorWriteResponse(*Response, interface{}) errorClose() error} 在服务端代码，我们将两个内部方法的声明进行改变，输入参数从之前的gob.Encoder变为ServerCodec。下面就是其中一个内部方法。
+func sendResponse(sending *sync.Mutex, req *Request, reply interface{}, enc *gob.Encoder, errmsg string) 修改后
+func sendResponse(sending *sync.Mutex, req *Request, reply interface{}, enc ServerCodec, errmsg string) 然后我们编写了一个简单的gobServerCodec代码块来再现原来的功能。并基于此很容易构建了 jsonServerCodec。
+在对客户端代码进行了类似的改造后，我们完成了需要在RPC包上做的全面工作。
+整个练习耗费大概20分钟！在整理测试新代码后，最终的代码修改 被提交
+在Java或c++等面向继承的语言中，比较容易想到的方法是，泛化RPC类，并创建JsonRPC和GobRPC子类。但是，如果您想进一步泛化该层次结构，则此方法将变得棘手。（例如，你需要实现一个替代的RPC标准）。在Go包中，我们采用了一种概念上更简单、需要编写或更改的代码更少的方法。
+ 其实就是组合相比继承的优点，但是翻译过来感觉有点说的简单了。
+ 任何代码库的一个重要品质都是可维护性。随着需求的变化，很有必要把代码适配得轻松、干净，以免它变得难以阅读和工作。我们相信Go的轻量级、面向组合的类型系统提供了一种构建可伸缩代码的方法。</description>
+    </item>
+    
     <item>
       <title>Third-party libraries: goprotobuf and beyond</title>
       <link>https://huija.github.io/go-protobuf/</link>
       <pubDate>Mon, 07 Nov 2022 22:55:33 +0800</pubDate>
       
       <guid>https://huija.github.io/go-protobuf/</guid>
-      <description>第三方库: goprotobuf及以后 原文信息  地址：Third-party libraries: goprotobuf and beyond 作者：Andrew Gerrand 时间：2010年4月20号  中文译文 （2010年）3月24号，Rob Pike发布了goprotobuf ，是谷歌数据交换格式Protocol Buffers的Go语言实现，Protocol Buffers简称protobufs。随着goprotobuf的发布，Go加入了c++、Java和Python的行列，成为官方提供protobuf实现的语言之一。这标志着能够实现现有系统和Go构建的系统之间的互操作性的一个重要里程碑。
+      <description>第三方库: goprotobuf及以后 原文信息  地址：Third-party libraries: goprotobuf and beyond 作者：Andrew Gerrand 时间：2010年4月20号  中文译文 （2010年）3月24号，Rob Pike发布了goprotobuf ，是谷歌数据交换格式Protocol Buffers的Go语言实现，Protocol Buffers简称protobufs。随着goprotobuf的发布，Go加入了c++、Java和Python的行列，成为官方提供protobuf实现的语言之一。这是一个重要里程碑，标志着能够实现现有系统和Go构建的系统之间的互操作性。
 goprotobuf项目包含两个部分：一个是“协议编译器插件（protocol compiler plugin）”，用于生成Go的源码文件，编译后（的代码）可以访问和管理协议缓存区；另一个是Go package, 对编解码以及访问协议缓存区提供了运行时的支持。
 想要使用goprotobuf的话，你首先需要同时安装Go和protobuf 。然后你可以通过goinstall来安装“proto”这个packge：
 goinstall goprotobuf.googlecode.com/hg/proto  接着安装&amp;quot;protocol compiler plugin&amp;quot;：
 cd $GOROOT/src/pkg/goprotobuf.googlecode.com/hg/compiler make install  更多细节参考项目的README文件。
-goprotobuf是不断增长的第三方Go项目列表中的一个。在goprotobuf发布之后，X Go绑定已经从标准库分离到x-go-binding 项目，并且已经开始了一个Freetype的项目，freetype-go 。还有（很多）其他流行的第三方项目，包含轻量化的web框架web.go ，Go语音的GTK实现gtk-go。
-我们希望去鼓励开源社区开发其他有用的包。如果你有正在做的工作，请不要藏在自己的心里 - 通过我们的邮件列表golang-nuts让我们知道。
+goprotobuf是不断增长的第三方Go项目列表中的一个。在goprotobuf发布之后，X Go绑定已经从标准库分离到x-go-binding 项目，并且已经开始了一个Freetype的项目freetype-go 。还有（很多）其他流行的第三方项目，包含轻量化的web框架web.go ，Go语言的GTK（接口）绑定库gtk-go。
+我们希望鼓励开源社区开发其他有用的软件包。如果你有正在做的工作，请不要藏在自己的心里 - 联系我们的邮件列表golang-nuts让我们知道吧。
 Next article:JSON-RPC: a tale of interfaces
 Previous article:Go: What&amp;rsquo;s New in March 2010
 Blog Index</description>

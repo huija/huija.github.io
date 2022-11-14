@@ -6,11 +6,16 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.82.0" />
-  <link rel="canonical" href="https://huija.github.io/tags/" />
+  <link rel="canonical" href="https://huija.github.io/go-new-talk-and-tutorials/" />
 
   
     
-    <meta name="description" content="Tags">
+    <meta name="description" content="Go New Talk and Tutorials 原文信息  地址：Go New Talk and Tutorials 作者：Andrew Gerrand 时间：2010年5月5号  中文译文 Rob Pike最近在斯坦福大学的计算机系统研讨会(EE380) 做了一个演讲，演讲的名字叫 Another Go at Language Design ，这个演讲概述了Go语言的设计之痒以及Go是如何解决这些问题的。你可以在youtube 看到演讲视频，以及从斯坦福大学网下载（资料）。
+上周的发布，包括一个代码实验“编写网页应用” ，其中详细说明了一个简单wiki程序的架构。对于一些Go语言的概念而言，这是一个实用性的介绍，也是一系列Go代码实验的第一趴。
+最后，我们经常被问到“Go的packages是如何工作的？”，相较于解释说明，展示是更加容易的，所以我在Go Packages录屏 统一演示了编写、构建、安装和重新分发Go包的过程。我很乐意近期在gocoding YouTube channel 发布更多关于Go编程主题的文章。
+Next article:Upcoming Google I/O Go Events
+Previous article:JSON-RPC: a tale of interfaces
+Blog Index">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://huija.github.io/apple-touch-icon.png">
@@ -60,7 +65,7 @@
 
   
   
-  <title>Tags | Huija&#39;s Blog</title>
+  <title>Go New Talk and Tutorials | Huija&#39;s Blog</title>
 </head>
 
   <body>
@@ -212,7 +217,7 @@
       
       
       
-      <a href="/post/" >
+      <a href="/post/" aria-current="page">
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -225,7 +230,7 @@
       
       
       
-      <a href="/tags/" aria-current="page">
+      <a href="/tags/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -281,34 +286,138 @@
       <div class="main-and-footer">
         <div>
           
-  <main id="main">
-    <h1>Tags</h1>
-    <ul class="patterns-list">
+<main id="main">
+  <h1>
+    <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+      <use href="#bookmark"></use>
+    </svg>
+    Go New Talk and Tutorials
+  </h1>
+
+  <div class="date">
+    
+    
+    <strong>Publish date: </strong>Nov 14, 2022
+    
+    
+    <br>
+    <strong>Last updated: </strong>Nov 14, 2022
+    
+    
+  </div>
+
+  
+  <div class="tags">
+    <strong>Tags: </strong>
+    <ul aria-label="">
       
-        <li>
-          <h2>
-            <a href="/tags/go/">
-              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-                <use href="#tag"></use>
-              </svg>
-              (4) go
-            </a>
-          </h2>
-        </li>
+      <li>
+        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+          <use href="#tag"></use>
+        </svg>
+        
+        <a href="/tags/go/">go</a>
+      </li>
       
-        <li>
-          <h2>
-            <a href="/tags/go-official-blog/">
-              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-                <use href="#tag"></use>
-              </svg>
-              (4) go official blog
-            </a>
-          </h2>
-        </li>
+      <li>
+        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+          <use href="#tag"></use>
+        </svg>
+        
+        <a href="/tags/go-official-blog/">go official blog</a>
+      </li>
       
     </ul>
-  </main>
+  </div>
+  
+
+  
+  <nav class="toc" aria-labelledby="toc-heading">
+    <strong id="toc-heading">Table of Contents</strong>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#原文信息">原文信息</a></li>
+    <li><a href="#中文译文">中文译文</a></li>
+  </ul>
+</nav>
+  </nav>
+
+
+
+  <h1 id="go-new-talk-and-tutorials">Go New Talk and Tutorials</h1>
+<h2 id="原文信息">原文信息</h2>
+<ul>
+<li>地址：<a href="https://go.dev/blog/new-talk-and-tutorials">Go New Talk and Tutorials</a></li>
+<li>作者：Andrew Gerrand</li>
+<li>时间：2010年5月5号</li>
+</ul>
+<h2 id="中文译文">中文译文</h2>
+<p>Rob Pike最近在斯坦福大学的<a href="http://www.stanford.edu/class/ee380/">计算机系统研讨会</a>(EE380)
+做了一个演讲，演讲的名字叫 <strong><a href="http://www.stanford.edu/class/ee380/Abstracts/100428.html">Another Go at Language Design</a></strong>
+，这个演讲概述了Go语言的设计之痒以及Go是如何解决这些问题的。你可以在<a href="https://www.youtube.com/watch?v=7VcArS4Wpqk">youtube</a>
+看到演讲视频，以及从<a href="http://www.stanford.edu/class/ee380/Abstracts/100428-pike-stanford.pdf">斯坦福大学网</a>下载（资料）。</p>
+<p>上周的发布，包括一个代码实验<a href="https://go.dev/doc/codelab/wiki/">“编写网页应用”</a>
+，其中详细说明了一个简单wiki程序的架构。对于一些Go语言的概念而言，这是一个实用性的介绍，也是一系列Go代码实验的第一趴。</p>
+<p>最后，我们经常被问到“Go的packages是如何工作的？”，相较于解释说明，展示是更加容易的，所以我在<a href="http://www.youtube.com/watch?v=jDWBJOXs_iI">Go Packages录屏</a>
+统一演示了编写、构建、安装和重新分发Go包的过程。我很乐意近期在<a href="http://youtube.com/gocoding">gocoding YouTube channel</a>
+发布更多关于Go编程主题的文章。</p>
+<p><strong>Next article:</strong><a href="https://huija.github.io/go-io2010-preview">Upcoming Google I/O Go Events</a><br>
+<strong>Previous article:</strong><a href="https://huija.github.io/go-json-rpc">JSON-RPC: a tale of interfaces</a><br>
+<strong><a href="https://huija.github.io/tags/go-official-blog/">Blog Index</a></strong></p>
+
+</main>
+<div id="disqus-container">
+  
+</div>
+
+
+<script src="https://utteranc.es/client.js"
+    repo="huija/huija.github.io"
+    issue-term="title" theme="github-light"
+    crossorigin="anonymous" async>
+    </script>
+<style type="text/css">
+    .utterances-frame {
+        background-color: transparent;
+    }
+</style>
+<script>
+    var changeTheme = (theme) => {
+        const message = {
+            type: "set-theme",
+            theme
+        };
+        const utteranc = document.querySelector(".utterances-frame");
+        utteranc.contentWindow.postMessage(message, "https://utteranc.es");
+    };
+    document.onreadystatechange = () => {
+        if (document.readyState == "complete") {
+            
+            
+            setTimeout(() => {
+                if (!document.getElementById("darkTheme").disabled) {
+                    changeTheme("photon-dark");
+                }
+            }, 1000);
+            
+            const utteranc = document.querySelector(".utterances-frame");
+            utteranc.onload = () => {
+                
+                setTimeout(() => {
+                    if (!document.getElementById("darkTheme").disabled) {
+                        changeTheme("photon-dark");
+                    }
+                }, 1000);
+            };
+            
+            document.getElementById("themer").addEventListener("click", () => {
+                changeTheme(document.getElementById("darkTheme").disabled ? "photon-dark" : "github-light");
+            });
+        }
+    };
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
+        utterances.</a></noscript>
 
           
         </div>
