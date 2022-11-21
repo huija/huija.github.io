@@ -6,11 +6,27 @@
     <description>Recent content in go on Huija&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 14 Nov 2022 13:40:51 +0800</lastBuildDate><atom:link href="https://huija.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 12 May 2010 12:00:00 +0800</lastBuildDate><atom:link href="https://huija.github.io/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Upcoming Google I/O Go Events</title>
+      <link>https://huija.github.io/go-io2010-preview/</link>
+      <pubDate>Wed, 12 May 2010 12:00:00 +0800</pubDate>
+      
+      <guid>https://huija.github.io/go-io2010-preview/</guid>
+      <description>即将到来的谷歌 I/O Go活动 原文信息  地址：Upcoming Google I/O Go Events 作者：Andrew Gerrand 时间：2010年5月12号  中文译文 Google I/O 2010 将于下周在旧金山的Moscone中心举行。你们如果有票的话，就可以在I/O会议和训练营看到一些Go团队的成员。按时间倒序排列（如下）:
+Rob Pike和Russ Cox将在周四上午10点15分进行一个演讲，Go Programming 。这一环节将详细讨论Go在实际意义上与其他语言的区别。通过一系列的例子，他们将展示Go的各种特性以及它们影响程序设计的方式。
+一些Go团队的成员将在周三下午12点到2:30的办公时间待在Go语言板块。来现场由这些专家解答你的Go语言问题。
+在周二下午4点15分的训练营，Andrew Gerrand将做一个关于Go的介绍性演讲。这一环节将概述那些促使我们构建一门新语言的问题，以及Go解决这些问题的方法。
+如果你要来参加I/O，我们期待在那里见到你!
+Next article:New Talk and Tutorials
+Previous article:Third-party libraries: goprotobuf and beyond
+Blog Index</description>
+    </item>
+    
     <item>
       <title>Go New Talk and Tutorials</title>
       <link>https://huija.github.io/go-new-talk-and-tutorials/</link>
-      <pubDate>Mon, 14 Nov 2022 13:40:51 +0800</pubDate>
+      <pubDate>Wed, 05 May 2010 12:00:00 +0800</pubDate>
       
       <guid>https://huija.github.io/go-new-talk-and-tutorials/</guid>
       <description>Go New Talk and Tutorials 原文信息  地址：Go New Talk and Tutorials 作者：Andrew Gerrand 时间：2010年5月5号  中文译文 Rob Pike最近在斯坦福大学的计算机系统研讨会(EE380) 做了一个演讲，演讲的名字叫 Another Go at Language Design ，这个演讲概述了Go语言的设计之痒以及Go是如何解决这些问题的。你可以在youtube 看到演讲视频，以及从斯坦福大学网下载（资料）。
@@ -24,7 +40,7 @@ Blog Index</description>
     <item>
       <title>JSON-RPC: a tale of interfaces</title>
       <link>https://huija.github.io/go-json-rpc/</link>
-      <pubDate>Thu, 10 Nov 2022 11:40:17 +0800</pubDate>
+      <pubDate>Tue, 27 Apr 2010 12:00:00 +0800</pubDate>
       
       <guid>https://huija.github.io/go-json-rpc/</guid>
       <description>JSON-RPC: 接口的故事 原文信息  地址：JSON-RPC: a tale of interfaces 作者：Andrew Gerrand 时间：2010年4月27号  中文译文 这里（这篇文章）我们提供一个例子，Go的interfaces 重构代码后会让代码更加灵活并具有更好的拓展性。
@@ -43,7 +59,7 @@ func sendResponse(sending *sync.Mutex, req *Request, reply interface{}, enc Serv
     <item>
       <title>Third-party libraries: goprotobuf and beyond</title>
       <link>https://huija.github.io/go-protobuf/</link>
-      <pubDate>Mon, 07 Nov 2022 22:55:33 +0800</pubDate>
+      <pubDate>Tue, 20 Apr 2010 12:00:00 +0800</pubDate>
       
       <guid>https://huija.github.io/go-protobuf/</guid>
       <description>第三方库: goprotobuf及以后 原文信息  地址：Third-party libraries: goprotobuf and beyond 作者：Andrew Gerrand 时间：2010年4月20号  中文译文 （2010年）3月24号，Rob Pike发布了goprotobuf ，是谷歌数据交换格式Protocol Buffers的Go语言实现，Protocol Buffers简称protobufs。随着goprotobuf的发布，Go加入了c++、Java和Python的行列，成为官方提供protobuf实现的语言之一。这是一个重要里程碑，标志着能够实现现有系统和Go构建的系统之间的互操作性。
@@ -61,10 +77,10 @@ Blog Index</description>
     <item>
       <title>Go: What&#39;s New in March 2010</title>
       <link>https://huija.github.io/go-hello-world/</link>
-      <pubDate>Sun, 06 Nov 2022 00:18:31 +0800</pubDate>
+      <pubDate>Thu, 18 Mar 2010 12:00:00 +0800</pubDate>
       
       <guid>https://huija.github.io/go-hello-world/</guid>
-      <description>Go: 2010年3月有什么新消息 原文信息  地址： Go: What&amp;rsquo;s New in March 2010 作者：Andrew Gerrand 时间：2010年3月18号  中文译文 欢迎来到Go的官方博客。我们（Go团队）希望通过发布这些博客，让全世界了解到关于Go编程语言的最新开发状况以及围绕Go语言不断成长的最新生态和应用。
+      <description>Go: 2010年3月有什么新消息 原文信息  地址：Go: What&amp;rsquo;s New in March 2010 作者：Andrew Gerrand 时间：2010年3月18号  中文译文 欢迎来到Go的官方博客。我们（Go团队）希望通过发布这些博客，让全世界了解到关于Go编程语言的最新开发状况以及围绕Go语言不断成长的最新生态和应用。
 Go发行（2009年11月）已经过去几个月了，所以让我们谈谈自那以后，Go的世界发生了什么。
 谷歌的核心团队继续开发语言、编译器、包、工具和文档。编译器现在生成的代码在某些情况下比首次release时快1到2倍。我们已经将一些Benchmark的性能测试图表和编译状态放在一起，来追踪每一个对于Go语言的更改的可靠性。
 我们对语法进行了修改，使语言更加简洁、规范和灵活。分号在Go语言内基本被全部删除 。…T语法能够更容易地处理任意数量的方法参数。x[lo:] 切片语法，现在是x[lo:len(x)]的缩写。Go现在也原生支持复数。查看release notes 获取更多信息。

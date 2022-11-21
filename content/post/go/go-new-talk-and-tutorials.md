@@ -1,6 +1,6 @@
 ---
 title: "Go New Talk and Tutorials"
-date: 2022-11-14T13:40:51+08:00
+date: 2010-05-05T12:00:00+08:00
 draft: true
 tags: ["go","go official blog"]
 toc: true

@@ -1,6 +1,6 @@
 ---
 title: "JSON-RPC: a tale of interfaces"
-date: 2022-11-10T11:40:17+08:00
+date: 2010-04-27T12:00:00+08:00
 draft: true
 tags: ["go","go official blog"]
 toc: true

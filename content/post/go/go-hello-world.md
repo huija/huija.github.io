@@ -1,6 +1,6 @@
 ---
 title: "Go: What's New in March 2010"
-date: 2022-11-06T00:18:31+08:00
+date: 2010-03-18T12:00:00+08:00
 draft: true
 tags: ["go","go official blog"]
 toc: true
@@ -10,7 +10,7 @@ toc: true
 
 ## 原文信息
 
-* 地址： [Go: What's New in March 2010](https://go.dev/blog/hello-world)
+* 地址：[Go: What's New in March 2010](https://go.dev/blog/hello-world)
 * 作者：Andrew Gerrand
 * 时间：2010年3月18号
 
