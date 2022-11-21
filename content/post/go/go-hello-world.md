@@ -10,7 +10,7 @@ toc: true
 
 ## 原文信息
 
-* 地址： [Go: What's New in March 2010](https://go.dev/blog/hello-world)
+* 地址：[Go: What's New in March 2010](https://go.dev/blog/hello-world)
 * 作者：Andrew Gerrand
 * 时间：2010年3月18号
 
