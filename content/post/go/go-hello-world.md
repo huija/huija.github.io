@@ -1,6 +1,6 @@
 ---
 title: "Go: What's New in March 2010"
-date: 2022-11-06T00:18:31+08:00
+date: 2010-03-18T12:00:00+08:00
 draft: true
 tags: ["go","go official blog"]
 toc: true
