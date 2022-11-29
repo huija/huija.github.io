@@ -44,7 +44,7 @@ params:
   giscus:
     repo: huija/huija.github.io
     repoId: MDEwOlJlcG9zaXRvcnkzNTg5MjMwOTc=
-    category: Ideas
+    category: Announcements
     categoryId: DIC_kwDOFWS7Wc4CSy-q
     mapping: title
     theme: preferred_color_scheme
