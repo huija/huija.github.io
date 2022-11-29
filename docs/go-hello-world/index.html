@@ -391,48 +391,56 @@ freenode）启动以来，一个充满活力的社区已经蓬勃发展了起来
 </div>
 
   
-<script src="https://utteranc.es/client.js"
-        repo="huija/huija.github.io"
-        issue-term="title" theme="github-light"
-        crossorigin="anonymous" async>
+  
+<script src="https://giscus.app/client.js"
+        data-repo="huija/huija.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkzNTg5MjMwOTc="
+        data-category="Ideas"
+        data-category-id="DIC_kwDOFWS7Wc4CSy-q"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
 </script>
-<style type="text/css">
-    .utterances-frame {
+<style>
+    iframe.giscus-frame {
         background-color: transparent;
     }
 </style>
 <script>
-    var changeTheme = (theme) => {
-        
-        const message = {
-            type: "set-theme",
-            theme
-        };
-        const utteranc = document.querySelector(".utterances-frame");
-        utteranc.contentWindow.postMessage(message, "https://utteranc.es");
-    };
+    function sendMessage(message) {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({giscus: message}, 'https://giscus.app');
+    }
+
+    function changeTheme(theme) {
+        sendMessage({
+            setConfig: {
+                theme
+            }
+        });
+    }
+
     document.onreadystatechange = () => {
         if (document.readyState === "complete") {
             
             if (!document.getElementById("darkTheme").disabled) {
-                changeTheme("photon-dark");
+                changeTheme("dark");
             }
             
-            const utterance = document.querySelector(".utterances-frame");
-            utterance.onload = () => {
-                if (!document.getElementById("darkTheme").disabled) {
-                    changeTheme("photon-dark");
-                }
-            };
-            
             document.getElementById("themer").addEventListener("click", () => {
-                changeTheme(document.getElementById("darkTheme").disabled ? "photon-dark" : "github-light");
+                changeTheme(document.getElementById("darkTheme").disabled ? "dark" : "light");
             });
         }
     };
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
-    utterances.</a></noscript>
 
           
         </div>
