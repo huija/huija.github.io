@@ -814,7 +814,7 @@ h1 svg {
     position: relative;
     font-size: 1.66rem;
 }
-.h2-container a {
+.h2-container .link-icon {
     position: absolute;
     margin-top: 0;
     top: 0;
