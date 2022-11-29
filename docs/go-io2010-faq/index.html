@@ -6,11 +6,23 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
   <meta name="generator" content="Hugo 0.82.0" />
-  <link rel="canonical" href="https://huija.github.io/tags/go-official-blog/" />
+  <link rel="canonical" href="https://huija.github.io/go-io2010-faq/" />
 
   
     
-    <meta name="description" content="go official blog">
+    <meta name="description" content="Go I/O 2010 FAQ 原文信息  地址：Go at I/O: Frequently Asked Questions 作者：Andrew Gerrand 时间：2010年5月27号  中文译文 上周，在备受瞩目的谷歌I/O大会上，我们小团队的演讲室座无虚席，并遇见了许多现在和未来的Go程序员。尤其令人欣慰的是，有非常多的人在了解了Go之后，对使用Go所能获得的潜在好处( 即时的和长期的)感到兴奋。
+在I/O大会期间，我们被问了很多有意义的问题，在这篇文章中，我想对其中的一些问题进行总结和扩展。
+Go在生产系统中的适用性如何？Go现在已经准备好了，而且已经稳定了。我们很荣幸地宣布，谷歌正在一些生产系统中使用Go，它们的性能很好。当然还有改进的空间——这就是为什么我们继续在语言、库、工具链和运行时上努力的原因。
+你们有实现泛型的计划吗？许多关于类泛型特性的建议在公开和内部都被讨论过，但到目前为止，我们还没有找到一个与该语言的其他部分一致的提案。我们认为Go的重要优点之一是它的简单，所以我们对引入可能使这门语言更难理解的新功能保持警惕。此外，我们编写的Go代码越多( 越能写出好的Go代码)，我们就越不需要这样的语言特性。
+你们有支持GPU编程的计划吗？我们目前还没有任何这样做的计划，但由于Go与架构无关，所以这是很有可能的。能够启动运行在不同处理器架构上的goroutine，并使用channel在运行在不同架构上的goroutine之间进行通信，似乎都是不错的想法。
+是否计划在App引擎上支持Go？Go和App引擎团队都希望看到这种情况发生。一如既往地，这是一个资源和优先事项的问题，来决定这是否会或者何时会实现。
+有在Android上支持Go的计划吗？两个Go编译器都支持ARM代码生成，所以这是可能的。虽然我们认为Go对于编写移动应用程序将是一种很好的语言，但Android支持并不是我们积极努力的方向。
+我能用Go做什么？Go在设计时就考虑到了系统编程。服务器、客户端、数据库、缓存、均衡器、分发器——对于它们Go都是明显有用的，这也是我们已经开始在谷歌中使用它的方式。然而，自从Go开源发布以来，社区已经出现了各种各样的应用程序。从网页应用到游戏再到图形工具，Go有望成为一种通用编程语言。它的潜力目前知识被库的支持所限制了，而库支持正在以惊人的速度提高。此外，教育工作者对使用Go教授编程表达了兴趣，称其简洁的语法和一致性非常适合这项任务。
+感谢每一位参加我们的演讲或在办公时间与我们交谈的人。我们希望在今后的活动中再次见到您。
+Rob 和 Russ 的演讲视频跳转YouTube可以看到。
+Next article:New Talk and Tutorials
+Previous article:Third-party libraries: goprotobuf and beyond
+Blog Index">
   
 
   <link rel="apple-touch-icon" sizes="180x180" href="https://huija.github.io/apple-touch-icon.png">
@@ -60,7 +72,7 @@
 
   
   
-  <title>go official blog | Huija&#39;s Blog</title>
+  <title>Go I/O 2010 FAQ | Huija&#39;s Blog</title>
 </head>
 
   <body>
@@ -212,7 +224,7 @@
       
       
       
-      <a href="/post/" >
+      <a href="/post/" aria-current="page">
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -225,7 +237,7 @@
       
       
       
-      <a href="/tags/" aria-current="page">
+      <a href="/tags/" >
         <svg class="bookmark-icon" aria-hidden="true" focusable="false" viewBox="0 0 40 50">
           <use href="#bookmark"></use>
         </svg>
@@ -284,116 +296,144 @@
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>go official blog</h1>
-  
-  <input
-    id="search"
-    type="text"
-    placeholder="Search by title..."
-    aria-label="Search by title"
-  />
-  
-  <ul class="patterns-list" id="list">
+  <main id="main">
+    <h1>
+      <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+        <use href="#bookmark"></use>
+      </svg>
+      Go I/O 2010 FAQ
+    </h1>
+
+    <div class="date">
+      
+      
+      <strong>Publish date: </strong>May 27, 2010
+      
+        
+          <br>
+          <strong>Last updated: </strong>Nov 29, 2022
+        
+      
+    </div>
+
     
-    <li>
-      <h2>
-        <a href="/go-io2010-faq/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Go I/O 2010 FAQ
-        </a>
-      </h2>
-    </li>
+      <div class="tags">
+        <strong>Tags: </strong>
+        <ul aria-label="tags">
+          
+            <li>
+              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+                <use href="#tag"></use>
+              </svg>
+              
+              <a href="/tags/go/">go</a>
+            </li>
+          
+            <li>
+              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+                <use href="#tag"></use>
+              </svg>
+              
+              <a href="/tags/go-official-blog/">go official blog</a>
+            </li>
+          
+        </ul>
+      </div>
     
-    <li>
-      <h2>
-        <a href="/go-io2010-preview/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Upcoming Google I/O Go Events
-        </a>
-      </h2>
-    </li>
+
     
-    <li>
-      <h2>
-        <a href="/go-new-talk-and-tutorials/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Go New Talk and Tutorials
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/go-json-rpc/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          JSON-RPC: a tale of interfaces
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/go-protobuf/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Third-party libraries: goprotobuf and beyond
-        </a>
-      </h2>
-    </li>
-    
-    <li>
-      <h2>
-        <a href="/go-hello-world/">
-          <svg
-            class="bookmark"
-            aria-hidden="true"
-            viewBox="0 0 40 50"
-            focusable="false"
-          >
-            <use href="#bookmark"></use>
-          </svg>
-          Go: What&#39;s New in March 2010
-        </a>
-      </h2>
-    </li>
-    
+  <nav class="toc" aria-labelledby="toc-heading">
+    <strong id="toc-heading">Table of Contents</strong>
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#原文信息">原文信息</a></li>
+    <li><a href="#中文译文">中文译文</a></li>
   </ul>
-</main>
+</nav>
+  </nav>
+
+
+
+    <h1 id="go-io-2010-faq">Go I/O 2010 FAQ</h1>
+<h2 id="原文信息">原文信息</h2>
+<ul>
+<li>地址：<a href="https://go.dev/blog/io2010-faq">Go at I/O: Frequently Asked Questions</a></li>
+<li>作者：Andrew Gerrand</li>
+<li>时间：2010年5月27号</li>
+</ul>
+<h2 id="中文译文">中文译文</h2>
+<p>上周，在备受瞩目的谷歌I/O大会上，我们小团队的演讲室座无虚席，并遇见了许多现在和未来的Go程序员。尤其令人欣慰的是，有非常多的人在了解了Go之后，对使用Go所能获得的潜在好处(
+即时的和长期的)感到兴奋。</p>
+<p>在I/O大会期间，我们被问了很多有意义的问题，在这篇文章中，我想对其中的一些问题进行总结和扩展。</p>
+<p>Go在生产系统中的适用性如何？Go现在已经准备好了，而且已经稳定了。我们很荣幸地宣布，谷歌正在一些生产系统中使用Go，它们的性能很好。当然还有改进的空间——这就是为什么我们继续在语言、库、工具链和运行时上努力的原因。</p>
+<p>你们有实现泛型的计划吗？许多关于类泛型特性的建议在公开和内部都被讨论过，但到目前为止，我们还没有找到一个与该语言的其他部分一致的提案。我们认为Go的重要优点之一是它的简单，所以我们对引入可能使这门语言更难理解的新功能保持警惕。此外，我们编写的Go代码越多(
+越能写出好的Go代码)，我们就越不需要这样的语言特性。</p>
+<p>你们有支持GPU编程的计划吗？我们目前还没有任何这样做的计划，但由于Go与架构无关，所以这是很有可能的。能够启动运行在不同处理器架构上的goroutine，并使用channel在运行在不同架构上的goroutine之间进行通信，似乎都是不错的想法。</p>
+<p>是否计划在App引擎上支持Go？Go和App引擎团队都希望看到这种情况发生。一如既往地，这是一个资源和优先事项的问题，来决定这是否会或者何时会实现。</p>
+<p>有在Android上支持Go的计划吗？两个Go编译器都支持ARM代码生成，所以这是可能的。虽然我们认为Go对于编写移动应用程序将是一种很好的语言，但Android支持并不是我们积极努力的方向。</p>
+<p>我能用Go做什么？Go在设计时就考虑到了系统编程。服务器、客户端、数据库、缓存、均衡器、分发器——对于它们Go都是明显有用的，这也是我们已经开始在谷歌中使用它的方式。然而，自从Go开源发布以来，社区已经出现了各种各样的应用程序。从网页应用到游戏再到图形工具，Go有望成为一种通用编程语言。它的潜力目前知识被库的支持所限制了，而库支持正在以惊人的速度提高。此外，教育工作者对使用Go教授编程表达了兴趣，称其简洁的语法和一致性非常适合这项任务。</p>
+<p>感谢每一位参加我们的演讲或在办公时间与我们交谈的人。我们希望在今后的活动中再次见到您。</p>
+<p>Rob 和 Russ 的演讲视频跳转<a href="https://youtu.be/jgVhBThJdXc">YouTube</a>可以看到。</p>
+<p><strong>Next article:</strong><a href="https://huija.github.io/go-io2010/">New Talk and Tutorials</a><br>
+<strong>Previous article:</strong><a href="https://huija.github.io/go-io2010-preview/">Third-party libraries: goprotobuf and beyond</a><br>
+<strong><a href="https://huija.github.io/tags/go-official-blog/">Blog Index</a></strong></p>
+
+  </main>
+  <div id="disqus-container">
+  
+</div>
+
+  
+  
+<script src="https://giscus.app/client.js"
+        data-repo="huija/huija.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkzNTg5MjMwOTc="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOFWS7Wc4CSy-n"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+<style>
+    iframe.giscus-frame {
+        background-color: transparent;
+    }
+</style>
+<script>
+    function sendMessage(message) {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({giscus: message}, 'https://giscus.app');
+    }
+
+    function changeTheme(theme) {
+        sendMessage({
+            setConfig: {
+                theme
+            }
+        });
+    }
+
+    document.onreadystatechange = () => {
+        if (document.readyState === "complete") {
+            
+            if (!document.getElementById("darkTheme").disabled) {
+                changeTheme("dark");
+            }
+            
+            document.getElementById("themer").addEventListener("click", () => {
+                changeTheme(document.getElementById("darkTheme").disabled ? "dark" : "light");
+            });
+        }
+    };
+</script>
 
           
         </div>
