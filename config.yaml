@@ -36,11 +36,19 @@ params:
   customJs:
     - js/custom_01.js
     - js/custom_02.js
-  utterances:
-    owner: huija
-    repo: huija.github.io
-    issueTerm: title
-    theme: github-light
+#  utterances:
+#    owner: huija
+#    repo: huija.github.io
+#    issueTerm: title
+#    theme: github-light
+  giscus:
+    repo: huija/huija.github.io
+    repoId: MDEwOlJlcG9zaXRvcnkzNTg5MjMwOTc=
+    category: Ideas
+    categoryId: DIC_kwDOFWS7Wc4CSy-q
+    mapping: title
+    theme: preferred_color_scheme
+    inputPosition: top
 
 menu:
   nav:

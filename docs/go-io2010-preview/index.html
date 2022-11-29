@@ -270,7 +270,9 @@ Blog Index">
 </nav>
     
       <footer role="contentinfo">
-  <div >
+  <div
+  
+  >
     <label for="themer">
       dark theme: <input type="checkbox" id="themer" class="vh">
       
@@ -278,9 +280,10 @@ Blog Index">
     </label>
   </div>
   
-  Made with <a href="https://gohugo.io/">Hugo</a>. Themed by <a href="https://github.com/huija/cupper-hugo-theme">Cupper</a>. Deployed to <a href="https://github.com/huija/huija.github.io">Github Pages</a>.
+    Made with <a href="https://gohugo.io/">Hugo</a>. Themed by <a href="https://github.com/huija/cupper-hugo-theme">Cupper</a>. Deployed to <a href="https://github.com/huija/huija.github.io">Github Pages</a>.
   
 </footer>
+
     
   </div>
 </header>
@@ -288,49 +291,52 @@ Blog Index">
       <div class="main-and-footer">
         <div>
           
-<main id="main">
-  <h1>
-    <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
-      <use href="#bookmark"></use>
-    </svg>
-    Upcoming Google I/O Go Events
-  </h1>
+  <main id="main">
+    <h1>
+      <svg class="bookmark-icon" aria-hidden="true" viewBox="0 0 40 50" focusable="false">
+        <use href="#bookmark"></use>
+      </svg>
+      Upcoming Google I/O Go Events
+    </h1>
 
-  <div class="date">
-    
-    
-    <strong>Publish date: </strong>May 12, 2010
-    
-    
-    
-  </div>
-
-  
-  <div class="tags">
-    <strong>Tags: </strong>
-    <ul aria-label="">
+    <div class="date">
       
-      <li>
-        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-          <use href="#tag"></use>
-        </svg>
+      
+      <strong>Publish date: </strong>May 12, 2010
+      
         
-        <a href="/tags/go/">go</a>
-      </li>
-      
-      <li>
-        <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
-          <use href="#tag"></use>
-        </svg>
+          <br>
+          <strong>Last updated: </strong>Nov 21, 2022
         
-        <a href="/tags/go-official-blog/">go official blog</a>
-      </li>
       
-    </ul>
-  </div>
-  
+    </div>
 
-  
+    
+      <div class="tags">
+        <strong>Tags: </strong>
+        <ul aria-label="tags">
+          
+            <li>
+              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+                <use href="#tag"></use>
+              </svg>
+              
+              <a href="/tags/go/">go</a>
+            </li>
+          
+            <li>
+              <svg class="tag-icon" aria-hidden="true" viewBox="0 0 177.16535 177.16535" focusable="false">
+                <use href="#tag"></use>
+              </svg>
+              
+              <a href="/tags/go-official-blog/">go official blog</a>
+            </li>
+          
+        </ul>
+      </div>
+    
+
+    
   <nav class="toc" aria-labelledby="toc-heading">
     <strong id="toc-heading">Table of Contents</strong>
     <nav id="TableOfContents">
@@ -343,7 +349,7 @@ Blog Index">
 
 
 
-  <h1 id="即将到来的谷歌-io-go活动">即将到来的谷歌 I/O Go活动</h1>
+    <h1 id="即将到来的谷歌-io-go活动">即将到来的谷歌 I/O Go活动</h1>
 <h2 id="原文信息">原文信息</h2>
 <ul>
 <li>地址：<a href="https://go.dev/blog/io2010-preview">Upcoming Google I/O Go Events</a></li>
@@ -362,59 +368,62 @@ Blog Index">
 <strong>Previous article:</strong><a href="https://huija.github.io/go-new-talk-and-tutorials/">Third-party libraries: goprotobuf and beyond</a><br>
 <strong><a href="https://huija.github.io/tags/go-official-blog/">Blog Index</a></strong></p>
 
-</main>
-<div id="disqus-container">
+  </main>
+  <div id="disqus-container">
   
 </div>
 
-
-<script src="https://utteranc.es/client.js"
-    repo="huija/huija.github.io"
-    issue-term="title" theme="github-light"
-    crossorigin="anonymous" async>
-    </script>
-<style type="text/css">
-    .utterances-frame {
+  
+  
+<script src="https://giscus.app/client.js"
+        data-repo="huija/huija.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkzNTg5MjMwOTc="
+        data-category="Ideas"
+        data-category-id="DIC_kwDOFWS7Wc4CSy-q"
+        data-mapping="title"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="preferred_color_scheme"
+        data-lang="zh-CN"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+<style>
+    iframe.giscus-frame {
         background-color: transparent;
     }
 </style>
 <script>
-    var changeTheme = (theme) => {
-        const message = {
-            type: "set-theme",
-            theme
-        };
-        const utteranc = document.querySelector(".utterances-frame");
-        utteranc.contentWindow.postMessage(message, "https://utteranc.es");
-    };
+    function sendMessage(message) {
+        const iframe = document.querySelector('iframe.giscus-frame');
+        if (!iframe) return;
+        iframe.contentWindow.postMessage({giscus: message}, 'https://giscus.app');
+    }
+
+    function changeTheme(theme) {
+        sendMessage({
+            setConfig: {
+                theme
+            }
+        });
+    }
+
     document.onreadystatechange = () => {
-        if (document.readyState == "complete") {
+        if (document.readyState === "complete") {
             
-            
-            setTimeout(() => {
-                if (!document.getElementById("darkTheme").disabled) {
-                    changeTheme("photon-dark");
-                }
-            }, 1000);
-            
-            const utteranc = document.querySelector(".utterances-frame");
-            utteranc.onload = () => {
-                
-                setTimeout(() => {
-                    if (!document.getElementById("darkTheme").disabled) {
-                        changeTheme("photon-dark");
-                    }
-                }, 1000);
-            };
+            if (!document.getElementById("darkTheme").disabled) {
+                changeTheme("dark");
+            }
             
             document.getElementById("themer").addEventListener("click", () => {
-                changeTheme(document.getElementById("darkTheme").disabled ? "photon-dark" : "github-light");
+                changeTheme(document.getElementById("darkTheme").disabled ? "dark" : "light");
             });
         }
     };
 </script>
-<noscript>Please enable JavaScript to view the <a href="https://github.com/utterance">comments powered by
-        utterances.</a></noscript>
 
           
         </div>
@@ -440,14 +449,9 @@ Blog Index">
 
 
     
-<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css"
-    integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
-<script defer src="https://fastly.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js"
-    integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij"
-    crossorigin="anonymous"></script>
-<script defer src="https://fastly.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js"
-    integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous"
-    onload="renderMathInElement(document.body);"></script>
+<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.css" integrity="sha384-dbVIfZGuN1Yq7/1Ocstc1lUEm+AT+/rCkibIcC/OmWo5f0EA48Vf8CytHzGrSwbQ" crossorigin="anonymous">
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.10.1/dist/katex.min.js" integrity="sha384-2BKqo+exmr9su6dir+qCw08N2ZKRucY4PrGQPPWU1A7FtlCGjmEGFqXCv5nyM5Ij" crossorigin="anonymous"></script>
+<script defer src="https://fastly.jsdelivr.net/npm/katex@0.10.1/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
 
     
   
