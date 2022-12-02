@@ -8,3 +8,8 @@ git submodule update --remote
 # hugo new about.md
 # hugo server -D
 # hugo -D
+
+# cd themes
+# git submodule foreach git pull
+# cd cupper-hugo-theme
+# git checkout dev
