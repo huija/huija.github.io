@@ -28,6 +28,6 @@ Rob Pike最近在斯坦福大学的[计算机系统研讨会](http://www.stanfor
 统一演示了编写、构建、安装和重新分发Go包的过程。我很乐意近期在[gocoding YouTube channel](http://youtube.com/gocoding)
 发布更多关于Go编程主题的文章。
 
-**Next article:**[Upcoming Google I/O Go Events](https://huija.github.io/go-io2010-preview)\
-**Previous article:**[JSON-RPC: a tale of interfaces](https://huija.github.io/go-json-rpc)\
-**[Blog Index](https://huija.github.io/tags/go-official-blog/)**
+**下一篇文章：**[Upcoming Google I/O Go Events](https://huija.github.io/go-io2010-preview)\
+**上一篇文章：**[JSON-RPC: a tale of interfaces](https://huija.github.io/go-json-rpc)\
+**[博客地址](https://huija.github.io/tags/go-official-blog/)**

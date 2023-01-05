@@ -48,6 +48,6 @@ Go`绑定已经从标准库分离到[x-go-binding](http://code.google.com/p/x-go
 我们希望鼓励开源社区开发其他有用的软件包。如果你有正在做的工作，请不要藏在自己的心里 -
 联系我们的邮件列表[golang-nuts](http://groups.google.com/group/golang-nuts)让我们知道吧。
 
-**Next article:**[JSON-RPC: a tale of interfaces](https://huija.github.io/go-json-rpc/)\
-**Previous article:**[Go: What's New in March 2010](https://huija.github.io/go-hello-world/)\
-**[Blog Index](https://huija.github.io/tags/go-official-blog/)**
+**下一篇文章：**[JSON-RPC: a tale of interfaces](https://huija.github.io/go-json-rpc/)\
+**上一篇文章：**[Go: What's New in March 2010](https://huija.github.io/go-hello-world/)\
+**[博客地址](https://huija.github.io/tags/go-official-blog/)**

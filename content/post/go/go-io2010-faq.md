@@ -38,6 +38,6 @@ Go在生产系统中的适用性如何？Go现在（对于生产系统）已经�
 
 Rob 和 Russ 的演讲视频跳转[YouTube](https://youtu.be/jgVhBThJdXc)可以看到。
 
-**Next article:**[New Talk and Tutorials](https://huija.github.io/go-io2010/)\
-**Previous article:**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/go-io2010-preview/)\
-**[Blog Index](https://huija.github.io/tags/go-official-blog/)**
+**下一篇文章：**[New Talk and Tutorials](https://huija.github.io/go-io2010/)\
+**上一篇文章：**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/go-io2010-preview/)\
+**[博客地址](https://huija.github.io/tags/go-official-blog/)**
