@@ -14,9 +14,9 @@
       
       <guid>https://huija.github.io/go-io2010/</guid>
       <description>Go Programming session video from Google I/O 原文信息  地址：Go Programming session video from Google I/O 作者：Andrew Gerrand 时间：2010年6月6号  中文译文 下面是Rob Pike和Russ Cox在Google I/O 2010大会上的发言视频。
-Next article:New Talk and Tutorials
-Previous article:Third-party libraries: goprotobuf and beyond
-Blog Index</description>
+下一篇文章：New Talk and Tutorials
+上一篇文章：Third-party libraries: goprotobuf and beyond
+博客地址</description>
     </item>
     
     <item>
@@ -35,9 +35,9 @@ Go在生产系统中的适用性如何？Go现在（对于生产系统）已经�
 我能用Go做什么？Go在设计时就考虑到了系统编程。服务器、客户端、数据库、缓存、均衡器、分发器——Go对于它们都是明显有用的，这也是我们在谷歌已经开始使用它的方式。然而，自从Go开源发布以来，社区已经出现了各种各样的应用程序。从网页应用到游戏再到图形工具，Go有望成为一种通用编程语言。它的潜力目前只是被库的支持所限制了，而库支持正在以惊人的速度提高。此外，教育工作者对使用Go教授编程表达了兴趣，称其简洁的语法和一致性非常适合这项任务。
 感谢每一位参加我们的演讲或在办公时间与我们交谈的人。我们希望在今后的活动中再次见到您。
 Rob 和 Russ 的演讲视频跳转YouTube可以看到。
-Next article:New Talk and Tutorials
-Previous article:Third-party libraries: goprotobuf and beyond
-Blog Index</description>
+下一篇文章：New Talk and Tutorials
+上一篇文章：Third-party libraries: goprotobuf and beyond
+博客地址</description>
     </item>
     
     <item>
@@ -51,9 +51,9 @@ Rob Pike和Russ Cox将在周四上午10点15分进行一个演讲，Go Programmi
 一些Go团队的成员将在周三下午12点到2:30的办公时间待在Go语言板块。来现场由这些专家解答你的Go语言问题。
 在周二下午4点15分的训练营，Andrew Gerrand将做一个关于Go的介绍性演讲。这一环节将概述那些促使我们构建一门新语言的问题，以及Go解决这些问题的方法。
 如果你要来参加I/O，我们期待在那里见到你!
-Next article:New Talk and Tutorials
-Previous article:Third-party libraries: goprotobuf and beyond
-Blog Index</description>
+下一篇文章：New Talk and Tutorials
+上一篇文章：Third-party libraries: goprotobuf and beyond
+博客地址</description>
     </item>
     
     <item>
@@ -65,9 +65,9 @@ Blog Index</description>
       <description>Go New Talk and Tutorials 原文信息  地址：Go New Talk and Tutorials 作者：Andrew Gerrand 时间：2010年5月5号  中文译文 Rob Pike最近在斯坦福大学的计算机系统研讨会(EE380) 做了一个演讲，演讲的名字叫 Another Go at Language Design ，这个演讲概述了Go语言的设计之痒以及Go是如何解决这些问题的。你可以在youtube 看到演讲视频，以及从斯坦福大学网下载（资料）。
 上周的发布，包括一个代码实验“编写网页应用” ，其中详细说明了一个简单wiki程序的架构。对于一些Go语言的概念而言，这是一个实用性的介绍，也是一系列Go代码实验的第一趴。
 最后，我们经常被问到“Go的packages是如何工作的？”，相较于解释说明，展示是更加容易的，所以我在Go Packages录屏 统一演示了编写、构建、安装和重新分发Go包的过程。我很乐意近期在gocoding YouTube channel 发布更多关于Go编程主题的文章。
-Next article:Upcoming Google I/O Go Events
-Previous article:JSON-RPC: a tale of interfaces
-Blog Index</description>
+下一篇文章：Upcoming Google I/O Go Events
+上一篇文章：JSON-RPC: a tale of interfaces
+博客地址</description>
     </item>
     
     <item>
@@ -102,9 +102,9 @@ goinstall goprotobuf.googlecode.com/hg/proto  接着安装&amp;quot;protocol com
 cd $GOROOT/src/pkg/goprotobuf.googlecode.com/hg/compiler make install  更多细节参考项目的README文件。
 goprotobuf是不断增长的第三方Go项目列表中的一个。在goprotobuf发布之后，X Go绑定已经从标准库分离到x-go-binding 项目，并且已经开始了一个Freetype的项目freetype-go 。还有（很多）其他流行的第三方项目，包含轻量化的web框架web.go ，Go语言的GTK（接口）绑定库gtk-go。
 我们希望鼓励开源社区开发其他有用的软件包。如果你有正在做的工作，请不要藏在自己的心里 - 联系我们的邮件列表golang-nuts让我们知道吧。
-Next article:JSON-RPC: a tale of interfaces
-Previous article:Go: What&amp;rsquo;s New in March 2010
-Blog Index</description>
+下一篇文章：JSON-RPC: a tale of interfaces
+上一篇文章：Go: What&amp;rsquo;s New in March 2010
+博客地址</description>
     </item>
     
     <item>

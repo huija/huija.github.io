@@ -59,6 +59,6 @@ func sendResponse(sending *sync.Mutex, req *Request, reply interface{}, enc Serv
 
 任何代码库的一个重要品质都是可维护性。随着需求的变化，很有必要把代码适配得轻松、干净，以免它变得难以阅读和工作。我们相信Go的轻量级、面向组合的类型系统提供了一种构建可伸缩代码的方法。
 
-**Next article:**[New Talk and Tutorials](https://huija.github.io/go-new-talk-and-tutorials/)\
-**Previous article:**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/go-protobuf/)\
-**[Blog Index](https://huija.github.io/tags/go-official-blog/)**
+**下一篇文章：**[New Talk and Tutorials](https://huija.github.io/go-new-talk-and-tutorials/)\
+**上一篇文章：**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/go-protobuf/)\
+**[博客地址](https://huija.github.io/tags/go-official-blog/)**

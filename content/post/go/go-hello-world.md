@@ -47,5 +47,5 @@ freenode）启动以来，一个充满活力的社区已经蓬勃发展了起来
 
 至于未来：我们已经听取了无数的声音告诉我们他们需要什么，现在正专注于让Go准备好迎接高光时刻。我们正在改进垃圾收集器、运行时调度程序、工具链和标准库，并探索新的语言特性。2010年对Go来说将是激动人心的一年，我们期待着与社区合作，使它成为一个成功的一年。
 
-**下一篇文章：**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/tags/go-protobuf/)\
+**下一篇文章：**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/go-protobuf/)\
 **[博客地址](https://huija.github.io/tags/go-official-blog/)**

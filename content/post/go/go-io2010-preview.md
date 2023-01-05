@@ -28,6 +28,6 @@ Rob Pike和Russ Cox将在周四上午10点15分进行一个演讲，[Go Programm
 
 如果你要来参加I/O，我们期待在那里见到你!
 
-**Next article:**[New Talk and Tutorials](https://huija.github.io/go-io2010-faq/)\
-**Previous article:**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/go-new-talk-and-tutorials/)\
-**[Blog Index](https://huija.github.io/tags/go-official-blog/)**
+**下一篇文章：**[New Talk and Tutorials](https://huija.github.io/go-io2010-faq/)\
+**上一篇文章：**[Third-party libraries: goprotobuf and beyond](https://huija.github.io/go-new-talk-and-tutorials/)\
+**[博客地址](https://huija.github.io/tags/go-official-blog/)**
