@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>huija · 个人项目</title>
-  <meta name="description" content="huija 的个人项目主页：vibe coder 的开源作品导航。">
+  <title>huija · Projects</title>
+  <meta name="description" content="huija's personal project index: open-source work from a vibe coder.">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="huija">
-  <meta property="og:title" content="huija · 个人项目">
-  <meta property="og:description" content="huija 的个人项目主页：vibe coder 的开源作品导航。">
-  <meta property="og:url" content="https://huija.github.io/">
+  <meta property="og:title" content="huija · Projects">
+  <meta property="og:description" content="huija's personal project index: open-source work from a vibe coder.">
+  <meta property="og:url" content="https://huija.github.io/en/">
   <meta property="og:image" content="https://huija.github.io/assets/og-card.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta property="og:image:alt" content="huija — vibe coder · github.com/huija">
-  <meta property="og:locale" content="zh_CN">
+  <meta property="og:locale" content="en_US">
   <meta name="twitter:card" content="summary_large_image">
-  <link rel="canonical" href="https://huija.github.io/">
+  <link rel="canonical" href="https://huija.github.io/en/">
   <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/">
   <link rel="alternate" hreflang="en" href="https://huija.github.io/en/">
   <link rel="alternate" hreflang="x-default" href="https://huija.github.io/">
@@ -27,15 +27,15 @@
 
   <nav class="nav">
     <div class="nav-inner">
-      <a class="brand" href="/"><span class="path">~/</span>huija<span class="cursor"></span></a>
+      <a class="brand" href="/en/"><span class="path">~/</span>huija<span class="cursor"></span></a>
       <div class="nav-links">
-        <a href="#projects">项目</a>
-        <a href="/skillmod/">skillmod</a>
+        <a href="#projects">Projects</a>
+        <a href="/en/skillmod/">skillmod</a>
         <a class="gh" href="https://github.com/huija" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
           <span>GitHub</span>
         </a>
-        <a class="lang" href="/en/" data-lang="en">EN</a>
+        <a class="lang" href="/" data-lang="zh">中文</a>
       </div>
     </div>
   </nav>
@@ -48,9 +48,9 @@
       <div class="hero-content">
         <p class="kicker"><span class="dim">$</span> whoami</p>
         <h1><span class="scramble" data-text="huija">huija</span></h1>
-        <p class="sub"><span class="hl">Vibe coder</span>，出想法、按回车、收项目，剩下的交给 agent。</p>
+        <p class="sub"><span class="hl">Vibe coder</span> — I bring the idea, hit enter, and collect the project. The rest goes to the agent.</p>
         <div class="hero-cta">
-          <a class="btn btn-primary" href="#projects">查看项目</a>
+          <a class="btn btn-primary" href="#projects">View projects</a>
           <a class="btn btn-ghost" href="https://github.com/huija" target="_blank" rel="noopener">GitHub</a>
         </div>
       </div>
@@ -61,24 +61,24 @@
     <section class="section" id="projects">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2>项目导航</h2>
-          <p>造轮子，也造用轮子的工具。每个项目解决一个具体问题。</p>
+          <h2>Projects</h2>
+          <p>Building wheels, and tools that use them. Each project solves one concrete problem.</p>
         </div>
 
         <div class="projects">
 
-          <a class="card card-feature reveal" href="/skillmod/">
+          <a class="card card-feature reveal" href="/en/skillmod/">
             <svg class="arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>
             <div class="cf-body">
               <h3>skillmod</h3>
               <p class="tagline">go mod for Agent Skills</p>
-              <p class="desc">面向 agent 项目的 skill 依赖管理器。SKILL.mod 声明依赖，SKILL.lock 内容寻址锁定，sync 让每台机器逐字节一致，share 把同一套安装分发给任意 agent，verify 是现成的 CI 关卡。设计血统来自 go mod：直接走 Git 源，打 tag 即发布，无服务端、无 registry。</p>
+              <p class="desc">A skill dependency manager for agent projects. Declare dependencies in SKILL.mod, pin content in SKILL.lock, and let skillmod sync make every machine byte-identical. Share installs with any agent, and use verify as a ready-made CI gate. In the spirit of Go modules: sources straight from Git, publishing is tagging, no server, no registry.</p>
               <div class="tags">
                 <span class="tag">Go</span>
                 <span class="tag">CLI</span>
                 <span class="tag">Agent</span>
-                <span class="tag">依赖管理</span>
-                <span class="tag">CI 关卡</span>
+                <span class="tag">Dependencies</span>
+                <span class="tag">CI gate</span>
               </div>
             </div>
             <div class="demo" aria-hidden="true">
@@ -95,11 +95,11 @@
     <section class="section" style="padding-top:0">
       <div class="wrap">
         <div class="qr-band reveal">
-          <img src="/assets/wechat-qr.svg" alt="微信公众号：从入门到删库跑路" width="128" height="128">
+          <img src="/assets/wechat-qr.svg" alt="WeChat official account: 从入门到删库跑路" width="128" height="128">
           <div>
-            <p class="qr-label">微信公众号</p>
+            <p class="qr-label">WeChat Official Account</p>
             <h2>从入门到删库跑路</h2>
-            <p>入门、翻车、删库、跑路，全程记录。</p>
+            <p>Setup, breakdown, drop the database, run — the whole journey, in Chinese.</p>
           </div>
         </div>
       </div>

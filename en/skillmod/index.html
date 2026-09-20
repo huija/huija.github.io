@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>skillmod · go mod for Agent Skills</title>
+  <meta name="description" content="skillmod: a skill dependency manager for agent projects. Declare in SKILL.mod, pin content in SKILL.lock, sync byte-identically, share with any agent, and use verify as a CI gate.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="skillmod · go mod for Agent Skills">
+  <meta property="og:description" content="skillmod: a skill dependency manager for agent projects. Declare in SKILL.mod, pin content in SKILL.lock, sync byte-identically, share with any agent, and use verify as a CI gate.">
+  <meta property="og:url" content="https://huija.github.io/en/skillmod/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="skillmod — go mod for Agent Skills · github.com/huija/skillmod">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/en/skillmod/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/en/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/en/">Home</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/skillmod/" data-lang="zh">中文</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="wrap">
+      <div class="hero-split">
+        <div class="hero-content">
+          <p class="kicker"><span class="dim">$</span> go mod for Agent Skills <span class="ver">v0.0.5</span></p>
+          <h1 class="md"><span class="scramble" data-text="skillmod">skillmod</span></h1>
+          <p class="sub">Declare, pin, sync. <span class="hl">Every machine gets the exact same set of skills</span>.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">View source</a>
+            <a class="btn btn-ghost" href="https://github.com/huija/skillmod/releases" target="_blank" rel="noopener">Releases</a>
+          </div>
+        </div>
+        <div class="hero-visual reveal">
+          <div class="term">
+            <div class="term-bar"><i></i><i></i><i></i><span class="title">zsh</span></div>
+            <div class="term-body">
+              <div><span class="p">$</span> <span class="cmd">skillmod get github.com/openai/skills//gh-fix-ci</span></div>
+              <div><span class="ok">✓</span> <span class="out">gh-fix-ci installed · SKILL.mod and SKILL.lock updated</span></div>
+              <div><span class="p">$</span> <span class="cmd">skillmod sync</span></div>
+              <div><span class="ok">✓</span> <span class="out">byte-identical with SKILL.lock, idempotent</span></div>
+              <div><span class="p">$</span> <span class="cmd">skillmod share --all --agent claude --agent workbuddy</span></div>
+              <div><span class="ok">✓</span> <span class="out">links ready: claude · workbuddy</span></div>
+              <div><span class="p">$</span> <span class="cmd">skillmod verify</span></div>
+              <div><span class="ok">✓</span> <span class="out">no drift (exit 0)</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+
+    <section class="section">
+      <div class="wrap split">
+        <div class="reveal">
+          <h2>Skill dependency management is stuck in the pre-package-manager era</h2>
+          <p style="color:var(--muted)">A skill (the packaged unit of instructions and scripts) determines agent behavior. AGENTS.md tells an agent how to behave; SKILL.mod declares which capabilities it needs. skillmod brings the Go-modules playbook to skills: SKILL.mod declares, SKILL.lock pins content with a dirhash, skillmod sync reconciles byte-identically; share hands the same install to any agent, and verify fails the build on drift.</p>
+        </div>
+        <ul class="pain-list reveal" style="--d:100ms">
+          <li>
+            <span class="x">✗</span>
+            <span class="body"><strong>Manual copies, git submodules, platform marketplaces</strong> — the same team gets inconsistent agent behavior across machines</span>
+          </li>
+          <li>
+            <span class="x">✗</span>
+            <span class="body">When something breaks, <strong>"which version were we on?"</strong> has no answer</span>
+          </li>
+          <li>
+            <span class="check">✓</span>
+            <span class="body"><strong>SKILL.lock is content-addressed</strong> — any tampering shows up at verify</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Capabilities</h2>
+        </div>
+        <div class="feat-grid">
+          <div class="feat feat-wide reveal">
+            <h3>Eleven commands</h3>
+            <ul class="cmd-list">
+              <li><span class="name">init</span> <span class="desc">register existing skills</span></li>
+              <li><span class="name">get</span> <span class="desc">add from any Git repository</span></li>
+              <li><span class="name">sync</span> <span class="desc">reconcile against the lock, idempotently</span></li>
+              <li><span class="name">share</span> <span class="desc">link into .claude/.codex and any agent</span></li>
+              <li><span class="name">list</span> <span class="desc">show declarations, versions, install status</span></li>
+              <li><span class="name">why</span> <span class="desc">explain one entry: origin and state</span></li>
+              <li><span class="name">update</span> <span class="desc">move to the newest immutable version</span></li>
+              <li><span class="name">verify</span> <span class="desc">check for drift; the CI gate</span></li>
+              <li><span class="name">remove</span> <span class="desc">exit cleanly, or just unshare</span></li>
+              <li><span class="name">prune</span> <span class="desc">clean up stale installs and lock records</span></li>
+              <li><span class="name">upgrade</span> <span class="desc">replace in place, checksum-verified</span></li>
+            </ul>
+          </div>
+          <div class="feat feat-wide reveal" style="--d:80ms">
+            <h3>Sources straight from Git</h3>
+            <p>The direct mode of Go modules: a skill is a tagged repository, or a monorepo subdirectory (&lt;repo&gt;//&lt;subdir&gt;). A bare skill name after <span class="cmd">//</span> works too — exact subdirectory first, then a unique name anywhere under skills/. Publishing is tagging. No server, no registry.</p>
+          </div>
+          <div class="feat feat-slim reveal">
+            <h3>Three immutable versions</h3>
+            <p>Semver tags (including subdirectory tags like <span class="cmd">code-review/v1.2.0</span>), commit SHAs, and pseudo-versions. A pseudo-version takes the repository's highest tag as its base, and old locks migrate on the next update. Branch names are refused — a mutable reference cannot be locked.</p>
+          </div>
+          <div class="feat feat-slim reveal" style="--d:80ms">
+            <h3>Content-addressed lock</h3>
+            <p>SKILL.lock pins content with a dirhash — pure-function generated, timestamp-free, hand-editing forbidden. It also records the resolved commit, so a pseudo-version stays resolvable on machines that never saw the tag.</p>
+          </div>
+          <div class="feat feat-slim reveal" style="--d:160ms">
+            <h3>Shared persistent storage</h3>
+            <p>Read-only whole-repo snapshots live in ~/.agents/skillmod/pkg/mod; HTTPS and SSH variants share storage. A skill is fetched once, and the second project installs straight from disk.</p>
+          </div>
+          <div class="feat feat-wide reveal">
+            <h3>Install as a link, shared machine-wide</h3>
+            <p>Installs default to a symlink into the shared snapshot, falling back to byte-for-byte copies when links are unavailable (Windows included). To edit content, detach first with <span class="cmd">sync --relink --install-mode=copy</span>.</p>
+          </div>
+          <div class="feat feat-wide reveal" style="--d:80ms">
+            <h3>Share with any agent</h3>
+            <p>An agent is one directory segment: .claude, .codex, workbuddy — all equal. Destinations are recorded on the skill's SKILL.mod entry; sync rebuilds the links on every machine, and verify reports missing or drifted ones.</p>
+          </div>
+          <div class="feat feat-wide reveal">
+            <h3>CI gate, machine-readable</h3>
+            <p>verify exits 2 on drift — use it directly as a build gate; get/sync/update/remove keep modified installs instead of overwriting them and report exit 3, handing the decision back. Every command supports <span class="cmd">--json</span> with a stable action vocabulary for scripts to branch on.</p>
+          </div>
+          <div class="feat feat-wide reveal" style="--d:80ms">
+            <h3>Flat 1:1 · zero telemetry</h3>
+            <p>No transitive dependency resolution, no constraint solver (the requires field is reserved). Nothing is collected; the only external dependency is Git.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <h2>Two files say it all</h2>
+          <p>SKILL.mod is maintained by people and committed; SKILL.lock is written by the tool, deterministically. Which agents a skill is shared with is declared on its entry, too.</p>
+        </div>
+        <div class="code-duo">
+          <div class="code-block reveal">
+            <div class="code-head">
+              <span>SKILL.mod</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <pre><code><span class="k">schemaversion</span> = <span class="n">1</span>
+
+<span class="k">[[skill]]</span>
+<span class="k">name</span> = <span class="s">'gh-fix-ci'</span>
+<span class="k">source</span> = <span class="s">'github.com/openai/skills//skills/.curated/gh-fix-ci'</span>
+<span class="k">version</span> = <span class="s">'v0.0.0-20260624023612-49f948faa925'</span>
+<span class="k">agents</span> = <span class="s">['claude', 'workbuddy']</span></code></pre>
+          </div>
+          <div class="code-block reveal" style="--d:100ms">
+            <div class="code-head">
+              <span>SKILL.lock</span>
+              <button class="copy-btn" type="button">Copy</button>
+            </div>
+            <pre><code><span class="k">[[skill]]</span>
+<span class="k">name</span> = <span class="s">'gh-fix-ci'</span>
+<span class="k">source</span> = <span class="s">'github.com/openai/skills//skills/.curated/gh-fix-ci'</span>
+<span class="k">version</span> = <span class="s">'v0.0.0-20260624023612-49f948faa925'</span>
+<span class="k">commit</span> = <span class="s">'49f948faa9258a0c61caceaf225e179651397431'</span>
+<span class="k">dirhash</span> = <span class="s">'h1:kiGlVBeTCF8Q9f0rPATnDn1jBn/obT3TTTL8D8gdCbM='</span></code></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <div class="wrap">
+        <div class="cta-band reveal">
+          <div>
+            <h2>Two paths to get started</h2>
+            <p style="color:var(--muted);margin-top:8px">After installing, use <span class="cmd-inline">skillmod upgrade</span> to replace the binary in place: the download is verified against release checksums before it swaps.</p>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:22px">
+            <div class="install-group">
+              <p class="ig-label">Agent-guided install<span class="ig-rec">Recommended</span></p>
+              <div class="install-line">
+                <span class="p">$</span>
+                <code>npx skills add huija/skillmod --skill skillmod --global</code>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <p class="ig-note">This command only installs the guiding skill into your agent. Then tell it: "Install skillmod, and make sure it is callable from PATH." Platform detection, checksum verification, and PATH setup are all done by the agent.</p>
+            </div>
+            <div class="install-group">
+              <p class="ig-label">Manual · one command</p>
+              <div class="install-line">
+                <span class="p">$</span>
+                <code>go install github.com/huija/skillmod@v0.0.5</code>
+                <button class="copy-btn" type="button">Copy</button>
+              </div>
+              <p class="ig-note">Requires Go 1.26.6+. Without Go, grab the archive from Releases, verify it against checksums.txt, and put the binary on PATH.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/en/">Home</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

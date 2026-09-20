@@ -5,6 +5,31 @@
 (function () {
   "use strict";
 
+  /* ---------- language: remember manual choice; auto-align every visit
+     until the visitor picks a language once (then their choice wins) ---------- */
+
+  var LANG_KEY = "preferred-lang";
+  var path = location.pathname;
+  var isEn = path.indexOf("/en") === 0;
+  var savedLang = null;
+  try { savedLang = localStorage.getItem(LANG_KEY); } catch (e) {}
+
+  document.querySelectorAll("a.lang").forEach(function (a) {
+    a.addEventListener("click", function () {
+      try { localStorage.setItem(LANG_KEY, a.dataset.lang); } catch (e) {}
+    });
+  });
+
+  if (!savedLang) {
+    var navLang = (navigator.language || "").toLowerCase();
+    var wantsEn = navLang.indexOf("zh") !== 0;
+    if (wantsEn && !isEn) {
+      location.replace("/en" + (path === "/" ? "/" : path));
+    } else if (!wantsEn && isEn) {
+      location.replace(path.replace(/^\/en\/?/, "/"));
+    }
+  }
+
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- text scramble (hero name) ---------- */
@@ -70,8 +95,11 @@
     var LINK = 130;
 
     function resize() {
-      canvas.width = canvas.offsetWidth * devicePixelRatio;
-      canvas.height = canvas.offsetHeight * devicePixelRatio;
+      var dpr = window.devicePixelRatio || 1;
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
+      /* drawing coords stay in CSS px; map them onto the HiDPI backing store */
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       var count = Math.min(70, Math.floor((canvas.offsetWidth * canvas.offsetHeight) / 22000));
       particles = [];
       for (var i = 0; i < count; i++) {
@@ -88,8 +116,7 @@
     function tick() {
       var w = canvas.offsetWidth;
       var h = canvas.offsetHeight;
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.scale(1, 1);
+      ctx.clearRect(0, 0, w, h);
 
       for (var i = 0; i < particles.length; i++) {
         var p = particles[i];
@@ -184,24 +211,32 @@
   document.querySelectorAll(".copy-btn").forEach(function (btn) {
     btn.addEventListener("click", function () {
       var text = btn.dataset.copy || btn.closest(".code-block, .install-line, .term").querySelector("pre, code").innerText;
+      var label = btn.textContent; /* keep each page's own wording ("复制" / "Copy") */
+      var copiedLabel = label === "复制" ? "已复制" : "Copied";
       function done() {
         btn.classList.add("copied");
-        btn.textContent = "已复制";
+        btn.textContent = copiedLabel;
         setTimeout(function () {
           btn.classList.remove("copied");
-          btn.textContent = "复制";
+          btn.textContent = label;
         }, 1600);
       }
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done);
-      } else {
+      function fallback() {
         var ta = document.createElement("textarea");
         ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
         document.body.appendChild(ta);
         ta.select();
         document.execCommand("copy");
         document.body.removeChild(ta);
         done();
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, fallback);
+      } else {
+        fallback();
       }
     });
   });

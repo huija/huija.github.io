@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 · huija</title>
+  <meta name="description" content="页面不存在。">
+  <meta name="robots" content="noindex">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <main style="min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:24px">
+    <div style="width:100%;max-width:620px">
+      <div class="term">
+        <div class="term-bar"><i></i><i></i><i></i><span class="title">zsh</span></div>
+        <div class="term-body">
+          <div><span class="p">$</span> <span class="cmd">cd <span id="nf-path"></span></span></div>
+          <div><span class="out">cd: no such file or directory: <span id="nf-path-echo"></span></span></div>
+          <div><span class="ok">✓</span> <span class="out">从主页重新导航即可</span></div>
+        </div>
+      </div>
+      <div class="hero-cta" style="margin-top:28px">
+        <a class="btn btn-primary" href="/">回到主页</a>
+        <a class="btn btn-ghost" href="/en/">English</a>
+        <a class="btn btn-ghost" href="/skillmod/">skillmod</a>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var p;
+      try { p = decodeURIComponent(location.pathname); } catch (e) { p = location.pathname; }
+      /* textContent only — never reflect the raw URL as HTML */
+      document.getElementById("nf-path").textContent = p;
+      document.getElementById("nf-path-echo").textContent = p;
+    })();
+  </script>
+</body>
+</html>
