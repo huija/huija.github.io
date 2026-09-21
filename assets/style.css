@@ -304,13 +304,13 @@ a { color: inherit; text-decoration: none; }
 
 .projects {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: 20px;
 }
 
 .card-feature {
   display: grid;
-  grid-template-columns: 1.1fr 1fr;
+  grid-template-columns: 1.1fr minmax(0, 1fr);
   gap: 8px 48px;
   align-items: center;
   padding: 36px;
@@ -457,7 +457,7 @@ a { color: inherit; text-decoration: none; }
 
 .code-duo {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
   align-items: start;
 }
@@ -513,7 +513,7 @@ a { color: inherit; text-decoration: none; }
 
 .feat-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -542,7 +542,7 @@ a { color: inherit; text-decoration: none; }
 .cmd-list {
   list-style: none;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 8px 24px;
   font-family: var(--mono);
   font-size: 13px;
@@ -556,7 +556,7 @@ a { color: inherit; text-decoration: none; }
 
 .scene-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -624,7 +624,7 @@ a { color: inherit; text-decoration: none; }
 
 .split {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 56px;
   align-items: start;
 }
@@ -700,7 +700,9 @@ a { color: inherit; text-decoration: none; }
 }
 
 .install-line .p { color: var(--accent); user-select: none; }
-.install-line code { white-space: nowrap; overflow-x: auto; }
+.install-line code { white-space: nowrap; overflow-x: auto; min-width: 0; }
+
+.install-col { min-width: 0; }
 
 .install-group .ig-label {
   font-family: var(--mono);
@@ -772,7 +774,7 @@ a { color: inherit; text-decoration: none; }
 
 .hl-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
 }
 
@@ -836,7 +838,10 @@ a { color: inherit; text-decoration: none; }
   flex-direction: column;
   gap: 2px;
   margin-top: 14px;
+  scrollbar-width: none;
 }
+
+.doc-nav::-webkit-scrollbar { display: none; }
 
 .doc-nav-item {
   display: block;
@@ -980,7 +985,7 @@ a { color: inherit; text-decoration: none; }
 
 .doc-cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: 20px;
   margin-top: 36px;
 }
@@ -1083,21 +1088,21 @@ footer {
 /* ---------- responsive ---------- */
 
 @media (max-width: 900px) {
-  .projects { grid-template-columns: 1fr; }
-  .card-feature { grid-template-columns: 1fr; gap: 20px; padding: 28px; }
-  .code-duo { grid-template-columns: 1fr; }
-  .split { grid-template-columns: 1fr; gap: 40px; }
+  .projects { grid-template-columns: minmax(0, 1fr); }
+  .card-feature { grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 28px; }
+  .code-duo { grid-template-columns: minmax(0, 1fr); }
+  .split { grid-template-columns: minmax(0, 1fr); gap: 40px; }
   .feat-wide, .feat-slim { grid-column: span 6; }
-  .scene-grid { grid-template-columns: 1fr; }
-  .hl-grid { grid-template-columns: 1fr 1fr; }
-  .doc-layout { grid-template-columns: 1fr; gap: 28px; }
+  .scene-grid { grid-template-columns: minmax(0, 1fr); }
+  .hl-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .doc-layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .doc-side { position: static; }
   .doc-nav { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
   .doc-nav-item { white-space: nowrap; border-left: none; border-bottom: 2px solid transparent; border-radius: 8px 8px 0 0; }
   .doc-nav-item.current { border-bottom-color: var(--accent); }
-  .doc-cards { grid-template-columns: 1fr; }
+  .doc-cards { grid-template-columns: minmax(0, 1fr); }
   .section { padding: 80px 0; }
-  .hero-split { grid-template-columns: 1fr; gap: 44px; }
+  .hero-split { grid-template-columns: minmax(0, 1fr); gap: 44px; }
   .hero-visual .term { transform: none; }
   .hero-visual { max-width: 560px; }
 }
@@ -1108,7 +1113,9 @@ footer {
   .cta-band { padding: 32px 24px; }
   .install-line { width: 100%; }
   .qr-band { flex-direction: column; text-align: center; gap: 20px; }
-  .hl-grid { grid-template-columns: 1fr; }
+  .hl-grid { grid-template-columns: minmax(0, 1fr); }
+  .doc-main th { white-space: normal; }
+  .doc-main td code { overflow-wrap: anywhere; }
 }
 
 /* ---------- reduced motion ---------- */
