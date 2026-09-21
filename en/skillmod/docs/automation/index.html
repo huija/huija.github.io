@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automation &amp; CI · skillmod docs</title>
+  <meta name="description" content="skillmod automation and CI: what exit codes 0/1/2/3 mean, the --json report shape, the full action vocabulary, a copyable pipeline sequence, non-interactive conventions, and SKILLMOD_LANG.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="Automation &amp; CI · skillmod docs">
+  <meta property="og:description" content="skillmod automation and CI: what exit codes 0/1/2/3 mean, the --json report shape, the full action vocabulary, a copyable pipeline sequence, non-interactive conventions, and SKILLMOD_LANG.">
+  <meta property="og:url" content="https://huija.github.io/en/skillmod/docs/automation/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/en/skillmod/docs/automation/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/automation/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/automation/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/automation/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/en/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/en/skillmod/docs/">Docs</a>
+        <a href="/en/">Home</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/skillmod/docs/automation/" data-lang="zh">中文</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item" href="/en/skillmod/docs/">Home</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/quickstart/">Five-minute start</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/concepts/">Core concepts</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/commands/">Command reference</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/scenarios/">Scenario guide</a>
+            <a class="doc-nav-item current" href="/en/skillmod/docs/automation/">Automation &amp; CI</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/troubleshooting/">Troubleshooting</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / automation</p>
+            <h1>Automation &amp; CI</h1>
+            <p>The reading for scripts, CI jobs, and agents: how to branch on exit codes, what is inside a <code>--json</code> report, the action vocabulary, the full pattern for wiring skillmod into a pipeline, and the conventions for non-interactive environments. Hands-on sequences by task live in the <a href="/en/skillmod/docs/scenarios/">scenario guide</a>, and the per-command flags in the <a href="/en/skillmod/docs/commands/">command reference</a>.</p>
+          </header>
+
+          <h2>Exit codes</h2>
+          <p>Read the exit code when a script, a CI job, or an agent needs to decide something from a skillmod run instead of a person reading its output:</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Exit</th><th>Meaning</th><th>When it appears</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>0</code></td><td>All checked entries are consistent</td><td>An inspection or operation completed normally</td></tr>
+                <tr><td><code>1</code></td><td>Operational or input error</td><td>Any command</td></tr>
+                <tr><td><code>2</code></td><td>Drift detected</td><td><code>verify</code> finds contents that do not match <code>SKILL.lock</code></td></tr>
+                <tr><td><code>3</code></td><td>Partial completion: independent work finished, and one or more targets were safely preserved</td><td><code>get</code>, <code>sync</code>, <code>update</code>, and <code>remove</code> keep a target instead of overwriting it</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><code>get</code>, <code>sync</code>, <code>update</code>, and <code>remove</code> return <code>3</code> when they keep a target instead of overwriting it. That is not total failure and not total success: read the report to see what was preserved and why.</p>
+          <p>Drift gets its own <code>2</code> because it is a different conclusion from “something went wrong.” The job of <code>verify</code> is checking consistency: contents that do not match the lock record are a definite state judgment, worth separating from argument errors and environment problems so a script can handle each on its own.</p>
+          <div class="doc-note">
+            <strong>Reading it as a build gate:</strong> treat any nonzero exit as a failure. <code>2</code> means the checked-out skill environment does not match the declaration, and <code>3</code> means targets were safely preserved — either one should stop the pipeline, with the report left for troubleshooting.
+          </div>
+
+          <h2>--json</h2>
+          <p>Every command supports <code>--json</code>. The command prints its human summary as usual; adding <code>--json</code> also emits a structured report on stdout.</p>
+          <p>A report separates the command that ran from the outcome of each declaration and of each installation directory:</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Field</th><th>Meaning</th><th>action values</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>action</code></td><td>The command that produced the report</td><td><code>get</code>, <code>init</code>, <code>list</code>, <code>prune</code>, <code>remove</code>, <code>share</code>, <code>sync</code>, <code>update</code>, <code>upgrade</code>, <code>verify</code>, <code>why</code></td></tr>
+                <tr><td><code>entries[].action</code></td><td>The aggregate outcome of one declaration</td><td><code>conflict</code>, <code>drift</code>, <code>install</code>, <code>installed</code>, <code>keep</code>, <code>local</code>, <code>local-drift</code>, <code>matched</code>, <code>missing</code>, <code>partial</code>, <code>prune</code>, <code>remove</code>, <code>skip</code>, <code>stale</code>, <code>unlocked</code>, <code>unresolved</code>, <code>unverifiable</code>, <code>update</code></td></tr>
+                <tr><td><code>entries[].targetResults[].action</code></td><td>The outcome of one installation directory</td><td><code>drift</code>, <code>install</code>, <code>installed</code>, <code>keep</code>, <code>missing</code>, <code>remove</code>, <code>skip</code>, <code>unlocked</code>, <code>unverifiable</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Field names and action identifiers are never translated. Branch on the command and action identifiers, not on natural-language notes: a <code>note</code> is translated prose for people, and it changes with the output language.</p>
+          <p>Inspection reports (<code>list</code>, <code>why</code>, and <code>verify</code>) also carry <code>requestedVersion</code> for remote entries: it is the exact <code>SKILL.mod</code> value, while <code>version</code> is the installed version from <code>SKILL.lock</code>. An empty <code>requestedVersion</code> means the declaration tracks latest, which the lock pins.</p>
+          <p><code>upgrade</code> uses the same shape with <code>action: "upgrade"</code> and one entry named <code>skillmod</code>. The entry action is <code>keep</code> when the running version is the requested one and <code>update</code> when a newer release exists, with <code>entries[0].version</code> naming that release; the executable's own <code>targetResults[0].action</code> says what happened to the file: <code>installed</code> means it was replaced, <code>install</code> means a dry run verified it, and <code>keep</code> means it was left alone. The report is written even when the upgrade fails, so <code>--json</code> always decodes one document.</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod upgrade --check --json</div>
+            <div class="c">watch for a release without downloading it</div>
+          </div>
+
+          <h2>Action vocabulary</h2>
+          <p>The command level is the eleven command names themselves: whichever command produced the report is the top-level <code>action</code>. The full vocabulary for the entry and directory levels follows.</p>
+          <h3>entries[].action (the aggregate outcome of one declaration)</h3>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>action</th><th>Meaning</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>conflict</code></td><td>The target directory holds different content, settled by the conflict policy</td></tr>
+                <tr><td><code>drift</code></td><td>Contents do not match the lock record</td></tr>
+                <tr><td><code>install</code></td><td>A planned installation that a dry run verified, not yet written</td></tr>
+                <tr><td><code>installed</code></td><td>Written, and matching the lock record</td></tr>
+                <tr><td><code>keep</code></td><td>Already as expected, left alone</td></tr>
+                <tr><td><code>local</code></td><td>A local declaration, with no remote source</td></tr>
+                <tr><td><code>local-drift</code></td><td>The local entry was edited and no longer matches the recorded baseline</td></tr>
+                <tr><td><code>matched</code></td><td>init matched the source of an existing lock record or verified snapshot</td></tr>
+                <tr><td><code>missing</code></td><td>The installation directory does not exist</td></tr>
+                <tr><td><code>partial</code></td><td>Partial completion: some work finished, and targets were preserved</td></tr>
+                <tr><td><code>prune</code></td><td>prune removed a stale installation or lock record</td></tr>
+                <tr><td><code>remove</code></td><td>The declaration (or a share link) was removed</td></tr>
+                <tr><td><code>skip</code></td><td>The target was skipped by the conflict policy</td></tr>
+                <tr><td><code>stale</code></td><td>The declaration is gone from SKILL.mod while the installation remains; clean it with prune</td></tr>
+                <tr><td><code>unlocked</code></td><td>The declaration has no matching record in SKILL.lock</td></tr>
+                <tr><td><code>unresolved</code></td><td>The source cannot be resolved to a Git repository and is kept as a local entry</td></tr>
+                <tr><td><code>unverifiable</code></td><td>The directory cannot be read or its contents cannot be verified</td></tr>
+                <tr><td><code>update</code></td><td>Updated; in an upgrade report, a newer release exists</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>entries[].targetResults[].action (the outcome of one installation directory)</h3>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>action</th><th>Meaning</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>drift</code></td><td>Directory contents do not match the lock record</td></tr>
+                <tr><td><code>install</code></td><td>A planned installation that a dry run verified</td></tr>
+                <tr><td><code>installed</code></td><td>Written, and matching the lock record</td></tr>
+                <tr><td><code>keep</code></td><td>The directory is already as expected and was left unchanged</td></tr>
+                <tr><td><code>missing</code></td><td>The directory does not exist, or a share link is absent</td></tr>
+                <tr><td><code>remove</code></td><td>The directory (or share link) was removed</td></tr>
+                <tr><td><code>skip</code></td><td>Skipped by the conflict policy</td></tr>
+                <tr><td><code>unlocked</code></td><td>No lock record to check the directory against</td></tr>
+                <tr><td><code>unverifiable</code></td><td>The directory cannot be read or its contents cannot be verified</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>The stability conventions of the report shape:</p>
+          <ul>
+            <li>Branch only on the command identifier and the action values at each level: they are stable and never translated; a <code>note</code> is translated prose and is not something to branch on.</li>
+            <li><code>entries[].action</code> is an aggregate that folds the entry's target results into the most actionable status; read <code>targetResults</code> when one directory matters more than the declaration as a whole.</li>
+            <li>Per-directory facts appear only in <code>targetResults</code>: a conflicting or unreadable directory stays visible there while the rest of the command succeeds.</li>
+            <li><code>requestedVersion</code> appears only on remote entries of inspection reports, and an empty value means the declaration tracks latest.</li>
+            <li>The <code>upgrade</code> report is written even when the upgrade fails, so <code>--json</code> always decodes one document.</li>
+          </ul>
+
+          <h2>Wiring into CI</h2>
+          <p>The full pattern is four steps: checkout, install skillmod, <code>sync</code>, <code>verify</code>. <code>verify</code> is the build gate — a nonzero exit fails the build.</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> git clone https://github.com/acme/project.git &amp;&amp; cd project</div>
+            <div class="c">checkout: SKILL.mod and SKILL.lock arrive with the repository</div>
+            <div><span class="p">$</span> go install github.com/huija/skillmod@latest</div>
+            <div class="c">install skillmod; when the image has no Go toolchain, use the release binaries from GitHub releases</div>
+            <div><span class="p">$</span> skillmod sync</div>
+            <div class="c">install or align the declared skills against the lock</div>
+            <div><span class="p">$</span> skillmod verify</div>
+            <div class="c">build gate: exit 2 fails the build</div>
+          </div>
+          <p>Wire the exit code of <code>verify</code> into the pipeline explicitly:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync</div>
+            <div><span class="p">$</span> skillmod verify --json &gt; verify.json</div>
+            <div><span class="p">$</span> code=$?</div>
+            <div><span class="p">$</span> [ $code -eq 0 ] || { cat verify.json; exit 1; }</div>
+            <div class="c">exit 2 (drift) or 3 (partial completion) fails the build, with the report left for troubleshooting</div>
+          </div>
+          <ul>
+            <li><code>sync</code> is idempotent: it installs or aligns declared content against <code>SKILL.lock</code> and does not silently overwrite local modifications; <code>verify</code> checks the result after alignment.</li>
+            <li>Add <code>--json</code> for a machine-readable conclusion, branch on the command and action identifiers, and keep the report as a build artifact for troubleshooting.</li>
+            <li>CI has no TTY: give the selection up front for any command that could open one, as described in the next section.</li>
+            <li>To watch for a new skillmod release in the pipeline without downloading it: <code>skillmod upgrade --check --json</code>.</li>
+          </ul>
+          <div class="doc-note">
+            <strong>Network:</strong> an already materialized immutable snapshot may work offline, but latest-version resolution requires remote references. A first <code>sync</code> in a clean environment usually needs access to the repositories.
+          </div>
+
+          <h2>Non-interactive conventions</h2>
+          <p>CI and scripts have no TTY, so any command that could open a selection needs that selection given up front. <code>--all</code> and <code>--yes</code> divide the work: <code>--all</code> states the selection itself — every skill the repository publishes for <code>get</code>, every declared entry for <code>remove</code>, every installed skill for <code>share</code>; <code>--yes</code> answers the confirmations that follow a selection and never decides what the selection is.</p>
+          <p>A non-interactive run of a multi-skill repository has to say <code>--all</code> to get past the selection step. On a terminal, <code>--yes</code> still lets the user pick skills; it skips only the later confirmations. The same rule applies to <code>share</code> and <code>remove</code>.</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod get github.com/acme/agent-skills//review --all --yes</div>
+            <div class="c">--all gets past the selection, --yes past the confirmation; neither one prompts</div>
+            <div><span class="p">$</span> skillmod remove --all --yes</div>
+            <div><span class="p">$</span> skillmod share --all --agent claude --yes</div>
+          </div>
+          <p>The use of <code>--dry-run</code> is to review the report before the write: <code>init</code>, <code>sync --relink</code>, <code>remove</code>, <code>prune</code>, <code>share</code>, and <code>upgrade</code> all support it. <code>upgrade --dry-run</code> downloads and verifies without replacing the executable, and <code>--check</code> stops before downloading. A dry run writes no state and creates no links, so it suits confirming before acting.</p>
+
+          <h2>Language and environment</h2>
+          <p>Command help, summaries, prompts, and errors follow <code>SKILLMOD_LANG</code>; when it is unset, the system locale is read from <code>LC_ALL</code>, <code>LC_MESSAGES</code>, then <code>LANG</code>, falling back to English when none is available or supported.</p>
+          <p>JSON field names and action identifiers are unaffected: a script can branch on the identifiers whether or not <code>SKILLMOD_LANG</code> is set. Setting it keeps the human-readable output in one language — worth fixing in CI logs, so prompts do not change shape with the runner.</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> SKILLMOD_LANG=zh_CN skillmod verify</div>
+            <div class="c">human output pinned to Chinese, exit code unchanged</div>
+            <div><span class="p">$</span> SKILLMOD_LANG=en skillmod verify --json</div>
+            <div class="c">the --json report does not depend on the language</div>
+          </div>
+
+          <div class="doc-note">
+            <strong>Further reading:</strong> the word-for-word flag vocabulary for every command is in the <a href="/en/skillmod/docs/commands/">command reference</a>; hands-on sequences by task are in the <a href="/en/skillmod/docs/scenarios/">scenario guide</a>; errors and odd states are in <a href="/en/skillmod/docs/troubleshooting/">troubleshooting</a>.
+          </div>
+
+          <nav class="doc-pager">
+            <a class="prev" href="/en/skillmod/docs/scenarios/">
+              <span class="dir">Prev</span>
+              <span class="name">Scenario guide</span>
+            </a>
+            <a class="next" href="/en/skillmod/docs/troubleshooting/">
+              <span class="dir">Next</span>
+              <span class="name">Troubleshooting</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/en/skillmod/">skillmod</a>
+      <a href="/en/">Home</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

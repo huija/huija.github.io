@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自动化与 CI · skillmod 文档</title>
+  <meta name="description" content="skillmod 自动化与 CI：退出码 0/1/2/3 的含义、--json 报告结构、完整 action 词表、接进流水线的命令序列、非交互环境约定与 SKILLMOD_LANG。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="自动化与 CI · skillmod 文档">
+  <meta property="og:description" content="skillmod 自动化与 CI：退出码 0/1/2/3 的含义、--json 报告结构、完整 action 词表、接进流水线的命令序列、非交互环境约定与 SKILLMOD_LANG。">
+  <meta property="og:url" content="https://huija.github.io/skillmod/docs/automation/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/skillmod/docs/automation/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/automation/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/automation/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/automation/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/skillmod/docs/">文档</a>
+        <a href="/">主页</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/en/skillmod/docs/automation/" data-lang="en">EN</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item" href="/skillmod/docs/">首页</a>
+            <a class="doc-nav-item" href="/skillmod/docs/quickstart/">五分钟上手</a>
+            <a class="doc-nav-item" href="/skillmod/docs/concepts/">核心概念</a>
+            <a class="doc-nav-item" href="/skillmod/docs/commands/">命令参考</a>
+            <a class="doc-nav-item" href="/skillmod/docs/scenarios/">场景指南</a>
+            <a class="doc-nav-item current" href="/skillmod/docs/automation/">自动化与 CI</a>
+            <a class="doc-nav-item" href="/skillmod/docs/troubleshooting/">故障排查</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / automation</p>
+            <h1>自动化与 CI</h1>
+            <p>给脚本、CI 任务和 agent 的读法：退出码怎么分支、<code>--json</code> 报告里有什么、action 词表、接进流水线的完整模式、非交互环境的约定。按任务的实操在<a href="/skillmod/docs/scenarios/">场景指南</a>，逐条命令的 flag 在<a href="/skillmod/docs/commands/">命令参考</a>。</p>
+          </header>
+
+          <h2>退出码</h2>
+          <p>脚本、CI 任务或 agent 需要从一次 skillmod 运行里做判断，而不是由人读输出时，看退出码：</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>退出码</th><th>含义</th><th>什么时候出现</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>0</code></td><td>所有受检条目一致</td><td>检查与操作正常完成</td></tr>
+                <tr><td><code>1</code></td><td>操作或输入错误</td><td>任何命令</td></tr>
+                <tr><td><code>2</code></td><td>检出漂移</td><td><code>verify</code> 发现内容与 <code>SKILL.lock</code> 不符</td></tr>
+                <tr><td><code>3</code></td><td>部分完成：独立的工作已完成，一个或多个目标被安全保留</td><td><code>get</code>、<code>sync</code>、<code>update</code>、<code>remove</code> 保留目标而不是覆盖它时</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><code>get</code>、<code>sync</code>、<code>update</code> 和 <code>remove</code> 在保留目标而不是覆盖它时返回 <code>3</code>。这既不是彻底失败，也不是完全成功：读报告，看保留了什么、为什么保留。</p>
+          <p>漂移单独占 <code>2</code>，因为它和“操作出错”是不同的结论。<code>verify</code> 的职责是检查一致性：内容与锁记录不符是一个确定的状态判断，该和参数错误、环境问题区分开，脚本才能分别处置。</p>
+          <div class="doc-note">
+            <strong>构建门槛的读法：</strong>把任何非零退出都当失败。<code>2</code> 意味着检出的技能环境与声明不符，<code>3</code> 意味着有目标被安全保留——两者都该让流水线停下，报告留给排障。
+          </div>
+
+          <h2>--json</h2>
+          <p>所有命令都支持 <code>--json</code>。命令照常打印给人看的摘要，加上 <code>--json</code> 后，同时在 stdout 输出一份结构化报告。</p>
+          <p>报告把“哪条命令产生了它”和“每条声明、每个安装目录的结果”分开：</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>字段</th><th>含义</th><th>action 取值</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>action</code></td><td>产生报告的命令</td><td><code>get</code>、<code>init</code>、<code>list</code>、<code>prune</code>、<code>remove</code>、<code>share</code>、<code>sync</code>、<code>update</code>、<code>upgrade</code>、<code>verify</code>、<code>why</code></td></tr>
+                <tr><td><code>entries[].action</code></td><td>一条声明的汇总结果</td><td><code>conflict</code>、<code>drift</code>、<code>install</code>、<code>installed</code>、<code>keep</code>、<code>local</code>、<code>local-drift</code>、<code>matched</code>、<code>missing</code>、<code>partial</code>、<code>prune</code>、<code>remove</code>、<code>skip</code>、<code>stale</code>、<code>unlocked</code>、<code>unresolved</code>、<code>unverifiable</code>、<code>update</code></td></tr>
+                <tr><td><code>entries[].targetResults[].action</code></td><td>一个安装目录的结果</td><td><code>drift</code>、<code>install</code>、<code>installed</code>、<code>keep</code>、<code>missing</code>、<code>remove</code>、<code>skip</code>、<code>unlocked</code>、<code>unverifiable</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>字段名和 action 标识永不翻译。脚本按命令和 action 标识分支，不要解析自然语言备注：<code>note</code> 是给人看的译文，跟着输出语言变。</p>
+          <p>检查类报告（<code>list</code>、<code>why</code>、<code>verify</code>）的远端条目还带 <code>requestedVersion</code>：它是 <code>SKILL.mod</code> 里的原值，<code>version</code> 是 <code>SKILL.lock</code> 记录的安装版本。<code>requestedVersion</code> 为空，表示这条声明跟随 latest，具体版本由 lock 钉住。</p>
+          <p><code>upgrade</code> 用同一形状：<code>action</code> 为 <code>"upgrade"</code>，只有一个名为 <code>skillmod</code> 的条目。条目 action 为 <code>keep</code> 表示当前运行的就是所求版本，为 <code>update</code> 表示有新版本，<code>entries[0].version</code> 给出该版本号；可执行文件自己的 <code>targetResults[0].action</code> 说明文件发生了什么：<code>installed</code> 是被替换，<code>install</code> 是 dry-run 验证通过，<code>keep</code> 是原样未动。升级失败时报告照写，<code>--json</code> 总能解出一个文档。</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod upgrade --check --json</div>
+            <div class="c">不下载，只观察有没有新版本</div>
+          </div>
+
+          <h2>action 词表</h2>
+          <p>命令层的取值就是十一条命令名：报告由哪条命令产生，顶层 <code>action</code> 就是哪个词。条目层和目录层的完整词表如下。</p>
+          <h3>entries[].action（一条声明的汇总结果）</h3>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>action</th><th>含义</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>conflict</code></td><td>目标目录里是不同内容，按冲突策略处置</td></tr>
+                <tr><td><code>drift</code></td><td>内容与 lock 记录不符</td></tr>
+                <tr><td><code>install</code></td><td>计划中的安装，dry-run 已验证、尚未写入</td></tr>
+                <tr><td><code>installed</code></td><td>已写入，且与 lock 记录相符</td></tr>
+                <tr><td><code>keep</code></td><td>已符合预期，原样保留</td></tr>
+                <tr><td><code>local</code></td><td>本地声明，没有远端来源</td></tr>
+                <tr><td><code>local-drift</code></td><td>本地条目被编辑过，与记录的基线不符</td></tr>
+                <tr><td><code>matched</code></td><td>init 匹配到既有锁记录或已验证快照的来源</td></tr>
+                <tr><td><code>missing</code></td><td>安装目录不存在</td></tr>
+                <tr><td><code>partial</code></td><td>部分完成：有工作完成，也有目标被保留</td></tr>
+                <tr><td><code>prune</code></td><td>prune 清掉了失效的安装或锁记录</td></tr>
+                <tr><td><code>remove</code></td><td>声明（或分享链接）被移除</td></tr>
+                <tr><td><code>skip</code></td><td>按冲突策略跳过该目标</td></tr>
+                <tr><td><code>stale</code></td><td>声明已不在 SKILL.mod 里，安装仍然残留，用 prune 清理</td></tr>
+                <tr><td><code>unlocked</code></td><td>声明在 SKILL.lock 里没有对应记录</td></tr>
+                <tr><td><code>unresolved</code></td><td>来源无法解析为 Git 仓库，作为本地条目保留</td></tr>
+                <tr><td><code>unverifiable</code></td><td>目录读不动或内容无法校验</td></tr>
+                <tr><td><code>update</code></td><td>已更新；upgrade 报告里表示有新版本可用</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>entries[].targetResults[].action（一个安装目录的结果）</h3>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>action</th><th>含义</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>drift</code></td><td>目录内容与 lock 记录不符</td></tr>
+                <tr><td><code>install</code></td><td>dry-run 验证过的计划安装</td></tr>
+                <tr><td><code>installed</code></td><td>已写入，且与 lock 记录相符</td></tr>
+                <tr><td><code>keep</code></td><td>目录已符合预期，未改动</td></tr>
+                <tr><td><code>missing</code></td><td>目录不存在，或分享链接缺失</td></tr>
+                <tr><td><code>remove</code></td><td>该目录（或分享链接）被移除</td></tr>
+                <tr><td><code>skip</code></td><td>按冲突策略跳过</td></tr>
+                <tr><td><code>unlocked</code></td><td>目录没有锁记录可对照</td></tr>
+                <tr><td><code>unverifiable</code></td><td>目录读不动或内容无法校验</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>报告形状的稳定性约定：</p>
+          <ul>
+            <li>分支只依赖命令标识和各级 action 取值：它们稳定、永不翻译；<code>note</code> 是译文，不拿它分支。</li>
+            <li><code>entries[].action</code> 是聚合值，把该条目各目标的结果汇总成最可行动的状态；某个目录比整条声明更重要时，读 <code>targetResults</code>。</li>
+            <li>每目录的事实只出现在 <code>targetResults</code>：冲突或读不动的目录在其中保持可见，命令其余部分照样成功。</li>
+            <li><code>requestedVersion</code> 只出现在检查类报告的远端条目上，为空表示跟随 latest。</li>
+            <li><code>upgrade</code> 的 <code>--json</code> 即使升级失败也写报告，总能解出一个文档。</li>
+          </ul>
+
+          <h2>接进 CI</h2>
+          <p>完整模式是四步：checkout、安装 skillmod、<code>sync</code>、<code>verify</code>。<code>verify</code> 是构建门槛，退出码非零就让构建失败。</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> git clone https://github.com/acme/project.git &amp;&amp; cd project</div>
+            <div class="c">checkout：SKILL.mod 和 SKILL.lock 随仓库一起到位</div>
+            <div><span class="p">$</span> go install github.com/huija/skillmod@latest</div>
+            <div class="c">安装 skillmod；镜像里没有 Go 工具链时，用 GitHub releases 的预编译包</div>
+            <div><span class="p">$</span> skillmod sync</div>
+            <div class="c">按 lock 安装或对齐声明的 skill</div>
+            <div><span class="p">$</span> skillmod verify</div>
+            <div class="c">构建门槛：退出码 2 即失败</div>
+          </div>
+          <p>把 <code>verify</code> 的退出码显式接进流水线：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync</div>
+            <div><span class="p">$</span> skillmod verify --json &gt; verify.json</div>
+            <div><span class="p">$</span> code=$?</div>
+            <div><span class="p">$</span> [ $code -eq 0 ] || { cat verify.json; exit 1; }</div>
+            <div class="c">退出码 2（漂移）或 3（部分完成）都让构建失败，报告留给排障</div>
+          </div>
+          <ul>
+            <li><code>sync</code> 幂等，按 <code>SKILL.lock</code> 安装或对齐内容，不会静默覆盖本地修改；<code>verify</code> 检查的是对齐之后的结果。</li>
+            <li>要机器可读的结论就加 <code>--json</code>，按命令和 action 标识分支，并把报告存进构建产物方便排障。</li>
+            <li>CI 里没有 TTY，可能进入选择的命令要先给定选择，见下一节。</li>
+            <li>想在流水线里观察 skillmod 自身的新版本而不下载：<code>skillmod upgrade --check --json</code>。</li>
+          </ul>
+          <div class="doc-note">
+            <strong>网络：</strong>已经物化的不可变快照可以离线工作，latest 版本解析需要远程引用。干净环境里第一次 <code>sync</code> 通常要能访问仓库。
+          </div>
+
+          <h2>非交互环境约定</h2>
+          <p>CI 和脚本里没有 TTY，可能弹出选择的命令要预先把选择给定。<code>--all</code> 和 <code>--yes</code> 分工明确：<code>--all</code> 决定选择本身——<code>get</code> 取全部已发现的 skill，<code>remove</code> 取全部已声明条目，<code>share</code> 取全部已安装 skill；<code>--yes</code> 只回答选择之后的确认，从不决定选什么。</p>
+          <p>多 skill 仓库的非交互运行必须说 <code>--all</code>，否则卡在选择这一步。在终端上 <code>--yes</code> 仍由用户挑选 skill，只跳过后续确认；<code>share</code> 和 <code>remove</code> 同理。</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod get github.com/acme/agent-skills//review --all --yes</div>
+            <div class="c">--all 过选择，--yes 过确认，两步都不弹</div>
+            <div><span class="p">$</span> skillmod remove --all --yes</div>
+            <div><span class="p">$</span> skillmod share --all --agent claude --yes</div>
+          </div>
+          <p><code>--dry-run</code> 的用途是写入前先看报告：<code>init</code>、<code>sync --relink</code>、<code>remove</code>、<code>prune</code>、<code>share</code>、<code>upgrade</code> 都支持。<code>upgrade --dry-run</code> 下载并校验，但不替换可执行文件；<code>--check</code> 在下载之前停下。dry-run 不写状态、不建链接，适合先确认再执行。</p>
+
+          <h2>语言与环境</h2>
+          <p>命令帮助、摘要、提示和错误跟随 <code>SKILLMOD_LANG</code>；未设置时读系统 locale，依次 <code>LC_ALL</code>、<code>LC_MESSAGES</code>、<code>LANG</code>，取不到或不支持时回退英文。</p>
+          <p>JSON 字段名和 action 标识不受影响：脚本设不设 <code>SKILLMOD_LANG</code> 都能按标识分支。设它是为了让人读的输出稳定在一种语言上——CI 日志尤其值得固定，免得换台 runner 提示就变样。</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> SKILLMOD_LANG=zh_CN skillmod verify</div>
+            <div class="c">人读的输出固定为中文，退出码不变</div>
+            <div><span class="p">$</span> SKILLMOD_LANG=en skillmod verify --json</div>
+            <div class="c">--json 的报告与语言无关</div>
+          </div>
+
+          <div class="doc-note">
+            <strong>延伸阅读：</strong>逐条命令的 flag 词表见<a href="/skillmod/docs/commands/">命令参考</a>；按任务的实操见<a href="/skillmod/docs/scenarios/">场景指南</a>；报错与状态异常见<a href="/skillmod/docs/troubleshooting/">故障排查</a>。
+          </div>
+
+          <nav class="doc-pager">
+            <a class="prev" href="/skillmod/docs/scenarios/">
+              <span class="dir">上一页</span>
+              <span class="name">场景指南</span>
+            </a>
+            <a class="next" href="/skillmod/docs/troubleshooting/">
+              <span class="dir">下一页</span>
+              <span class="name">故障排查</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/skillmod/">skillmod</a>
+      <a href="/">主页</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

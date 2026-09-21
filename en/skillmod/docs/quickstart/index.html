@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Five-minute start · skillmod docs</title>
+  <meta name="description" content="Get started with skillmod in five minutes: install, prerequisites, add a first skill, meet SKILL.mod and SKILL.lock, then create a drift and watch verify, why, and sync respond.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="Five-minute start · skillmod docs">
+  <meta property="og:description" content="Get started with skillmod in five minutes: install, prerequisites, add a first skill, meet SKILL.mod and SKILL.lock, then create a drift and watch verify, why, and sync respond.">
+  <meta property="og:url" content="https://huija.github.io/en/skillmod/docs/quickstart/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/en/skillmod/docs/quickstart/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/quickstart/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/quickstart/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/quickstart/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/en/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/en/skillmod/docs/">Docs</a>
+        <a href="/en/">Home</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/skillmod/docs/quickstart/" data-lang="zh">中文</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item" href="/en/skillmod/docs/">Home</a>
+            <a class="doc-nav-item current" href="/en/skillmod/docs/quickstart/">Five-minute start</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/concepts/">Core concepts</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/commands/">Command reference</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/scenarios/">Scenario guide</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/automation/">Automation &amp; CI</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/troubleshooting/">Troubleshooting</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / quickstart</p>
+            <h1>Five-minute start</h1>
+            <p>Install skillmod, add a first skill, meet SKILL.mod and SKILL.lock, then edit an installed skill on purpose and watch how verify, why, and sync each respond. Walk through it in order; about five minutes.</p>
+          </header>
+
+          <h2>Install skillmod</h2>
+
+          <h3>Let your agent install it (recommended)</h3>
+          <p>With Node.js/npm available, install the companion Agent Skill globally so your coding agent can set up and operate skillmod from any project:</p>
+
+          <div class="doc-cmd">
+            <div><span class="p">$</span> npx skills add huija/skillmod --skill skillmod --global</div>
+          </div>
+
+          <p>Then say one sentence to your agent. Copy it as written; no need to translate it:</p>
+
+          <div class="code-block">
+            <div class="code-head"><span>Tell your agent</span><button class="copy-btn" type="button">Copy</button></div>
+            <pre>Install skillmod and make it available on PATH.</pre>
+          </div>
+
+          <p>The skill checks the Git prerequisite and any existing skillmod installation, selects the release binary for the current operating system and architecture, verifies it against the published SHA-256 checksums, installs it in a user-writable directory on <code>PATH</code>, and verifies the result. Omit <code>--global</code> when the guidance should be available only in the current project.</p>
+
+          <h3>Manual installation</h3>
+          <p>Without Go, download the archive for your platform and <code>checksums.txt</code> from <a href="https://github.com/huija/skillmod/releases" target="_blank" rel="noopener">GitHub Releases</a>, verify the archive, extract it, and put <code>skillmod</code> on your <code>PATH</code>:</p>
+          <ul>
+            <li>Archives are named like <code>skillmod_&lt;version&gt;_linux_amd64.tar.gz</code>, and <code>.zip</code> on Windows; <code>&lt;version&gt;</code> omits the leading <code>v</code>.</li>
+            <li>Architecture names map from machine values: <code>x86_64</code>, <code>AMD64</code> to <code>amd64</code>; <code>aarch64</code>, <code>arm64</code>, <code>ARM64</code> to <code>arm64</code>.</li>
+            <li>Use only the executable inside the archive (<code>skillmod.exe</code> on Windows) and place it in a user-writable directory: <code>${XDG_BIN_HOME:-$HOME/.local/bin}</code> on Linux/macOS, or <code>%LOCALAPPDATA%\Programs\skillmod\bin</code> on Windows.</li>
+          </ul>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Platform</th><th>Command to check SHA-256</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Linux</td><td><code>sha256sum</code></td></tr>
+                <tr><td>macOS</td><td><code>shasum -a 256</code></td></tr>
+                <tr><td>PowerShell</td><td><code>Get-FileHash -Algorithm SHA256</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="doc-note">
+            <strong>Do not install when the checksum does not match.</strong>A missing entry in checksums.txt or a mismatched digest is a hard failure: delete the downloaded artifact, and never disable verification merely to make installation continue.
+          </div>
+          <p>With Go 1.26.6 or later, the install is shorter:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> go install github.com/huija/skillmod@latest</div>
+          </div>
+          <p>Either way ends at the same executable. Upgrade it in place later with <code>skillmod upgrade</code>: it reads the release published for the current operating system and architecture, verifies the archive against that release's <code>checksums.txt</code>, and replaces the running executable. <code>--check</code> stops before downloading, and <code>--dry-run</code> downloads and verifies without replacing the executable.</p>
+
+          <h2>Prerequisites</h2>
+          <p>skillmod invokes the system <code>git</code> executable to fetch sources, so Git must be installed and on <code>PATH</code>. On Windows it is not preinstalled; install Git for Windows. SSH remotes additionally require <code>ssh</code> on <code>PATH</code>.</p>
+          <p>Run a few read-only checks before you start:</p>
+          <div class="doc-cmd">
+            <div class="c"># whether Git and skillmod are in place; a missing skillmod is expected on first-time setup</div>
+            <div><span class="p">$</span> git --version</div>
+            <div><span class="p">$</span> command -v skillmod</div>
+            <div><span class="p">$</span> skillmod --version</div>
+          </div>
+          <p>When the current process cannot see a newly updated PATH, invoke the executable by its full path for verification and open a new terminal.</p>
+
+          <h2>Add your first skill</h2>
+          <p>From the project directory:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod get github.com/openai/skills//gh-fix-ci --install-mode=copy --yes</div>
+            <div><span class="ok">✓</span> installed gh-fix-ci v0.0.0-20260624023612-49f948faa925; SKILL.mod and SKILL.lock were updated</div>
+          </div>
+          <p>The repository is named once and the skill once: after <code>//</code> the skill name is enough, so the directory layout inside the repository does not have to be typed or remembered. An exact subdirectory still wins over a name, and a name that several skills answer is reported with the candidate paths instead of guessed. The declaration records where the skill actually lives, which is the <code>source</code> line in <code>SKILL.mod</code> below.</p>
+          <p><code>--yes</code> answers the confirmations that follow a selection and never decides what the selection is; the install mode is set by <code>--install-mode</code>, and this page uses <code>copy</code>.</p>
+
+          <h2>Meet SKILL.mod and SKILL.lock</h2>
+          <p><code>SKILL.mod</code> is the declaration you review and commit. <code>SKILL.lock</code> is written by skillmod and records what the declaration resolved to: the requested version, the resolved commit, and the content hash.</p>
+
+          <div class="code-block">
+            <div class="code-head"><span>SKILL.mod — maintained by people</span><button class="copy-btn" type="button">Copy</button></div>
+            <pre><span class="k">schemaversion</span> = <span class="n">1</span>
+
+[[<span class="k">skill</span>]]
+<span class="k">name</span> = <span class="s">'gh-fix-ci'</span>
+<span class="k">source</span> = <span class="s">'github.com/openai/skills//skills/.curated/gh-fix-ci'</span>
+<span class="k">version</span> = <span class="s">'v0.0.0-20260624023612-49f948faa925'</span></pre>
+          </div>
+
+          <div class="code-block">
+            <div class="code-head"><span>SKILL.lock — maintained by skillmod</span><button class="copy-btn" type="button">Copy</button></div>
+            <pre><span class="k">schemaversion</span> = <span class="n">1</span>
+
+[[<span class="k">skill</span>]]
+<span class="k">name</span> = <span class="s">'gh-fix-ci'</span>
+<span class="k">source</span> = <span class="s">'github.com/openai/skills//skills/.curated/gh-fix-ci'</span>
+<span class="k">version</span> = <span class="s">'v0.0.0-20260624023612-49f948faa925'</span>
+<span class="k">commit</span> = <span class="s">'49f948faa9258a0c61caceaf225e179651397431'</span>
+<span class="k">dirhash</span> = <span class="s">'h1:kiGlVBeTCF8Q9f0rPATnDn1jBn/obT3TTTL8D8gdCbM='</span></pre>
+          </div>
+
+          <p>Note that <code>SKILL.mod</code> carries no commit and no dirhash: those belong to the lock. <code>sync</code> reconciles every machine against the lock, and <code>verify</code> checks installed content against the lock.</p>
+
+          <h2>Create a drift on purpose</h2>
+          <p>Edit an installed skill the way an unreviewed change would, then ask whether the project still matches its lock:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> echo "Always rebase." &gt;&gt; .agents/skills/gh-fix-ci/SKILL.md</div>
+            <div><span class="p">$</span> skillmod verify</div>
+            <div>verification result: drift detected</div>
+            <div><span class="p">$</span> echo $?</div>
+            <div>2</div>
+          </div>
+          <p>The non-zero exit code is what makes it usable as a CI gate: an edited or tampered skill fails the build instead of sitting unnoticed on the machine.</p>
+
+          <h2>Ask why where it came from</h2>
+          <p>To learn where one entry came from and what state it is in, ask why:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod why gh-fix-ci</div>
+            <div>gh-fix-ci (directory gh-fix-ci): github.com/openai/skills//skills/.curated/gh-fix-ci v0.0.0-20260624023612-49f948faa925</div>
+            <div>  commit: 49f948faa9258a0c61caceaf225e179651397431</div>
+            <div>  dirhash: h1:kiGlVBeTCF8Q9f0rPATnDn1jBn/obT3TTTL8D8gdCbM=</div>
+            <div>  /tmp/agent-project/.agents/skills/gh-fix-ci: drift</div>
+          </div>
+          <p>Source, resolved version, commit, dirhash, and the per-target status all fit in one screen. The last line is the drift you just created.</p>
+
+          <h2>Local edits are never overwritten</h2>
+          <p><code>sync</code> will not throw that edit away to make itself look clean:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync --yes</div>
+            <div>conflict (--yes automatically kept and skipped): /tmp/agent-project/.agents/skills/gh-fix-ci</div>
+            <div>no changes; 1 conflicting targets were kept</div>
+            <div><span class="p">$</span> echo $?</div>
+            <div>3</div>
+          </div>
+          <p>Exit code 3 is the point: work that could proceed did proceed, and the decision about your edit stays with you. Keep it as the project's local version, or run <code>skillmod sync</code> interactively and choose overwrite to restore the locked content.</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Exit code</th><th>When it appears</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>2</td><td>verify detected drift: installed content and the lock disagree</td></tr>
+                <tr><td>3</td><td>sync hit a local edit: the other targets proceeded, the edited one was kept and reported</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>What to read next</h2>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Command</th><th>What it did on this page</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>get</code></td><td>Add a skill and install it</td></tr>
+                <tr><td><code>verify</code></td><td>Check installed content against the lock; a drift fails it; the CI gate</td></tr>
+                <tr><td><code>why</code></td><td>Explain one entry: source, resolved version, commit, dirhash, and per-target status</td></tr>
+                <tr><td><code>sync</code></td><td>Reconcile installations with the lock; idempotent, and never overwrites local edits</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>For what the two files each do, how scopes are split, and which version forms exist, read <a href="/en/skillmod/docs/concepts/">Core concepts</a>. For task-by-task operations — adopting skills that already exist on disk, distributing one skill set to a team, updating and pinning, sharing with agents, removal and cleanup — read <a href="/en/skillmod/docs/scenarios/">Scenario guide</a>.</p>
+          <p>To wire skillmod into a pipeline, see the exit-code table, the <code>--json</code> report shape, and the action vocabulary in <a href="/en/skillmod/docs/automation/">Automation &amp; CI</a>; for an error or an odd state, work through the self-check in <a href="/en/skillmod/docs/troubleshooting/">Troubleshooting</a>.</p>
+          <div class="doc-note">
+            <strong>The language of command output:</strong> help, summaries, prompts, and errors follow <code>SKILLMOD_LANG</code> when it is set and the system locale otherwise; JSON field names and action identifiers are never translated. The command output on this page is shown as an English locale prints it.
+          </div>
+
+          <nav class="doc-pager">
+            <a href="/en/skillmod/docs/">
+              <span class="dir">Previous</span>
+              <span class="name">Home</span>
+            </a>
+            <a class="next" href="/en/skillmod/docs/concepts/">
+              <span class="dir">Next</span>
+              <span class="name">Core concepts</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/en/skillmod/">skillmod</a>
+      <a href="/en/">Home</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

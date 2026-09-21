@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>故障排查 · skillmod 文档</title>
+  <meta name="description" content="skillmod 故障排查：五步自查、常见报错的含义与处置、缓存与快照的纪律，以及准备一份可提交的问题报告。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="故障排查 · skillmod 文档">
+  <meta property="og:description" content="skillmod 故障排查：五步自查、常见报错的含义与处置、缓存与快照的纪律，以及准备一份可提交的问题报告。">
+  <meta property="og:url" content="https://huija.github.io/skillmod/docs/troubleshooting/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/skillmod/docs/troubleshooting/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/troubleshooting/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/troubleshooting/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/troubleshooting/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/skillmod/docs/">文档</a>
+        <a href="/">主页</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/en/skillmod/docs/troubleshooting/" data-lang="en">EN</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item" href="/skillmod/docs/">首页</a>
+            <a class="doc-nav-item" href="/skillmod/docs/quickstart/">五分钟上手</a>
+            <a class="doc-nav-item" href="/skillmod/docs/concepts/">核心概念</a>
+            <a class="doc-nav-item" href="/skillmod/docs/commands/">命令参考</a>
+            <a class="doc-nav-item" href="/skillmod/docs/scenarios/">场景指南</a>
+            <a class="doc-nav-item" href="/skillmod/docs/automation/">自动化与 CI</a>
+            <a class="doc-nav-item current" href="/skillmod/docs/troubleshooting/">故障排查</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / troubleshooting</p>
+            <h1>故障排查</h1>
+            <p>按固定顺序自查，先排除作用域、工作目录和环境问题；再看懂常见报错的含义与处置；然后守住缓存与快照的纪律；最后，需要向上游报告时，准备一份脱敏的、可提交的问题报告。</p>
+          </header>
+
+          <h2>自查五步</h2>
+          <p>遇到报错或状态异常时，按同样的五步走。顺序是刻意的：作用域和工作目录解释大多数"莫名其妙"的结果，环境和版本解释剩下的很大一部分。</p>
+          <ol>
+            <li>确认作用域与工作目录。项目命令默认读写当前目录的 <code>SKILL.mod</code> 与 <code>SKILL.lock</code>，并装进当前目录的 <code>.agents/skills/</code>；要影响用户全局环境的命令，必须显式加 <code>--global</code>。</li>
+            <li>运行 <code>git --version</code> 与 <code>skillmod --version</code>，确认 Git 可用，并记下 skillmod 版本。</li>
+            <li>运行 <code>skillmod list</code> 看全部声明；对具体条目运行 <code>skillmod why &lt;selector&gt;</code>，看它的来源、解析版本、commit、dirhash、安装目录，以及每个配置目标的状态。</li>
+            <li>运行 <code>skillmod verify</code> 并记录退出码。<code>list</code>、<code>why</code>、<code>verify</code> 对每个安装目录的分类方式一致，它们不可能对同一个目标给出互相矛盾的结论。</li>
+            <li>对计划中的写操作，在命令支持时用 <code>--dry-run</code> 重跑一遍，先审阅报告，再决定是否真正执行。</li>
+          </ol>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> git --version</div>
+            <div><span class="p">$</span> skillmod --version</div>
+            <div><span class="p">$</span> skillmod list</div>
+            <div><span class="p">$</span> skillmod why review</div>
+            <div><span class="p">$</span> skillmod verify</div>
+            <div class="c"># 计划中的写操作：先看 dry-run 报告</div>
+            <div><span class="p">$</span> skillmod sync --relink --dry-run</div>
+          </div>
+          <div class="doc-note">
+            <strong>退出码：</strong><code>verify</code> 返回 0 表示检查过的条目全部一致，1 表示操作或输入错误，2 表示检测到漂移，3 表示命令安全保留了冲突目标的未完成状态。完整退出码表和 <code>--json</code> 报告结构见<a href="/skillmod/docs/automation/">自动化与 CI</a>。
+          </div>
+
+          <h2>常见报错与处置</h2>
+          <p>下面每一条都是一种常见失败。先读懂含义，再决定动作；涉及本地修改的，一律以用户的决定为准。</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>现象 / 报错</th><th>含义与处置</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>SKILL.mod not found</code></td><td>当前作用域没有清单。初始化目标作用域（<code>init</code>），或切换到正确的项目根目录。</td></tr>
+                <tr><td>漂移，或冲突的目标被保留</td><td>查看本地修改，不要未经用户决定就覆盖。<code>sync</code> 返回 3 时逐目标看结果：部分工作已完成，冲突的目标被保留。</td></tr>
+                <tr><td>网络不可用</td><td>已经物化的不可变快照可能离线可用，直接从本地子目录校验并安装；latest 解析需要远端引用，离线时拿不到。</td></tr>
+                <tr><td>分支名被拒绝</td><td>版本必须不可变：选一个 tag、一个完整 commit SHA，或省略版本，让 skillmod 解析最新的不可变版本。</td></tr>
+                <tr><td>地址因不安全被拒</td><td>地址必须不带凭证：去掉 URL 里的密码或 token、query string 和 fragment；把 <code>source</code> 里的 <code>@version</code> 后缀移进 <code>version</code> 字段。凭证放进 Git credential helper、SSH agent 或环境变量。</td></tr>
+                <tr><td>manifest 校验错误</td><td>声明和锁在读取时都会校验。报告原文，不要凭猜测改写文件。没有 <code>schemaversion</code> 的 <code>SKILL.lock</code> 早于 schema 版本化，按 schema 1 处理；显式写了不支持的版本，仍需人工介入。</td></tr>
+                <tr><td>快照完整性错误</td><td>不要压制它。保留诊断信息；如果来源和本地状态看起来都正常，转入问题报告流程。</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>缓存与快照的纪律</h2>
+          <p>两个作用域共享同一个内容存储：缓存在 <code>$SKILLMOD_HOME/pkg/mod/</code>，默认 <code>~/.agents/skillmod/pkg/mod/</code>。快照可读且不可变，项目、全局技能和 CI 复用同一份，同一个仓库不会重复下载。</p>
+          <ul>
+            <li><code>prune</code> 删除过时的安装条目，但不删链接目标，也不删快照。</li>
+            <li>没有自动缓存逐出。手删快照之前，先确认没有安装中的链接还在用它——链接指向的快照与机器上其他项目共享。</li>
+            <li>不要把手删缓存当作移除一个依赖的捷径。移除依赖用 <code>remove</code>，清理过时安装用 <code>prune</code>。</li>
+            <li><code>--dry-run</code> 不动清单和安装，但远端来源校验可能仍会填充共享缓存。</li>
+          </ul>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod remove review --dry-run</div>
+            <div><span class="p">$</span> skillmod prune --dry-run</div>
+          </div>
+          <div class="doc-note">
+            <strong>编辑安装的技能前先脱离链接：</strong><code>auto</code> 模式装的是指向共享只读快照的目录链接，顺着链接编辑，等于修改机器上所有项目共享的内容。需要编辑时，用 <code>sync --relink --install-mode=copy</code> 换成独立副本。
+          </div>
+
+          <h2>准备问题报告</h2>
+          <p>只有当诊断指向 skillmod 自身的缺陷、且用户同意上报时，才进入提 issue 的流程。创建 GitHub issue 是对外的公开变更：先给出目标仓库和最终草稿，提交前必须获得明确授权。</p>
+          <p>复现只用对当前状态安全的命令：<code>--dry-run</code>、<code>list</code>、<code>why</code>、<code>verify</code>。不要在收集诊断信息之前破坏失败状态。</p>
+          <p>报告里带上这些信息：</p>
+          <ul>
+            <li><code>skillmod --version</code>、<code>git --version</code>，装有 GitHub CLI 时再加 <code>gh --version</code></li>
+            <li>操作系统与架构</li>
+            <li>安装方式与可执行文件路径</li>
+            <li>项目作用域还是全局作用域</li>
+            <li>确切的 skillmod 命令与退出码</li>
+            <li>预期行为与实际行为</li>
+            <li>最小复现步骤</li>
+            <li>行为是稳定复现还是间歇出现</li>
+          </ul>
+          <p>附上 <code>SKILL.mod</code>、<code>SKILL.lock</code> 和命令输出中最小的相关片段，不要默认贴整个文件。</p>
+          <div class="doc-note">
+            <strong>分享之前一律脱敏：</strong>删掉 access token、凭证、私有仓库 URL、用户名、home 目录路径、内部主机名，以及与问题无关的 skill 声明。默认绝不上传整个私有清单或 Git 配置。
+          </div>
+          <p>诊断输出默认可能是中文。设置 <code>SKILLMOD_LANG=en</code> 可以让维护者更容易检索，但不要为了翻译输出而重跑会改状态的命令。</p>
+          <p>没有 <code>gh</code> 时，按官方安装说明处理，不要未经同意就安装或认证；不想用 GitHub CLI 的用户，准备同一份草稿，到仓库的 issues 页面手动提交。新建之前先查重：</p>
+          <div class="doc-cmd">
+            <div class="c"># 用症状关键词检索已关闭和未关闭的 issue</div>
+            <div><span class="p">$</span> gh issue list --repo huija/skillmod --state all --search "&lt;keywords&gt;" --limit 20</div>
+          </div>
+          <div class="doc-note">
+            <strong>报告结构：</strong>Summary（一两句说明缺陷与影响）· Environment（skillmod 与 Git 版本、系统与架构、安装方式、作用域）· Steps to reproduce · Expected behavior · Actual behavior · Command output（脱敏后的输出与退出码）· Additional context（最小的脱敏清单片段）。标题用 <code>&lt;command&gt;: &lt;observable problem&gt;</code> 的形式陈述事实，不写未证实的根因。
+          </div>
+
+          <nav class="doc-pager">
+            <a href="/skillmod/docs/automation/">
+              <span class="dir">上一页</span>
+              <span class="name">自动化与 CI</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/skillmod/">skillmod</a>
+      <a href="/">主页</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

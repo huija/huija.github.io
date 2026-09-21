@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>核心概念 · skillmod 文档</title>
+  <meta name="description" content="skillmod 核心概念：SKILL.mod 与 SKILL.lock 的分工、项目与全局作用域、仓库地址形式、三种不可变版本、安装模式、共享存储与 agent 分享。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="核心概念 · skillmod 文档">
+  <meta property="og:description" content="skillmod 核心概念：SKILL.mod 与 SKILL.lock 的分工、项目与全局作用域、仓库地址形式、三种不可变版本、安装模式、共享存储与 agent 分享。">
+  <meta property="og:url" content="https://huija.github.io/skillmod/docs/concepts/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/skillmod/docs/concepts/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/concepts/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/concepts/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/concepts/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/skillmod/docs/">文档</a>
+        <a href="/">主页</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/en/skillmod/docs/concepts/" data-lang="en">EN</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item" href="/skillmod/docs/">首页</a>
+            <a class="doc-nav-item" href="/skillmod/docs/quickstart/">五分钟上手</a>
+            <a class="doc-nav-item current" href="/skillmod/docs/concepts/">核心概念</a>
+            <a class="doc-nav-item" href="/skillmod/docs/commands/">命令参考</a>
+            <a class="doc-nav-item" href="/skillmod/docs/scenarios/">场景指南</a>
+            <a class="doc-nav-item" href="/skillmod/docs/automation/">自动化与 CI</a>
+            <a class="doc-nav-item" href="/skillmod/docs/troubleshooting/">故障排查</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / concepts</p>
+            <h1>核心概念</h1>
+            <p>skillmod 的行为由几条固定规则决定：两个清单文件各司其职，声明与安装按作用域分开，版本只接受不可变形式。这一页把这些规则讲清楚；每条命令的逐字用法在命令参考。</p>
+          </header>
+
+          <h2>两个文件</h2>
+          <p><code>SKILL.mod</code> 是人维护、提交进仓库的声明。<code>SKILL.lock</code> 是工具维护的安装记录，确定性生成，禁止手改。每条命令都会读取并校验这两个文件：手改出来的违规清单会被报错，而不是被应用一半。</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th></th><th>SKILL.mod</th><th>SKILL.lock</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>谁维护</td><td>人</td><td>skillmod</td></tr>
+                <tr><td>写什么</td><td>声明：<code>source</code>、可选 <code>version</code>、每个 skill 的 <code>agents</code></td><td>安装记录：解析出的 <code>version</code>、<code>commit</code>、<code>dirhash</code></td></tr>
+                <tr><td>手改</td><td>可以，改完提交</td><td>不行</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>锁定记录里三个值各自的分工：</p>
+          <ul>
+            <li><code>version</code>：钉住的不可变版本。<code>SKILL.mod</code> 里没写 <code>version</code> 的条目跟随最新的不可变解析结果，由 <code>SKILL.lock</code> 钉住；写了的条目钉在那个 tag 或 commit 上，直到 <code>update</code> 运行。</li>
+            <li><code>commit</code>：解析出的提交。有它，伪版本在一台从未见过对应 tag 的机器上也能解析。</li>
+            <li><code>dirhash</code>：锁定的内容摘要。每条锁定记录必须是单个 <code>h1:</code> 开头的 SHA-256 值。</li>
+          </ul>
+          <div class="doc-note">
+            <strong>模式版本：</strong>两个文件都声明 <code>schemaversion = 1</code>。没有 <code>schemaversion</code> 的旧 <code>SKILL.lock</code> 按版本 1 读取，并在下次 skillmod 写入清单状态时归一化；显式的 0、负数和未知版本会被拒绝。
+          </div>
+
+          <h2>作用域</h2>
+          <p>skillmod 区分项目与全局两种作用域。默认是项目作用域：清单放在当前目录，skill 装进当前目录的 <code>.agents/skills/</code>。<code>--global</code>（<code>-g</code>）切到全局作用域：声明放在 <code>~/.agents/skillmod/global/</code>，装进 <code>~/.agents/skills/</code>。</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>作用域</th><th>声明与锁定</th><th>默认安装目录</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>项目（默认）</td><td>当前目录的 <code>SKILL.mod</code> 和 <code>SKILL.lock</code></td><td>当前目录的 <code>.agents/skills/</code></td></tr>
+                <tr><td>全局（<code>--global</code>）</td><td><code>$SKILLMOD_HOME/global/</code>，默认 <code>~/.agents/skillmod/global/</code></td><td><code>~/.agents/skills/</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>skill 装进所选作用域的 <code>.agents/skills/</code>，skillmod 不管理其他目录约定。所有命令都接受 <code>--global</code>（<code>-g</code>），普通命令不会合并项目与全局两份清单。</p>
+          <p>同一个 skill 可以同时声明在两个作用域，此时两者共享同一份磁盘快照：所有作用域共用一个内容存储，项目、全局技能和 CI 运行复用同一批不可变快照，不会重复下载同一个仓库。<code>global/</code> 目录只放清单，不是第二个快照缓存。</p>
+
+          <h2>地址形式</h2>
+          <p>仓库地址的形式是：</p>
+          <div class="doc-cmd">
+            <div>&lt;repository&gt;[//&lt;subdirectory-or-skill-name&gt;][@&lt;version&gt;]</div>
+          </div>
+          <p><code>@&lt;version&gt;</code> 只属于命令行，从不写进 <code>source</code>；<code>source</code> 里出现 <code>@version</code> 会被拒绝，版本写在 <code>version</code> 字段。HTTPS 传输是默认，两个文件都只记 <code>host/owner/repo</code>；其他传输因为改变了仓库的获取方式而显式记录。还拼着 <code>https://</code> 的旧文件可以正常工作，下次 skillmod 写入时改写成短形式。</p>
+          <h3>// 简写</h3>
+          <p><code>//</code> 后写单段时，skillmod 先试仓库根目录下的精确子目录，再回退到 <code>skills/</code> 下任意位置的唯一技能名；同名多个时要求写全路径并给出候选。单 skill 仓库不需要 <code>//</code>：省略时，<code>get</code> 会发现根 <code>SKILL.md</code> 和 <code>skills/</code> 下的每个 <code>SKILL.md</code>。</p>
+          <div class="doc-cmd">
+            <div class="c"># 两个来源可能发布同名 skill，用 --alias 安装额外条目</div>
+            <div><span class="p">$</span> skillmod get --alias review-acme github.com/acme/agent-skills//review</div>
+          </div>
+          <p>两份声明和两份锁定记录都会保留。安装目录等于 <code>name</code> 时，锁定记录省略 <code>dir</code>，只有别名条目才记录它。别名必须是可移植的名字，所有安装目录在 Unicode 规范化和大小写折叠后必须互不相同，同一个项目在 Linux、macOS 和 Windows 上行为一致。用不同别名重新 <code>get</code> 同一来源会保留旧目录，并提示 <code>skillmod prune</code> 可以清掉它。</p>
+          <div class="doc-note">
+            <strong>地址不带凭证：</strong>嵌入的用户信息、查询串、片段和控制字符会在地址被使用或持久化之前被拒绝，secret 到不了 <code>SKILL.mod</code>、<code>SKILL.lock</code>、裸仓库的配置或诊断信息。支持的传输是 <code>https</code>、<code>http</code>、<code>ssh</code>、<code>file</code>，以及 scp 风格的 <code>git@host:path</code>；<code>git://</code> 因未认证、未加密被拒绝。SSH 用户名会保留，因为它标识传输方式；密码不会，secret 属于 Git credential helper、SSH agent 或环境变量。
+          </div>
+
+          <h2>版本</h2>
+          <p>三种不可变形式会被接受，分支名一律拒绝——可变引用无法锁定。</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>形式</th><th>示例</th><th>什么时候用</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>语义化版本 tag</td><td><code>v1.2.0</code>、<code>code-review/v1.2.0</code></td><td>发布方给发布打 tag</td></tr>
+                <tr><td>提交 SHA</td><td>完整 40 字符 SHA</td><td>需要一个确切修订</td></tr>
+                <tr><td>伪版本</td><td><code>v1.0.96-0.20260624023612-49f948faa925</code></td><td>钉住一个提交；仓库有 tag 时 base 取最高 tag，没有 tag 时是纯 <code>v0.0.0</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>没有 tag 的仓库生成 <code>v0.0.0-&lt;ts&gt;-&lt;hash&gt;</code>；有 base tag 时生成 <code>v&lt;base&gt;-0.&lt;ts&gt;-&lt;hash&gt;</code>。base tag 出现之前写下的锁定记录使用纯 <code>v0.0.0-&lt;ts&gt;-&lt;hash&gt;</code> 形状，继续有效；下一次 <code>update</code> 会把它们迁移到仓库的最新 tag。</p>
+
+          <h2>安装模式</h2>
+          <p><code>auto</code> 优先把原生目录符号链接指向共享只读快照，链接不可用时回退逐字节拷贝，包括没有链接权限的 Windows。<code>copy</code> 总是创建独立目录。<code>--install-mode</code> 为单条命令覆盖机器配置。</p>
+          <p>链接指向机器上所有项目共享的快照，通过链接编辑就是编辑共享内容。要改先脱钩：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync --relink --install-mode=copy</div>
+          </div>
+          <p>安装模式、缓存的绝对路径和作用域都被刻意排除在两个文件之外：相同的声明与版本，在任何系统、任何安装模式下都生成相同的清单。</p>
+
+          <h2>共享存储</h2>
+          <p>只有一个缓存，所有作用域共用 <code>$SKILLMOD_HOME/pkg/mod/</code>，默认 <code>~/.agents/skillmod/pkg/mod/</code>：</p>
+          <div class="doc-cmd">
+            <div>~/.agents/skillmod/pkg/mod/</div>
+            <div>├── github.com/anthropics/skills@v0.0.0-.../  <span class="c"># 可直接浏览的整库快照</span></div>
+            <div>└── cache/</div>
+            <div>    ├── vcs/                                  <span class="c"># 裸 Git 仓库，内部按哈希设键</span></div>
+            <div>    ├── download/                             <span class="c"># 仓库版本、ref 与解析元数据</span></div>
+            <div>    └── locks/</div>
+          </div>
+          <p>快照可读且不可变。HTTPS、默认端口 SSH 和 <code>.git</code> URL 变体共享同一份快照，身份标识不带凭证，URL 里的 token 不可能成为缓存键的一部分。</p>
+          <p>第一次请求 <code>repo@version</code> 会物化整个仓库快照；之后从同一版本添加另一个 skill，会直接从本地子目录校验并安装，不调用 Git、不碰远程。显式的 <code>@commit</code> 同样复用该提交已有的快照。请求最新版本或运行 <code>skillmod update</code> 保持在线刷新语义。设置 <code>SKILLMOD_HOME</code> 可以搬迁整个存储。</p>
+          <p><code>--dry-run</code> 不动清单和安装，但远程来源校验仍可能填充共享缓存。<code>prune</code> 删除过时的安装条目，不删除链接目标或快照；没有自动缓存逐出，手工删除快照之前先确认没有已安装的链接还在用它，也不要用删缓存来移除单个依赖。</p>
+
+          <h2>分享给 agent</h2>
+          <p><code>share</code> 把每个 skill 的同名链接放进所选 agent 目录，例如 <code>.claude/skills/&lt;skill&gt;</code>，指向受管的 <code>.agents/skills/&lt;skill&gt;</code>。受管目录是唯一真实副本：改受管 skill 会同时透过每个链接可见，没有需要同步的东西。链接和安装一样使用 <code>auto</code> 回退，不支持符号链接的文件系统收到的是保字节拷贝。</p>
+          <p>agent 用一个目录段命名，从作用域根下的 <code>.&lt;name&gt;/skills</code> 读取，所以名单是开放的——<code>workbuddy</code> 和 <code>claude</code> 一样有效。分享记录只写名字，不写目录：存路径在别处无法复现，名字足以重建链接。</p>
+          <div class="doc-cmd">
+            <div class="c"># SKILL.mod</div>
+            <div>[[skill]]</div>
+            <div>name = "review"</div>
+            <div>agents = ["claude", "codex"]</div>
+          </div>
+          <p><code>sync</code> 在新机器上重建每个条目描述的链接，<code>verify</code> 报告缺失或漂移的链接；本机没有的 agent 目录会被跳过，因为声明表达的是团队意图，不是机器要求。名字用字母、数字、<code>.</code>、<code>_</code> 和 <code>-</code>；前导点和大小写会被归一化，<code>.Claude</code> 和 <code>claude</code> 是同一个目标，不能出现在同一个列表里。不能作为一个可移植目录段的名字会在读取清单时被拒绝。没有 <code>agents</code> 或 <code>agents</code> 为空的条目，skill 只留在受管目录里。</p>
+          <p><code>share --remove --agent &lt;name&gt;</code>（<code>-r</code>）是声明的出口：把点名的 agent 从命令指定的 skill 上解绑，并从这些条目的 agent 列表里删掉，放着外来内容的目标不动，链接拆完才保存声明。移除一个 skill 或把它当陈旧条目 <code>prune</code> 掉时，镜像其受管副本的链接一并拆掉，没有了 agent 的条目整个失去该字段。<code>SKILL.lock</code> 也记住创建过的目标：手工删掉一个 agent 名字只是移除分享意图，已有链接留给 <code>remove</code> 或 <code>prune</code> 之后清理。</p>
+
+          <div class="doc-note">
+            <strong>接下来：</strong>每条命令的逐字用法见<a href="/skillmod/docs/commands/">命令参考</a>；分发、更新、接管存量技能见<a href="/skillmod/docs/scenarios/">场景指南</a>。
+          </div>
+
+          <nav class="doc-pager">
+            <a href="/skillmod/docs/quickstart/">
+              <span class="dir">上一页</span>
+              <span class="name">五分钟上手</span>
+            </a>
+            <a class="next" href="/skillmod/docs/commands/">
+              <span class="dir">下一页</span>
+              <span class="name">命令参考</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/skillmod/">skillmod</a>
+      <a href="/">主页</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

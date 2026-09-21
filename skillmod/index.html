@@ -29,6 +29,7 @@
     <div class="nav-inner">
       <a class="brand" href="/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
       <div class="nav-links">
+        <a href="/skillmod/docs/">文档</a>
         <a href="/">主页</a>
         <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
@@ -49,8 +50,8 @@
           <h1 class="md"><span class="scramble" data-text="skillmod">skillmod</span></h1>
           <p class="sub">声明依赖、锁定内容、一键对齐。<span class="hl">任何机器，得到完全一致的 skill 集合</span>。</p>
           <div class="hero-cta">
-            <a class="btn btn-primary" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">查看源码</a>
-            <a class="btn btn-ghost" href="https://github.com/huija/skillmod/releases" target="_blank" rel="noopener">Releases</a>
+            <a class="btn btn-primary" href="/skillmod/docs/quickstart/">五分钟上手</a>
+            <a class="btn btn-ghost" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">查看源码</a>
           </div>
         </div>
         <div class="hero-visual reveal">
@@ -100,94 +101,72 @@
     <section class="section" style="padding-top:0">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2>能力</h2>
+          <h2>三个场景，对号入座</h2>
+          <p>skillmod 不为"一台机器、一个 skill"存在。下面任一场景成立，声明加锁就物有所值。</p>
         </div>
-        <div class="feat-grid">
-          <div class="feat feat-wide reveal">
-            <h3>十一条命令</h3>
-            <ul class="cmd-list">
-              <li><span class="name">init</span> <span class="desc">扫描登记现有技能</span></li>
-              <li><span class="name">get</span> <span class="desc">从任意 Git 仓库添加</span></li>
-              <li><span class="name">sync</span> <span class="desc">按锁文件幂等对齐</span></li>
-              <li><span class="name">share</span> <span class="desc">链接进 .claude/.codex 等 agent</span></li>
-              <li><span class="name">list</span> <span class="desc">列出声明、版本与安装状态</span></li>
-              <li><span class="name">why</span> <span class="desc">说明一个条目的来源与状态</span></li>
-              <li><span class="name">update</span> <span class="desc">升级到最新不可变版本</span></li>
-              <li><span class="name">verify</span> <span class="desc">校验漂移，CI 关卡</span></li>
-              <li><span class="name">remove</span> <span class="desc">干净退出，或仅解除分享</span></li>
-              <li><span class="name">prune</span> <span class="desc">清理过期安装与锁记录</span></li>
-              <li><span class="name">upgrade</span> <span class="desc">按发布校验和原地升级</span></li>
-            </ul>
+        <div class="scene-grid">
+          <div class="scene reveal">
+            <p class="scene-no">01</p>
+            <h3>全局底座，项目选装</h3>
+            <p>个人常用技能声明在全局清单，全机器可用；项目依赖声明在项目根的 <span class="cmd-inline">SKILL.mod</span> / <span class="cmd-inline">SKILL.lock</span>，随仓库提交。项目只装自己需要的 skill，换项目不串味。两个清单互不合并，命令带 <span class="cmd-inline">--global</span> 才动全局。</p>
+            <div class="scene-cmd">
+              <div><span class="p">$</span> skillmod --global init</div>
+              <div class="c">接管 ~/.agents/skills 里的存量技能</div>
+              <div><span class="p">$</span> cd my-project &amp;&amp; skillmod init</div>
+              <div class="c">只登记这个项目要用的</div>
+            </div>
           </div>
-          <div class="feat feat-wide reveal" style="--d:80ms">
-            <h3>源直接走 Git</h3>
-            <p>对应 go 的 direct 模式：skill 是带 tag 的仓库，或 monorepo 子目录（&lt;repo&gt;//&lt;subdir&gt;）。<span class="cmd">//</span> 后直接写技能名也行——先试精确子目录，再回退 skills/ 下唯一同名。打 tag 即发布，无服务端、无 registry。</p>
+          <div class="scene reveal" style="--d:80ms">
+            <p class="scene-no">02</p>
+            <h3>项目分发，一条 sync 到位</h3>
+            <p>SKILL.mod 与 SKILL.lock 提交进仓库，.agents/skills/ 加进 .gitignore。新同事 clone、你换新机器、CI 跑构建，都是同一条 <span class="cmd-inline">skillmod sync</span>：按锁文件装出逐字节一致的 skill 集合，share 记录的 agent 链接也在每台机器自动重建。</p>
+            <div class="scene-cmd">
+              <div><span class="p">$</span> git clone … &amp;&amp; cd my-project</div>
+              <div><span class="p">$</span> skillmod sync</div>
+              <div><span class="p">$</span> skillmod verify</div>
+              <div class="c">clone 完一条命令，装出和团队完全一致的 skill</div>
+            </div>
           </div>
-          <div class="feat feat-slim reveal">
-            <h3>三种不可变版本</h3>
-            <p>semver tag（含 <span class="cmd">code-review/v1.2.0</span> 子目录 tag）、commit SHA、伪版本。伪版本以仓库最高 tag 为 base，旧锁在下次 update 自动迁移。分支名直接拒绝，可变引用不可锁定。</p>
-          </div>
-          <div class="feat feat-slim reveal" style="--d:80ms">
-            <h3>内容寻址锁定</h3>
-            <p>SKILL.lock 用 dirhash 锁定内容，纯函数生成，无时间戳，禁止手改；同时记录解析出的 commit，伪版本在没见过 tag 的机器上也能复现。</p>
-          </div>
-          <div class="feat feat-slim reveal" style="--d:160ms">
-            <h3>共享持久存储</h3>
-            <p>只读整仓快照存放于 ~/.agents/skillmod/pkg/mod，HTTPS 与 SSH 变体共享存储。技能只取一次，第二个项目直接从磁盘安装。</p>
-          </div>
-          <div class="feat feat-wide reveal">
-            <h3>安装即链接，全机共享</h3>
-            <p>默认 symlink 指向共享快照，链接不可用时自动回退字节级拷贝（含 Windows）。要改动内容，先 <span class="cmd">sync --relink --install-mode=copy</span> 把安装脱钩成独立副本。</p>
-          </div>
-          <div class="feat feat-wide reveal" style="--d:80ms">
-            <h3>分享给任意 agent</h3>
-            <p>agent 用一个目录段命名：.claude、.codex、workbuddy 一视同仁。分享目标记录在技能的 SKILL.mod 条目上，sync 在每台机器重建链接，verify 报告缺失与漂移。</p>
-          </div>
-          <div class="feat feat-wide reveal">
-            <h3>CI 关卡，机器可读</h3>
-            <p>verify 漂移即退出码 2，可直接当构建门槛；get/sync/update/remove 遇到本地修改保留不覆盖，以退出码 3 交还决定权。全命令支持 <span class="cmd">--json</span>，报告按稳定的 action 词表分支。</p>
-          </div>
-          <div class="feat feat-wide reveal" style="--d:80ms">
-            <h3>扁平 1:1 · 零遥测</h3>
-            <p>无传递依赖解析，无约束求解器（requires 字段预留）。不收集任何数据，外部依赖只有 Git。</p>
+          <div class="scene reveal" style="--d:160ms">
+            <p class="scene-no">03</p>
+            <h3>更新，或钉死版本</h3>
+            <p><span class="cmd-inline">skillmod update</span> 把每个远端 skill 挪到最新的不可变版本——最高 tag 优先，无 tag 仓库才跟 HEAD。要钉住某个版本，在 SKILL.mod 的 version 字段写死 tag 或 commit，分支名直接拒绝。SKILL.lock 记下 version、commit、dirhash，"当时用的哪个版本"永远有答案。</p>
+            <div class="scene-cmd">
+              <div><span class="p">$</span> skillmod update</div>
+              <div><span class="p">$</span> skillmod update gh-fix-ci</div>
+              <div class="c">钉版本：version = 'v1.2.0'，分支名直接拒绝</div>
+            </div>
           </div>
         </div>
+        <p class="scene-more reveal">每个场景的完整步骤、接管存量、卸载清理，见 <a href="/skillmod/docs/scenarios/">场景指南</a>。</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:0">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2>两个文件，说清一切</h2>
-          <p>SKILL.mod 由人维护、提交入库；SKILL.lock 由工具维护，确定性生成。分享给哪些 agent，也声明在技能条目上。</p>
+          <h2>装好之后，你得到什么</h2>
+          <p>不是又一个安装脚本，而是一套可提交、可复现、可校验的 skill 声明。</p>
         </div>
-        <div class="code-duo">
-          <div class="code-block reveal">
-            <div class="code-head">
-              <span>SKILL.mod</span>
-              <button class="copy-btn" type="button">复制</button>
-            </div>
-            <pre><code><span class="k">schemaversion</span> = <span class="n">1</span>
-
-<span class="k">[[skill]]</span>
-<span class="k">name</span> = <span class="s">'gh-fix-ci'</span>
-<span class="k">source</span> = <span class="s">'github.com/openai/skills//skills/.curated/gh-fix-ci'</span>
-<span class="k">version</span> = <span class="s">'v0.0.0-20260624023612-49f948faa925'</span>
-<span class="k">agents</span> = <span class="s">['claude', 'workbuddy']</span></code></pre>
+        <div class="hl-grid">
+          <div class="hl reveal">
+            <h3>每台机器，逐字节一致</h3>
+            <p>clone、换机、CI 跑构建，同一条 <span class="cmd-inline">skillmod sync</span> 装出同一套 skill。</p>
           </div>
-          <div class="code-block reveal" style="--d:100ms">
-            <div class="code-head">
-              <span>SKILL.lock</span>
-              <button class="copy-btn" type="button">复制</button>
-            </div>
-            <pre><code><span class="k">[[skill]]</span>
-<span class="k">name</span> = <span class="s">'gh-fix-ci'</span>
-<span class="k">source</span> = <span class="s">'github.com/openai/skills//skills/.curated/gh-fix-ci'</span>
-<span class="k">version</span> = <span class="s">'v0.0.0-20260624023612-49f948faa925'</span>
-<span class="k">commit</span> = <span class="s">'49f948faa9258a0c61caceaf225e179651397431'</span>
-<span class="k">dirhash</span> = <span class="s">'h1:kiGlVBeTCF8Q9f0rPATnDn1jBn/obT3TTTL8D8gdCbM='</span></code></pre>
+          <div class="hl reveal" style="--d:80ms">
+            <h3>版本问题有答案</h3>
+            <p>SKILL.lock 记录 version、commit、dirhash，"当时用的哪个版本"随时可查。</p>
+          </div>
+          <div class="hl reveal" style="--d:160ms">
+            <h3>篡改与漂移现形</h3>
+            <p>内容寻址锁定，<span class="cmd-inline">skillmod verify</span> 在漂移时退出码 2，可直接当构建门槛。</p>
+          </div>
+          <div class="hl reveal" style="--d:240ms">
+            <h3>本地修改不被硬覆盖</h3>
+            <p>冲突目标保留并报告，exit 3 把决定权交还给人。</p>
           </div>
         </div>
+        <p class="hl-more reveal">十一条命令、地址与版本规则、存储与配置——完整参考见 <a href="/skillmod/docs/">skillmod 文档</a>。</p>
       </div>
     </section>
 
@@ -197,6 +176,7 @@
           <div>
             <h2>两种路径，开始使用</h2>
             <p style="color:var(--muted);margin-top:8px">装好之后都用 <span class="cmd-inline">skillmod upgrade</span> 原地升级：先按发布校验和验证，再替换可执行文件。</p>
+            <p style="margin-top:16px">装完不知道干什么？<a href="/skillmod/docs/quickstart/" style="color:var(--accent);border-bottom:1px solid var(--accent-line)">五分钟上手 →</a></p>
           </div>
           <div style="display:flex;flex-direction:column;gap:22px">
             <div class="install-group">
@@ -227,6 +207,7 @@
   <footer>
     <div class="wrap foot-inner">
       <span>© 2026 huija</span>
+      <a href="/skillmod/docs/">文档</a>
       <a href="/">主页</a>
       <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
     </div>

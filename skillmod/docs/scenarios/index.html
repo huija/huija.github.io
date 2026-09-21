@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>场景指南 · skillmod 文档</title>
+  <meta name="description" content="skillmod 场景指南：选择作用域、接管存量技能、引导已有项目、添加远端 skill、复现声明环境、检查状态与来源、CI 验证、更新与移除依赖、分享给其他 agent、安装模式，每条场景附可照抄的命令序列。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="场景指南 · skillmod 文档">
+  <meta property="og:description" content="skillmod 场景指南：选择作用域、接管存量技能、引导已有项目、添加远端 skill、复现声明环境、检查状态与来源、CI 验证、更新与移除依赖、分享给其他 agent、安装模式，每条场景附可照抄的命令序列。">
+  <meta property="og:url" content="https://huija.github.io/skillmod/docs/scenarios/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/skillmod/docs/scenarios/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/scenarios/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/scenarios/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/scenarios/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/skillmod/docs/">文档</a>
+        <a href="/">主页</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/en/skillmod/docs/scenarios/" data-lang="en">EN</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item" href="/skillmod/docs/">首页</a>
+            <a class="doc-nav-item" href="/skillmod/docs/quickstart/">五分钟上手</a>
+            <a class="doc-nav-item" href="/skillmod/docs/concepts/">核心概念</a>
+            <a class="doc-nav-item" href="/skillmod/docs/commands/">命令参考</a>
+            <a class="doc-nav-item current" href="/skillmod/docs/scenarios/">场景指南</a>
+            <a class="doc-nav-item" href="/skillmod/docs/automation/">自动化与 CI</a>
+            <a class="doc-nav-item" href="/skillmod/docs/troubleshooting/">故障排查</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / scenarios</p>
+            <h1>场景指南</h1>
+            <p>按任务组织的实操手册。每条场景给出可直接照抄的命令序列；某个 flag 的完整词表在命令参考，退出码与 JSON 输出的读法在自动化与 CI。不确定某个 flag 的准确写法时，对已安装版本运行 <code>skillmod &lt;command&gt; --help</code>。</p>
+          </header>
+
+          <h2>选作用域</h2>
+          <p>项目作用域是默认。<code>SKILL.mod</code> 和 <code>SKILL.lock</code> 放在当前目录，安装进入 <code>.agents/skills/</code>。</p>
+          <p><code>--global</code> 只用于用户级技能：全局声明存放在 skillmod store 之下，安装通常进入用户自己的 agent 技能目录。项目与全局声明是两份独立的东西，普通命令不会把它们合并。</p>
+          <div class="doc-note">
+            <strong>改动前先确认作用域：</strong>项目级改动前，确认当前工作目录就是目标项目根；全局改动前，明确说明这会影响用户的全局 agent 环境。
+          </div>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> cd my-project</div>
+            <div class="c">项目作用域操作当前目录，先进项目根</div>
+            <div><span class="p">$</span> skillmod list</div>
+            <div class="c">确认这份声明正是要改的项目</div>
+            <div><span class="p">$</span> skillmod --global list</div>
+            <div class="c">全局声明是另一份，单独查看</div>
+          </div>
+
+          <h2>接管存量技能</h2>
+          <p>接管用户级技能和接管项目是两个独立步骤：每个作用域各有一份 manifest，可以只做一边，顺序不限。</p>
+
+          <h3>接管用户级技能</h3>
+          <p>用户级技能是这台机器上共享技能的落脚处：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod --global init --dry-run --yes</div>
+            <div class="c">先看 dry-run 报告，再决定是否写入</div>
+            <div><span class="p">$</span> skillmod --global init --yes</div>
+            <div><span class="p">$</span> skillmod --global list</div>
+            <div><span class="p">$</span> skillmod --global verify</div>
+          </div>
+          <p>它把 <code>~/.agents/skills/</code> 里的一切声明进 <code>~/.agents/skillmod/global/SKILL.mod</code>，出处从上一个安装器记录的来源和共享快照缓存中恢复。</p>
+          <p>上一个安装器从 web 发现端点记录的 skill 没有 Git 仓库在背后：记录只留下 web 来源，条目报为 <code>unresolved</code>，作为本地声明保留。把发布它的仓库补进 <code>known_sources</code>，之后的 <code>init</code> 就能把它作为 Git 依赖接管，因为内容会对照该仓库校验。而上一个安装器本就标记为 local 的记录不是缺口：保持普通本地声明，没有提示，也不计入 <code>unresolved</code>。</p>
+
+          <h3>接管当前项目</h3>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> cd my-project</div>
+            <div><span class="p">$</span> skillmod init --dry-run --yes</div>
+            <div class="c">dry-run 不改动任何现有文件</div>
+            <div><span class="p">$</span> skillmod init --yes</div>
+          </div>
+          <p>之后保持两个作用域对齐。两份 manifest 相互独立，要影响用户机器的命令必须带 <code>--global</code>：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync &amp;&amp; skillmod verify</div>
+            <div><span class="p">$</span> skillmod --global sync &amp;&amp; skillmod --global verify</div>
+          </div>
+          <div class="doc-note">
+            同一个 skill 可以合法地同时声明在两个作用域：同一仓库的同一版本由磁盘上的一份共享快照同时服务。项目依赖它，就声明在项目里；希望每个项目都能用到，就声明在全局。
+          </div>
+
+          <h2>引导已有项目</h2>
+          <p>skill 目录已经存在、但还没有声明时，用 <code>init</code>：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod init --yes --dry-run</div>
+            <div><span class="p">$</span> skillmod init --yes</div>
+          </div>
+          <p><code>init</code> 在所选作用域里扫描 <code>.agents/skills/</code>，不改动现有目录、链接或文件：目录链接会被跟随以校验内容，断链、无法校验的内容和非法目录名会被报告并跳过。各目标中相同的条目会合并，每条候选路径都保留下来用于恢复出处。</p>
+          <p>出处从匹配的锁记录或已验证的快照中恢复，包括 monorepo 子目录和别名。<code>init --global</code> 还会导入上一个安装器的 <code>.skill-lock.json</code>，项目 <code>init</code> 读 <code>skills-lock.json</code>。已记录的 Git 来源和修订号始终权威，即使安装目录已经漂移；上游记录缺修订号时，只有内容完全一致，<code>init</code> 才采用最新的不可变解析。无法安全解析的来源作为本地基线保留，一个未解析条目不会拖垮整次导入。</p>
+          <p>导入同时写 <code>SKILL.mod</code> 和 <code>SKILL.lock</code>。替换已有声明需要 <code>--force</code>，它会先把原声明备份为 <code>SKILL.mod.bak</code>：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod init --yes --force</div>
+            <div class="c">只有要替换已有声明时才加 --force，备份为 SKILL.mod.bak</div>
+          </div>
+          <p>全局作用域只在明确要求时使用：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod --global init --yes --dry-run</div>
+            <div><span class="p">$</span> skillmod --global init --yes</div>
+          </div>
+
+          <h2>添加远端 skill</h2>
+          <p>地址的形式是 <code>&lt;repository&gt;[//&lt;subdirectory-or-skill-name&gt;][@&lt;version&gt;]</code>。仓库名始终要写，<code>//</code> 接着选中仓库内的 skill：</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>形式</th><th>命令</th><th>说明</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>仓库内路径</td><td><code>skillmod get github.com/acme/agent-skills//skills/review@v1.2.0</code></td><td><code>//</code> 后跟仓库内子目录，可带 <code>@version</code></td></tr>
+                <tr><td>仓库内技能名</td><td><code>skillmod get github.com/acme/agent-skills//review</code></td><td>用名字代替路径，两个短词就定位到集合里的 skill</td></tr>
+                <tr><td>仓库本身即 skill</td><td><code>skillmod get github.com/acme/single-skill</code></td><td>不需要 <code>//</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>精确的子目录始终优先于名字；唯一的名字会解析到 skill 的真实路径，所以 <code>source</code> 记录的是 <code>github.com/acme/agent-skills//skills/review</code>，而不是输入时写的简写。同一仓库里有多个 skill 叫同一个名字时，skillmod 报出候选路径并拒绝猜。</p>
+          <p>省略版本时，解析最新的不可变 tag；仓库没有任何 tag 时退到伪版本。分支名会被拒绝，地址不得携带凭据。</p>
+          <p>交互式终端每个候选一行：↑/← 和 ↓/→ 移动，空格切换选中，D 显示或隐藏当前的说明与命令，回车确认。<code>--all</code> 不再询问、直接安装全部已发现的 skill，只在选择已经明确时用；仓库有多个 skill 时优先交互选择，除非用户要的就是全部。<code>--yes</code> 不是一回事：它回答选择之后的确认；非交互环境跑多 skill 仓库必须说 <code>--all</code> 才能过选择这一步。在终端上 <code>--yes</code> 仍由用户挑选 skill，只跳过后续确认。<code>share</code> 和 <code>remove</code> 同理。</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod get github.com/acme/agent-skills//skills/review@v1.2.0</div>
+            <div><span class="p">$</span> skillmod get github.com/acme/agent-skills//review</div>
+            <div><span class="p">$</span> skillmod get github.com/acme/single-skill</div>
+          </div>
+          <p>两个来源发布同一个 skill 名时，用显式的目录别名安装第二个条目：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod get --alias review-acme github.com/acme/agent-skills//review</div>
+          </div>
+          <p>长时间运行的 <code>get</code> 和 <code>update</code> 会在交互终端显示一个紧凑的动画状态块。远端版本检查只请求 HEAD、分支和 tag 引用；<code>update</code> 合并等价的仓库 URL，最多并发检查四个不同的仓库；仓库快照每次命令做一次完整性校验，并在整个 skill 发现过程中复用。</p>
+
+          <h2>复现声明环境</h2>
+          <p>clone 一个带 <code>SKILL.mod</code> 和 <code>SKILL.lock</code> 的项目之后：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync</div>
+            <div><span class="p">$</span> skillmod verify</div>
+          </div>
+          <p><code>sync</code> 安装或对齐声明的内容，幂等，不会静默覆盖本地修改。返回退出码 3 时，逐个目标看结果：一部分工作已经完成，冲突的目标被保留。</p>
+          <p><code>sync --relink</code> 只用于有意按配置的安装模式重建匹配的远端安装：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync --relink --dry-run</div>
+            <div><span class="p">$</span> skillmod sync --relink</div>
+          </div>
+
+          <h2>检查状态与来源</h2>
+          <p>总览用 <code>list</code>：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod list</div>
+          </div>
+          <p><code>list</code>、<code>why</code>、<code>verify</code> 对每个安装目录的分类方式一致，不可能互相矛盾。它们还会把本地条目对照记录的基线：被编辑过的本地条目报为 <code>local-drift</code>，不是普通的 <code>local</code>；读不动的目录在哪里都是 <code>unverifiable</code>。</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>分类</th><th>含义</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>local</code></td><td>与记录基线一致的本地条目</td></tr>
+                <tr><td><code>local-drift</code></td><td>本地条目被编辑过，与记录的基线不一致</td></tr>
+                <tr><td><code>unverifiable</code></td><td>目录读不动，无法校验</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>看单条用 <code>why</code>，参数是发布名或安装别名：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod why review</div>
+          </div>
+          <p><code>why</code> 报告来源、解析出的版本、commit、dirhash、安装目录，以及每个已配置目标的状态。优先用它，而不是自己解读 <code>.agents/skills/</code> 里的链接。</p>
+
+          <h2>在 CI 里验证</h2>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod verify</div>
+          </div>
+          <p>退出码这样读：</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>退出码</th><th>含义</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>0</code></td><td>受检条目全部一致</td></tr>
+                <tr><td><code>1</code></td><td>操作或输入错误</td></tr>
+                <tr><td><code>2</code></td><td>检测到漂移</td></tr>
+                <tr><td><code>3</code></td><td>安全保留了目标的命令部分完成</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>给机器消费时加 <code>--json</code>，按命令和 action 标识分支，不要按翻译后的提示或终端文本。完整的 action 词表和报告结构见<a href="/skillmod/docs/automation/">自动化与 CI</a>。</p>
+
+          <h2>更新依赖</h2>
+          <p>先看状态，再更新全部远端条目或指定名字：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod list</div>
+            <div><span class="p">$</span> skillmod update</div>
+            <div><span class="p">$</span> skillmod update review</div>
+          </div>
+          <p>一个发布名可能对应多条带别名的声明；安装别名选中它对应的条目。选择器可能不唯一时，仔细核对输出。</p>
+          <p><code>update</code> 与 <code>get</code> 的 latest 语义相同：每条远端条目移到最高的语义版本 tag（先子目录 tag，再根 tag），只有完全没有 tag 的仓库才跟随默认分支 HEAD 前进到新的伪版本。钉在 commit 上的条目——伪版本和 SHA——也会迁移到该 tag，同一 skill 以不同方式接管的机器因此收敛到同一版本。</p>
+          <p>较新的 tag 在远端消失时，skillmod 拒绝意外的语义版本降级。确认远端删 tag 是有意为之，才用 <code>--allow-downgrade</code>：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod update review --allow-downgrade</div>
+          </div>
+
+          <h2>移除依赖</h2>
+          <p>声明本身不要了，用 <code>remove</code>：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod remove review --dry-run</div>
+            <div class="c">dry-run 先确认会删什么</div>
+            <div><span class="p">$</span> skillmod remove review</div>
+          </div>
+          <p>名字可以是发布名或安装别名，走位置参数或 <code>--skill</code>（<code>-s</code>，可重复、可逗号分隔，与 <code>share</code> 一致）；什么都不命名时，对 <code>SKILL.mod</code> 声明的内容打开选择：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod remove --all</div>
+            <div class="c">不问就取走全部已声明条目</div>
+            <div><span class="p">$</span> skillmod remove</div>
+            <div class="c">交互挑选，需要终端</div>
+          </div>
+          <p>裸 <code>remove</code> 交互挑选，需要终端；<code>--yes</code> 替代不了两者——它回答的是删除确认，而不是删什么。</p>
+          <p>只想停止分享、保留受管 skill 和声明，用 <code>--agent</code>：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod remove review --agent claude --dry-run</div>
+            <div><span class="p">$</span> skillmod remove --agent claude</div>
+            <div><span class="p">$</span> skillmod remove --all --agent claude</div>
+          </div>
+          <p>不带 skill 名时，选择器只列出分享给指定 agent 的 skill，且默认什么都不勾。带 <code>--all</code> 时取消所有匹配 skill 的分享；只分享给其他 agent 的 skill 不受影响。agent 值可重复或逗号分隔。名字和 <code>--all</code> 不能组合。</p>
+          <p>干净的受管安装被事务性删除；被本地修改或无法校验的目录会保留，并报为部分完成。</p>
+          <p>声明已经手工改过、残留陈旧安装或锁记录时，用 <code>prune</code>：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod prune --dry-run</div>
+            <div><span class="p">$</span> skillmod prune</div>
+          </div>
+          <p>不要用手工删缓存替代这两条命令。<code>prune</code> 从不删除链接目标或共享快照，也没有自动缓存逐出；手工删除快照前，先读仓库 reference 文档里的 storage 说明。</p>
+
+          <h2>分享给其他 agent</h2>
+          <p>skillmod 只管理 <code>.agents/skills/</code> 一个目录，读取其他约定的 agent 需要在那里有一条链接。<code>share</code> 创建这些链接，并把每个 skill 链接到哪些 agent 记录进 <code>SKILL.mod</code> 的对应条目——这正是换台机器也能复现的原因，也让一个 skill 去 claude、另一个去 codex 成为可能：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod share --dry-run</div>
+            <div><span class="p">$</span> skillmod share --skill review --agent claude --agent codex</div>
+          </div>
+          <p>选中的 skill 不在 <code>SKILL.mod</code> 里，会在同一轮被接管：已验证的锁基线或缓存快照保留它的远端来源和版本，否则作为本地条目记入 <code>SKILL.lock</code>，带当前内容哈希。只有选中的 skill 被接管，已有声明基线保持原样，<code>--dry-run</code> 只报告接管、不写状态和链接。尚未登记的镜像链接计入接管的 agent 列表。</p>
+          <p>带 <code>--agent</code> 时，skill 选择器只勾选已分享给每个指定 agent 的 skill：<code>share --agent workbuddy</code> 不会勾选只分享给 codex 的 skill，新 agent 默认什么都不勾。多个 agent 时，接受默认值会保留既有链接、不新增。</p>
+          <p>不带 <code>--skill</code> 和 <code>--agent</code> 时，列出已安装 skill 和 agent 目录供交互选择，两个列表都打开在既有状态上：已链接到某 agent 的 skill 是勾选的，所选 skill 已指向的每个 agent 也是勾选的。确认未改的选择因此是空操作；给几个 skill 加同一个 agent，就是先勾 skill、再勾 agent。</p>
+          <p>agent 名字是单个目录段，从作用域根下的 <code>.&lt;name&gt;/skills</code> 读取，所以声明只需要名字：<code>--agent workbuddy</code> 链接进 <code>.workbuddy/skills</code>，和其他 agent 一样记录。manifest 因此从不存路径——名字能在别的机器复现，路径不能。</p>
+          <p>目标里已有相同内容、或已有指向受管副本的链接，保留；内容不同的是冲突，按 <code>get</code>、<code>sync</code>、<code>update</code> 同样的逐冲突策略处理（<code>--on-conflict=overwrite</code> 或 <code>=skip</code>）。<code>.agents/skills/</code> 作为分享目标会被拒绝：链接过去会挡住 <code>verify</code> 读取的目录。</p>
+          <p>声明就位后，链接自我维护：<code>sync</code> 重建被替换或漂移的链接，<code>verify</code> 报告本机存在的 agent 目录下缺失的链接，移除 skill 会带走它的镜像链接。</p>
+          <p>停止分享，<code>share --remove --agent</code> 与 <code>remove --agent</code> 等价：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod share --skill review --remove --agent codex --dry-run</div>
+            <div><span class="p">$</span> skillmod share --remove --agent codex</div>
+            <div><span class="p">$</span> skillmod share --all --remove --agent codex</div>
+          </div>
+          <p>存有外来内容的目标不动；没有剩余 agent 的条目整个字段去掉。<code>--remove</code> 现在是开关，agent 值属于 <code>--agent</code>。两种形式都保留受管副本和声明，包括分享链接本就缺失的情况；状态写失败会恢复暂存的链接。</p>
+
+          <h2>安装模式</h2>
+          <p><code>auto</code> 优先链接到不可变的共享快照，链接不可用时退回复制；<code>copy</code> 创建独立目录。有意迁移时，覆盖配置的模式：</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync --relink --install-mode=copy --dry-run</div>
+            <div><span class="p">$</span> skillmod sync --relink --install-mode=copy</div>
+          </div>
+          <p>需要编辑已安装的 skill 时用 <code>copy</code>。不要通过链接安装编辑共享快照：链接指向的内容与机器上其他项目共享。普通 <code>sync</code> 保留匹配的安装且幂等，<code>--relink</code> 按所选模式有意重建远端安装。两者都尊重本地修改，<code>--yes</code> 也从不强制覆盖冲突文件。本地条目不自动迁移，只记录和校验。</p>
+          <div class="doc-note">
+            <strong>延伸阅读：</strong>本页每条命令的逐字 flag 词表见<a href="/skillmod/docs/commands/">命令参考</a>；退出码、<code>--json</code> 输出与 action 词表见<a href="/skillmod/docs/automation/">自动化与 CI</a>；报错与状态异常见<a href="/skillmod/docs/troubleshooting/">故障排查</a>。
+          </div>
+
+          <nav class="doc-pager">
+            <a class="prev" href="/skillmod/docs/commands/">
+              <span class="dir">上一页</span>
+              <span class="name">命令参考</span>
+            </a>
+            <a class="next" href="/skillmod/docs/automation/">
+              <span class="dir">下一页</span>
+              <span class="name">自动化与 CI</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/skillmod/">skillmod</a>
+      <a href="/">主页</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>文档 · skillmod</title>
+  <meta name="description" content="skillmod 文档：五分钟上手、核心概念、命令参考、场景指南、自动化与 CI、故障排查。">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="文档 · skillmod">
+  <meta property="og:description" content="skillmod 文档：五分钟上手、核心概念、命令参考、场景指南、自动化与 CI、故障排查。">
+  <meta property="og:url" content="https://huija.github.io/skillmod/docs/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="zh_CN">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/skillmod/docs/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/skillmod/docs/">文档</a>
+        <a href="/">主页</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/en/skillmod/docs/" data-lang="en">EN</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item current" href="/skillmod/docs/">首页</a>
+            <a class="doc-nav-item" href="/skillmod/docs/quickstart/">五分钟上手</a>
+            <a class="doc-nav-item" href="/skillmod/docs/concepts/">核心概念</a>
+            <a class="doc-nav-item" href="/skillmod/docs/commands/">命令参考</a>
+            <a class="doc-nav-item" href="/skillmod/docs/scenarios/">场景指南</a>
+            <a class="doc-nav-item" href="/skillmod/docs/automation/">自动化与 CI</a>
+            <a class="doc-nav-item" href="/skillmod/docs/troubleshooting/">故障排查</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / index</p>
+            <h1>skillmod 文档</h1>
+            <p>按任务组织的参考。想跑通第一个 skill，从五分钟上手开始；要查某条命令的逐字用法，去命令参考；想搞清规则背后的道理，去核心概念。</p>
+          </header>
+
+          <h2>阅读路径</h2>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>你是谁</th><th>建议路线</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>第一次听说 skillmod</td><td><a href="/skillmod/docs/quickstart/">五分钟上手</a> → <a href="/skillmod/docs/scenarios/">场景指南</a></td></tr>
+                <tr><td>已经装好，要查具体命令</td><td><a href="/skillmod/docs/commands/">命令参考</a></td></tr>
+                <tr><td>要把 skillmod 接进 CI 或脚本</td><td><a href="/skillmod/docs/automation/">自动化与 CI</a></td></tr>
+                <tr><td>遇到报错或状态异常</td><td><a href="/skillmod/docs/troubleshooting/">故障排查</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>全部页面</h2>
+          <div class="doc-cards">
+            <a class="doc-card reveal" href="/skillmod/docs/quickstart/">
+              <span class="dc-no">01</span>
+              <h3>五分钟上手</h3>
+              <p>安装、添加第一个 skill、认识 SKILL.mod 与 SKILL.lock，跑通 sync 和 verify。</p>
+            </a>
+            <a class="doc-card reveal" style="--d:60ms" href="/skillmod/docs/concepts/">
+              <span class="dc-no">02</span>
+              <h3>核心概念</h3>
+              <p>两个文件的分工、全局与项目作用域、三种不可变版本、安装模式与共享存储。</p>
+            </a>
+            <a class="doc-card reveal" style="--d:120ms" href="/skillmod/docs/commands/">
+              <span class="dc-no">03</span>
+              <h3>命令参考</h3>
+              <p>十一条命令逐条：语法、常用 flag、行为约定与注意事项。</p>
+            </a>
+            <a class="doc-card reveal" style="--d:180ms" href="/skillmod/docs/scenarios/">
+              <span class="dc-no">04</span>
+              <h3>场景指南</h3>
+              <p>接管存量技能、项目分发、更新与钉版本、分享给 agent、卸载与清理。</p>
+            </a>
+            <a class="doc-card reveal" style="--d:240ms" href="/skillmod/docs/automation/">
+              <span class="dc-no">05</span>
+              <h3>自动化与 CI</h3>
+              <p>退出码表、--json 输出结构、action 词表，把 skillmod 接进流水线。</p>
+            </a>
+            <a class="doc-card reveal" style="--d:300ms" href="/skillmod/docs/troubleshooting/">
+              <span class="dc-no">06</span>
+              <h3>故障排查</h3>
+              <p>按步骤自查，常见报错的含义与处置，准备一份可提交的问题报告。</p>
+            </a>
+          </div>
+
+          <h2>按任务查</h2>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>我想…</th><th>去看</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>装好 skillmod 并跑通第一个 skill</td><td><a href="/skillmod/docs/quickstart/">五分钟上手</a></td></tr>
+                <tr><td>搞清 SKILL.mod 和 SKILL.lock 的分工</td><td><a href="/skillmod/docs/concepts/">核心概念</a> · 两个文件</td></tr>
+                <tr><td>全局技能和项目技能怎么划分</td><td><a href="/skillmod/docs/concepts/">核心概念</a> · 作用域</td></tr>
+                <tr><td>把某个版本钉死不动</td><td><a href="/skillmod/docs/concepts/">核心概念</a> · 版本</td></tr>
+                <tr><td>让团队每台机器装同一套 skill</td><td><a href="/skillmod/docs/scenarios/">场景指南</a> · 项目分发</td></tr>
+                <tr><td>把已经装在机器上的 skill 管起来</td><td><a href="/skillmod/docs/scenarios/">场景指南</a> · 接管存量</td></tr>
+                <tr><td>退出码 2 / 3 是什么意思</td><td><a href="/skillmod/docs/automation/">自动化与 CI</a></td></tr>
+                <tr><td>verify 报漂移，怎么处理</td><td><a href="/skillmod/docs/troubleshooting/">故障排查</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="doc-note">
+            <strong>关于 source of truth：</strong>本站是规则的呈现层。最细的 manifest 规则、存储布局与 JSON 词表在 GitHub 仓库的 reference 文档里，两边同步维护；本站文档按任务重新编排，方便不熟仓库结构的人查阅。
+          </div>
+
+          <nav class="doc-pager">
+            <a class="next" href="/skillmod/docs/quickstart/">
+              <span class="dir">下一页</span>
+              <span class="name">五分钟上手</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/skillmod/">skillmod</a>
+      <a href="/">主页</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

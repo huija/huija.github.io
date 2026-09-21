@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scenario guide · skillmod docs</title>
+  <meta name="description" content="skillmod scenario guide: choosing a scope, adopting existing skills, bootstrapping a project, adding a remote skill, reproducing a declared environment, inspecting state and provenance, verifying in CI, updating and removing dependencies, sharing with agents, install modes — each with a copyable command sequence.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="Scenario guide · skillmod docs">
+  <meta property="og:description" content="skillmod scenario guide: choosing a scope, adopting existing skills, bootstrapping a project, adding a remote skill, reproducing a declared environment, inspecting state and provenance, verifying in CI, updating and removing dependencies, sharing with agents, install modes — each with a copyable command sequence.">
+  <meta property="og:url" content="https://huija.github.io/en/skillmod/docs/scenarios/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/en/skillmod/docs/scenarios/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/scenarios/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/scenarios/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/scenarios/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/en/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/en/skillmod/docs/">Docs</a>
+        <a href="/en/">Home</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/skillmod/docs/scenarios/" data-lang="zh">中文</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item" href="/en/skillmod/docs/">Home</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/quickstart/">Five-minute start</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/concepts/">Core concepts</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/commands/">Command reference</a>
+            <a class="doc-nav-item current" href="/en/skillmod/docs/scenarios/">Scenario guide</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/automation/">Automation &amp; CI</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/troubleshooting/">Troubleshooting</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / scenarios</p>
+            <h1>Scenario guide</h1>
+            <p>A hands-on guide organized by task. Each scenario ships a command sequence you can copy as is; the full flag vocabulary lives in the command reference, and the reading of exit codes and JSON output in automation &amp; CI. When the exact spelling of a flag needs confirming for the installed version, run <code>skillmod &lt;command&gt; --help</code>.</p>
+          </header>
+
+          <h2>Choose a scope</h2>
+          <p>Project scope is the default. <code>SKILL.mod</code> and <code>SKILL.lock</code> stay in the current directory, and installations go into <code>.agents/skills/</code>.</p>
+          <p><code>--global</code> is only for user-wide skills: global declarations live below the skillmod store, and installations normally go into the user's own agent skill directories. Project and global declarations are two separate things, and ordinary commands do not merge them.</p>
+          <div class="doc-note">
+            <strong>Confirm the scope before mutating:</strong> for a project-scoped change, confirm the working directory is the intended project root; for a global change, state explicitly that it will affect the user's global agent environment.
+          </div>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> cd my-project</div>
+            <div class="c">project scope works on the current directory, so enter the project root</div>
+            <div><span class="p">$</span> skillmod list</div>
+            <div class="c">confirm this declaration is the project you mean to change</div>
+            <div><span class="p">$</span> skillmod --global list</div>
+            <div class="c">the global declaration is a separate one, view it on its own</div>
+          </div>
+
+          <h2>Adopt existing skills</h2>
+          <p>Adopting the user-wide skills and adopting a project are two independent steps: each scope has its own manifest, either can be done alone, and the order does not matter.</p>
+
+          <h3>Adopt the user-wide skills</h3>
+          <p>The user-wide skills are where a machine's shared skills live:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod --global init --dry-run --yes</div>
+            <div class="c">read the dry-run report before deciding to write</div>
+            <div><span class="p">$</span> skillmod --global init --yes</div>
+            <div><span class="p">$</span> skillmod --global list</div>
+            <div><span class="p">$</span> skillmod --global verify</div>
+          </div>
+          <p>It declares everything in <code>~/.agents/skills/</code> into <code>~/.agents/skillmod/global/SKILL.mod</code>, recovering provenance from the previous installer's recorded sources and from the shared snapshot cache.</p>
+          <p>A skill the previous installer recorded from a web discovery endpoint has no Git repository behind it: the record names the web origin, the entry is reported as <code>unresolved</code>, and the skill is kept as a local declaration. Adding the repository that publishes it to <code>known_sources</code> lets a later <code>init</code> adopt it as a Git dependency, because the content is then verified against that repository. A record the previous installer already marked local is not a gap at all: it stays a plain local declaration, with no note and no <code>unresolved</code> count.</p>
+
+          <h3>Adopt the current project</h3>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> cd my-project</div>
+            <div><span class="p">$</span> skillmod init --dry-run --yes</div>
+            <div class="c">the dry-run changes no existing file</div>
+            <div><span class="p">$</span> skillmod init --yes</div>
+          </div>
+          <p>After that, keep both scopes aligned. The two manifests are independent, so a command that should affect the user's machine needs <code>--global</code>:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync &amp;&amp; skillmod verify</div>
+            <div><span class="p">$</span> skillmod --global sync &amp;&amp; skillmod --global verify</div>
+          </div>
+          <div class="doc-note">
+            The same skill can legitimately be declared in both scopes: the same repository at the same version is then served from one shared snapshot on disk. Declare it in the project when the project depends on it, and globally when the user wants it available in every project.
+          </div>
+
+          <h2>Bootstrap an existing project</h2>
+          <p>Use <code>init</code> when skill directories already exist but are not declared:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod init --yes --dry-run</div>
+            <div><span class="p">$</span> skillmod init --yes</div>
+          </div>
+          <p><code>init</code> scans <code>.agents/skills/</code> in the selected scope without changing existing directories, links, or files: directory links are followed for content verification, while broken links, unverifiable contents, and invalid directory names are reported and skipped. Identical entries across targets are merged, with every candidate path kept for provenance recovery.</p>
+          <p>Provenance is recovered from matching lock records or verified snapshots, including monorepo subdirectories and aliases. <code>init --global</code> also imports the upstream installer's <code>.skill-lock.json</code>, while project init reads <code>skills-lock.json</code>. A recorded Git source and revision stay authoritative even when the installed directory has drifted; when an upstream record omits its revision, init adopts the latest immutable resolution only if the contents match exactly. Sources that cannot be resolved safely are kept as local baselines, so one unresolved entry does not discard the rest of the import.</p>
+          <p>The import writes both <code>SKILL.mod</code> and <code>SKILL.lock</code>. Replacing an existing declaration requires <code>--force</code>, which first backs it up as <code>SKILL.mod.bak</code>:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod init --yes --force</div>
+            <div class="c">only when replacing an existing declaration; the backup is SKILL.mod.bak</div>
+          </div>
+          <p>Use global scope only when requested:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod --global init --yes --dry-run</div>
+            <div><span class="p">$</span> skillmod --global init --yes</div>
+          </div>
+
+          <h2>Add a remote skill</h2>
+          <p>An address has this form: <code>&lt;repository&gt;[//&lt;subdirectory-or-skill-name&gt;][@&lt;version&gt;]</code>. The repository is always named; <code>//</code> then selects the skill inside it:</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Form</th><th>Command</th><th>Notes</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Path inside the repository</td><td><code>skillmod get github.com/acme/agent-skills//skills/review@v1.2.0</code></td><td>a subdirectory after <code>//</code>, optionally with <code>@version</code></td></tr>
+                <tr><td>Skill name inside the repository</td><td><code>skillmod get github.com/acme/agent-skills//review</code></td><td>the name stands in for the path; two short words locate the skill in a collection</td></tr>
+                <tr><td>The repository is itself a skill</td><td><code>skillmod get github.com/acme/single-skill</code></td><td>no <code>//</code> needed</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>An exact subdirectory always wins over a name, and a unique name resolves to the skill's real path, so <code>source</code> records <code>github.com/acme/agent-skills//skills/review</code> rather than the shorthand that was typed. When several skills in the repository answer the same name, skillmod reports the candidate paths and refuses to guess.</p>
+          <p>Omitting a version asks skillmod to resolve the latest immutable tag, with a pseudo-version fallback for a repository that has no tag at all. A branch name is rejected, and the address must be credential-free.</p>
+          <p>On an interactive terminal each candidate gets one line: ↑/← and ↓/→ to move, Space to toggle a selection, D to show or hide the current description and command, and Enter to confirm. <code>--all</code> installs every discovered skill without asking, so use it only when the selection is already clear; for a repository that holds several skills, interactive selection is preferable unless the user asked for all of them. <code>--yes</code> is not the same thing: it answers the confirmations that follow the selection, and a non-interactive run of a multi-skill repository has to say <code>--all</code> to get past the selection step. On a terminal, <code>--yes</code> still lets the user pick skills; it skips only the later confirmations. The same rule applies to <code>share</code> and <code>remove</code>.</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod get github.com/acme/agent-skills//skills/review@v1.2.0</div>
+            <div><span class="p">$</span> skillmod get github.com/acme/agent-skills//review</div>
+            <div><span class="p">$</span> skillmod get github.com/acme/single-skill</div>
+          </div>
+          <p>When two sources publish the same skill name, install the additional entry with an explicit directory alias:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod get --alias review-acme github.com/acme/agent-skills//review</div>
+          </div>
+          <p>Long-running <code>get</code> and <code>update</code> runs show a compact animated status block on interactive terminals. Remote version checks request only HEAD, branch, and tag refs; <code>update</code> deduplicates equivalent repository URLs and checks up to four distinct repositories concurrently; and a repository snapshot is integrity-checked once per command and reused across skill discovery.</p>
+
+          <h2>Reproduce a declared environment</h2>
+          <p>After cloning a project that contains <code>SKILL.mod</code> and <code>SKILL.lock</code>:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync</div>
+            <div><span class="p">$</span> skillmod verify</div>
+          </div>
+          <p><code>sync</code> installs or aligns declared content and is idempotent. It does not silently overwrite local modifications. If it returns exit code 3, inspect the per-target results: some work completed, while conflicting targets were kept.</p>
+          <p>Use <code>sync --relink</code> only to deliberately recreate matching remote installations using the configured install mode:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync --relink --dry-run</div>
+            <div><span class="p">$</span> skillmod sync --relink</div>
+          </div>
+
+          <h2>Inspect state and provenance</h2>
+          <p>Use <code>list</code> for the complete declaration overview:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod list</div>
+          </div>
+          <p><code>list</code>, <code>why</code>, and <code>verify</code> classify every installation directory the same way, so they cannot disagree about a target. They also inspect local entries against the recorded baseline: an edited local entry is reported as <code>local-drift</code>, not as a plain <code>local</code>, and an unreadable directory is <code>unverifiable</code> everywhere.</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Classification</th><th>Meaning</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>local</code></td><td>A local entry that matches the recorded baseline</td></tr>
+                <tr><td><code>local-drift</code></td><td>A local entry that was edited and no longer matches the recorded baseline</td></tr>
+                <tr><td><code>unverifiable</code></td><td>The directory cannot be read, so it cannot be verified</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Use <code>why</code> for one published name or installation alias:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod why review</div>
+          </div>
+          <p><code>why</code> reports the source, resolved version, commit, dirhash, installation directory, and each configured target's status. Prefer it over manually interpreting links inside <code>.agents/skills/</code>.</p>
+
+          <h2>Verify in CI</h2>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod verify</div>
+          </div>
+          <p>Interpret the exits this way:</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Exit</th><th>Meaning</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>0</code></td><td>All checked entries are consistent</td></tr>
+                <tr><td><code>1</code></td><td>Operational or input error</td></tr>
+                <tr><td><code>2</code></td><td>Drift detected</td></tr>
+                <tr><td><code>3</code></td><td>Partial completion for commands that safely preserved targets</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>For machine consumption, add <code>--json</code> and branch on the command and action identifiers rather than on translated notes or terminal text. The full action vocabulary and the report shape are on the <a href="/en/skillmod/docs/automation/">automation &amp; CI</a> page.</p>
+
+          <h2>Update dependencies</h2>
+          <p>Inspect current state first, then update all remote entries or selected names:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod list</div>
+            <div><span class="p">$</span> skillmod update</div>
+            <div><span class="p">$</span> skillmod update review</div>
+          </div>
+          <p>A published name can represent more than one aliased declaration; an installation alias selects its corresponding entry. Review the output whenever the selector may not be unique.</p>
+          <p><code>update</code> shares <code>get</code>'s latest semantics: every remote entry moves to the highest semantic-version tag (subdirectory tags first, then root), and only a repository without any tag advances to a new pseudo-version at default-branch HEAD. Entries pinned to a commit — pseudo-versions and SHAs — migrate to that tag as well, so machines that adopted the same skill differently converge on the same version.</p>
+          <p>skillmod refuses an accidental semantic-version downgrade of a tag lock when newer tags have disappeared. Use <code>--allow-downgrade</code> only after confirming that the remote tag removal was intentional:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod update review --allow-downgrade</div>
+          </div>
+
+          <h2>Remove a dependency</h2>
+          <p>Use <code>remove</code> when the declaration itself should go away:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod remove review --dry-run</div>
+            <div class="c">the dry-run shows what would be deleted</div>
+            <div><span class="p">$</span> skillmod remove review</div>
+          </div>
+          <p>Names may be published names or installation aliases — passed as positional arguments or through <code>--skill</code> (<code>-s</code>), which is repeatable and comma-separated exactly like share's — and a run that names nothing opens a selection over what <code>SKILL.mod</code> declares:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod remove --all</div>
+            <div class="c">takes every declared entry without asking</div>
+            <div><span class="p">$</span> skillmod remove</div>
+            <div class="c">picks interactively, needs a terminal</div>
+          </div>
+          <p><code>--all</code> takes every declared entry without asking. A bare <code>remove</code> picks from the declarations interactively, so it needs a terminal; <code>--yes</code> is not a substitute for either, because it answers the deletion confirmation rather than choosing what to delete.</p>
+          <p>Use <code>--agent</code> when only sharing should stop while the managed skill and its declaration stay:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod remove review --agent claude --dry-run</div>
+            <div><span class="p">$</span> skillmod remove --agent claude</div>
+            <div><span class="p">$</span> skillmod remove --all --agent claude</div>
+          </div>
+          <p>Without skill names, the picker offers only skills shared to the named agents and starts with nothing checked. With <code>--all</code>, all matching skills are unshared; skills shared only to other agents are unaffected. Agent values may repeat or use comma-separated names. Names and <code>--all</code> cannot be combined.</p>
+          <p>Clean managed installations are removed transactionally. Locally modified or unverifiable directories are preserved and reported as partial completion.</p>
+          <p>Use <code>prune</code> when declarations were already edited and stale installations or lock records remain:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod prune --dry-run</div>
+            <div><span class="p">$</span> skillmod prune</div>
+          </div>
+          <p>Do not replace either command with manual cache deletion. <code>prune</code> never deletes link targets or shared snapshots, and there is no automatic cache eviction; read the storage notes in the repository's reference docs before deleting a snapshot by hand.</p>
+
+          <h2>Share installed skills with other agents</h2>
+          <p>skillmod manages one directory, <code>.agents/skills/</code>, so an agent that reads another convention needs a link there. <code>share</code> creates those links and records the agents it linked each skill to on that skill's entry in <code>SKILL.mod</code>, which is what makes the setup reproducible on another machine — and lets one skill go to claude while another goes to codex:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod share --dry-run</div>
+            <div><span class="p">$</span> skillmod share --skill review --agent claude --agent codex</div>
+          </div>
+          <p>A selected skill missing from <code>SKILL.mod</code> is adopted in the same run: a verified lock baseline or cache snapshot preserves its remote source and version; otherwise it is recorded as a local entry with its current content hash in <code>SKILL.lock</code>. Only selected skills are adopted, existing declared baselines are preserved, and <code>--dry-run</code> reports the adoption without writing state or links. Existing unrecorded mirror links are included in the adopted agent list.</p>
+          <p>With <code>--agent</code>, the skill picker checks only skills already shared to every requested agent: <code>share --agent workbuddy</code> does not check a skill shared only to codex, and a new agent starts with nothing checked. With multiple agents, accepting the defaults keeps existing links without adding any.</p>
+          <p>Omitting <code>--skill</code> and <code>--agent</code> lists the installed skills and the agent directories for interactive selection, and both lists open on the state that already holds: the skills already linked to an agent are checked, and so is every agent all of the chosen skills already name. Confirming an unchanged selection is therefore a no-op, and adding one agent to several skills is a matter of checking the skills and then the agent.</p>
+          <p>An agent is named by one directory segment and read from <code>.&lt;name&gt;/skills</code> under the scope root, so the name is all a declaration needs: <code>--agent workbuddy</code> links into <code>.workbuddy/skills</code> and is recorded like any other. That is also why the manifest never stores a path — a name reproduces on another machine, a path would not.</p>
+          <p>A destination that already holds identical content or a link to the managed copy is kept; one that holds different content is a conflict, settled with the same per-conflict policy <code>get</code>, <code>sync</code>, and <code>update</code> use (<code>--on-conflict=overwrite</code> or <code>=skip</code>). <code>.agents/skills/</code> is refused as a destination, because linking there would shadow the directory <code>verify</code> reads.</p>
+          <p>Once the declaration exists, the links maintain themselves: <code>sync</code> recreates a link that was replaced or drifted, <code>verify</code> reports a missing one under an agent directory that exists on this machine, and removing a skill takes its mirror links down with it.</p>
+          <p>To stop sharing, <code>share --remove --agent</code> does the same as <code>remove --agent</code>:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod share --skill review --remove --agent codex --dry-run</div>
+            <div><span class="p">$</span> skillmod share --remove --agent codex</div>
+            <div><span class="p">$</span> skillmod share --all --remove --agent codex</div>
+          </div>
+          <p>Destinations holding foreign content are left alone, and an entry left with no agents loses the field entirely. <code>--remove</code> is now a switch; the agent value belongs to <code>--agent</code>. Both forms preserve managed copies and declarations, including when their share links were already missing. A state write failure restores staged links.</p>
+
+          <h2>Installation modes</h2>
+          <p><code>auto</code> prefers links to immutable shared snapshots and falls back to copies when links are unavailable. <code>copy</code> creates independent directories. Override the configured mode for an intentional migration:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync --relink --install-mode=copy --dry-run</div>
+            <div><span class="p">$</span> skillmod sync --relink --install-mode=copy</div>
+          </div>
+          <p>Use copies when the user needs to edit an installed skill. Do not edit a shared snapshot through a linked installation: a link points at content shared with every other project on the machine. Ordinary <code>sync</code> preserves matching installations and is idempotent, while <code>--relink</code> deliberately recreates remote installations in the selected mode. Both respect local modifications, and <code>--yes</code> never forces a conflicting file to be overwritten. Local entries are recorded and verified without automatic migration.</p>
+          <div class="doc-note">
+            <strong>Further reading:</strong> the word-for-word flag vocabulary for every command on this page is in the <a href="/en/skillmod/docs/commands/">command reference</a>; exit codes, <code>--json</code> output, and the action vocabulary are in <a href="/en/skillmod/docs/automation/">automation &amp; CI</a>; errors and odd states are in <a href="/en/skillmod/docs/troubleshooting/">troubleshooting</a>.
+          </div>
+
+          <nav class="doc-pager">
+            <a class="prev" href="/en/skillmod/docs/commands/">
+              <span class="dir">Prev</span>
+              <span class="name">Command reference</span>
+            </a>
+            <a class="next" href="/en/skillmod/docs/automation/">
+              <span class="dir">Next</span>
+              <span class="name">Automation &amp; CI</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/en/skillmod/">skillmod</a>
+      <a href="/en/">Home</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

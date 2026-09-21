@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Core concepts · skillmod docs</title>
+  <meta name="description" content="skillmod core concepts: what SKILL.mod and SKILL.lock each own, project vs global scope, repository address forms, the three immutable version forms, install modes, shared storage, and sharing with agents.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="Core concepts · skillmod docs">
+  <meta property="og:description" content="skillmod core concepts: what SKILL.mod and SKILL.lock each own, project vs global scope, repository address forms, the three immutable version forms, install modes, shared storage, and sharing with agents.">
+  <meta property="og:url" content="https://huija.github.io/en/skillmod/docs/concepts/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/en/skillmod/docs/concepts/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/concepts/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/concepts/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/en/skillmod/docs/concepts/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/en/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/en/skillmod/docs/">Docs</a>
+        <a href="/en/">Home</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/skillmod/docs/concepts/" data-lang="zh">中文</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item" href="/en/skillmod/docs/">Home</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/quickstart/">Five-minute start</a>
+            <a class="doc-nav-item current" href="/en/skillmod/docs/concepts/">Core concepts</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/commands/">Command reference</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/scenarios/">Scenario guide</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/automation/">Automation &amp; CI</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/troubleshooting/">Troubleshooting</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / concepts</p>
+            <h1>Core concepts</h1>
+            <p>A few fixed rules drive skillmod's behavior: two manifest files with distinct jobs, declarations and installs split by scope, and versions accepted only in immutable form. This page lays out those rules; the exact usage of each command lives in the command reference.</p>
+          </header>
+
+          <h2>Two files</h2>
+          <p><code>SKILL.mod</code> is the declaration people maintain and commit. <code>SKILL.lock</code> is the tool-maintained record of what is installed: generated deterministically, never edited by hand. Every command reads and validates both files, so a hand-edited manifest that breaks a rule is reported instead of being halfway applied.</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th></th><th>SKILL.mod</th><th>SKILL.lock</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Maintained by</td><td>People</td><td>skillmod</td></tr>
+                <tr><td>Records</td><td>Declarations: <code>source</code>, optional <code>version</code>, per-skill <code>agents</code></td><td>What is installed: the resolved <code>version</code>, <code>commit</code>, and <code>dirhash</code></td></tr>
+                <tr><td>Hand edits</td><td>Yes, then commit</td><td>No</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>Three values in a lock record, each with its own job:</p>
+          <ul>
+            <li><code>version</code>: the immutable version pinned. An entry with no <code>version</code> in <code>SKILL.mod</code> tracks the latest immutable resolution, which <code>SKILL.lock</code> pins; an entry with one stays on that tag or commit until <code>update</code> runs.</li>
+            <li><code>commit</code>: the resolved commit. With it, a pseudo-version stays resolvable on a machine that has never seen the tag.</li>
+            <li><code>dirhash</code>: the locked content digest. Every locked record must be a single <code>h1:</code> SHA-256 digest.</li>
+          </ul>
+          <div class="doc-note">
+            <strong>Schema version:</strong> both files declare <code>schemaversion = 1</code>. A <code>SKILL.lock</code> written before schema versioning has no <code>schemaversion</code>; it is read as schema version 1 and normalized the next time skillmod writes the manifest state. Explicit zero, negative, and unknown versions are rejected.
+          </div>
+
+          <h2>Scopes</h2>
+          <p>skillmod has two scopes. Project is the default: the manifests live in the current directory and skills install into <code>.agents/skills/</code> there. <code>--global</code> (<code>-g</code>) switches to the global scope: declarations live in <code>~/.agents/skillmod/global/</code> and installs go to <code>~/.agents/skills/</code>.</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Scope</th><th>Declaration and lock</th><th>Default installation directory</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Project (default)</td><td><code>SKILL.mod</code> and <code>SKILL.lock</code> in the current directory</td><td><code>.agents/skills/</code> in the current directory</td></tr>
+                <tr><td>Global (<code>--global</code>)</td><td><code>$SKILLMOD_HOME/global/</code>, default <code>~/.agents/skillmod/global/</code></td><td><code>~/.agents/skills/</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>A skill installs into <code>.agents/skills/</code> of the selected scope, and skillmod manages no other directory convention. All commands accept <code>--global</code> (<code>-g</code>); ordinary commands do not merge the project and global manifests.</p>
+          <p>The same skill can be declared in both scopes at once, and both share one snapshot on disk: every scope uses the same content store, so projects, global skills, and CI runs reuse the same immutable snapshots instead of downloading the same repository again. The <code>global/</code> directory holds manifests, not a second snapshot cache.</p>
+
+          <h2>Repository addresses</h2>
+          <p>A repository address takes the form:</p>
+          <div class="doc-cmd">
+            <div>&lt;repository&gt;[//&lt;subdirectory-or-skill-name&gt;][@&lt;version&gt;]</div>
+          </div>
+          <p>The <code>@&lt;version&gt;</code> suffix belongs to the command line only and is never recorded inside <code>source</code>; an <code>@version</code> suffix inside <code>source</code> is rejected, and a version belongs in the <code>version</code> field. The HTTPS transport is implied, so it is never recorded: both files store <code>host/owner/repo</code>. Any other transport is recorded explicitly because it changes how the repository is fetched. A file that still spells out <code>https://</code> works unchanged and is rewritten to the shorter form the next time skillmod writes it.</p>
+          <h3>The // shorthand</h3>
+          <p>When <code>//&lt;subdirectory&gt;</code> is a single segment, skillmod first tries an exact subdirectory of the repository root, then falls back to a unique skill name anywhere below <code>skills/</code>; ambiguous names require the full path and report the candidates. A single-skill repository needs no <code>//</code>: omitting it makes <code>get</code> discover the root <code>SKILL.md</code> and every <code>SKILL.md</code> below <code>skills/</code>.</p>
+          <div class="doc-cmd">
+            <div class="c"># Two sources may publish the same skill name; install the extra entry with an alias</div>
+            <div><span class="p">$</span> skillmod get --alias review-acme github.com/acme/agent-skills//review</div>
+          </div>
+          <p>Both declarations and both lock records are retained. A lock entry omits <code>dir</code> when the installation directory equals <code>name</code>, and records it only for an aliased entry. Aliases must be portable names, and all installation directories must stay distinct after Unicode normalization and case folding, so the same project behaves identically on Linux, macOS, and Windows. Re-getting the same source with a different alias keeps the old directory and reports that <code>skillmod prune</code> can remove it.</p>
+          <div class="doc-note">
+            <strong>Addresses must be credential-free:</strong> embedded user information, a query string, a fragment, and control characters are refused before the address is used or persisted, so a secret cannot reach <code>SKILL.mod</code>, <code>SKILL.lock</code>, the bare repository's configuration, or a diagnostic. The supported transports are <code>https</code>, <code>http</code>, <code>ssh</code>, and <code>file</code>, plus the scp-like <code>git@host:path</code> form; <code>git://</code> is refused as unauthenticated and unencrypted. An SSH username is kept because it identifies the transport; a password is not, and secrets belong in a Git credential helper, an SSH agent, or the environment.
+          </div>
+
+          <h2>Versions</h2>
+          <p>Three immutable forms are accepted. A branch name is rejected, because a mutable reference cannot be locked.</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Form</th><th>Example</th><th>Use when</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Semantic-version tag</td><td><code>v1.2.0</code>, <code>code-review/v1.2.0</code></td><td>The publisher tags releases</td></tr>
+                <tr><td>Commit SHA</td><td>a full 40-character SHA</td><td>You need one exact revision</td></tr>
+                <tr><td>Pseudo-version</td><td><code>v1.0.96-0.20260624023612-49f948faa925</code></td><td>A commit pin; the base is the highest tag when the repository has tags, plain <code>v0.0.0</code> when it has none</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p>A repository without tags yields <code>v0.0.0-&lt;ts&gt;-&lt;hash&gt;</code>; with a base tag it yields <code>v&lt;base&gt;-0.&lt;ts&gt;-&lt;hash&gt;</code>. Locks written before base tags existed use the plain <code>v0.0.0-&lt;ts&gt;-&lt;hash&gt;</code> shape and stay valid; the next <code>update</code> migrates them to the repository's latest tag.</p>
+
+          <h2>Installation mode</h2>
+          <p><code>auto</code> prefers native directory symlinks into the shared read-only snapshots and falls back to byte-for-byte copies when links are unavailable, including Windows without link privileges. <code>copy</code> always creates an independent directory. <code>--install-mode</code> overrides the machine configuration for one command.</p>
+          <p>Links point at a snapshot shared with every other project on the machine, so editing through a link edits that shared content. Detach before editing:</p>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod sync --relink --install-mode=copy</div>
+          </div>
+          <p>Installation mode, absolute cache paths, and scope are deliberately excluded from both files, so identical declarations and versions produce identical manifests on every system and in every installation mode.</p>
+
+          <h2>Shared storage</h2>
+          <p>There is only one cache, shared by every scope at <code>$SKILLMOD_HOME/pkg/mod/</code>, defaulting to <code>~/.agents/skillmod/pkg/mod/</code>:</p>
+          <div class="doc-cmd">
+            <div>~/.agents/skillmod/pkg/mod/</div>
+            <div>├── github.com/anthropics/skills@v0.0.0-.../  <span class="c"># directly browsable full-repository snapshot</span></div>
+            <div>└── cache/</div>
+            <div>    ├── vcs/                                  <span class="c"># bare Git repositories, keyed internally by hash</span></div>
+            <div>    ├── download/                             <span class="c"># repository versions, refs, and resolution metadata</span></div>
+            <div>    └── locks/</div>
+          </div>
+          <p>Snapshots are readable and immutable. HTTPS, default-port SSH, and <code>.git</code> URL variants of the same repository share one snapshot, and the identity is credential-free, so a token in a URL can never become part of a cache key.</p>
+          <p>The first request for a <code>repo@version</code> materializes the whole repository snapshot. Adding another skill from the same version later validates and installs it straight from that local subdirectory, without invoking Git or touching the remote. An explicit <code>@commit</code> reuses an existing snapshot of that commit the same way. Requesting latest, or running <code>skillmod update</code>, keeps online refresh semantics. Set <code>SKILLMOD_HOME</code> to relocate the store.</p>
+          <p><code>--dry-run</code> leaves manifests and installations untouched, though remote provenance verification may still populate the shared cache. <code>prune</code> removes stale installation entries without deleting link targets or snapshots. There is no automatic cache eviction; before deleting a snapshot by hand, confirm that no installed link still uses it, and never delete the cache as a shortcut for removing one dependency.</p>
+
+          <h2>Sharing with agents</h2>
+          <p><code>share</code> places a symlink named after each skill into the chosen agent directory, such as <code>.claude/skills/&lt;skill&gt;</code>, and points it at the managed <code>.agents/skills/&lt;skill&gt;</code>. The managed directory stays the one real copy: editing the managed skill is visible through every link at once, and there is nothing to synchronize. Links use the same <code>auto</code> fallback as installs, so a filesystem without symlink support receives a byte-preserving copy instead.</p>
+          <p>An agent is named by one directory segment and read from <code>.&lt;name&gt;/skills</code> under the scope root, so the list is open — <code>workbuddy</code> is as valid as <code>claude</code>. Only the name is recorded, never the directory: a stored path would not reproduce elsewhere, while a name is enough to rebuild the link.</p>
+          <div class="doc-cmd">
+            <div class="c"># SKILL.mod</div>
+            <div>[[skill]]</div>
+            <div>name = "review"</div>
+            <div>agents = ["claude", "codex"]</div>
+          </div>
+          <p><code>sync</code> recreates the links each entry describes on a new machine, and <code>verify</code> reports a missing or drifted one; an agent directory absent from the machine is skipped, because the declaration expresses team intent, not a machine requirement. Names use letters, digits, <code>.</code>, <code>_</code>, and <code>-</code>; a leading dot and letter case are normalized, so <code>.Claude</code> and <code>claude</code> are the same destination and cannot appear together in one list. A name that is not one portable directory segment is rejected when the manifest is read. An entry without <code>agents</code>, or with an empty one, means the skill stays only in the managed directory.</p>
+          <p><code>share --remove --agent &lt;name&gt;</code> (<code>-r</code>) is the declaration's exit: it unlinks the named agents from the skills the command names and drops them from those entries' agent lists, leaving destinations that hold foreign content alone and saving the declaration only after the links are down. Removing a skill, or pruning it as stale, takes the links that mirror its managed copy down with it, and an entry left with no agents loses the field entirely. <code>SKILL.lock</code> also remembers destinations that were created: removing an agent name by hand removes the intent to share, but leaves the existing link for <code>remove</code> or <code>prune</code> to clean up later.</p>
+
+          <div class="doc-note">
+            <strong>Next:</strong> the exact usage of every command lives in the <a href="/en/skillmod/docs/commands/">command reference</a>; distribution, updating, and adopting what already exists live in the <a href="/en/skillmod/docs/scenarios/">scenario guide</a>.
+          </div>
+
+          <nav class="doc-pager">
+            <a href="/en/skillmod/docs/quickstart/">
+              <span class="dir">Previous</span>
+              <span class="name">Five-minute start</span>
+            </a>
+            <a class="next" href="/en/skillmod/docs/commands/">
+              <span class="dir">Next</span>
+              <span class="name">Command reference</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/en/skillmod/">skillmod</a>
+      <a href="/en/">Home</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

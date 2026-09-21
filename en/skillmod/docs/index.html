@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Docs · skillmod</title>
+  <meta name="description" content="skillmod docs: five-minute start, core concepts, command reference, scenario guide, automation and CI, troubleshooting.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="Docs · skillmod">
+  <meta property="og:description" content="skillmod docs: five-minute start, core concepts, command reference, scenario guide, automation and CI, troubleshooting.">
+  <meta property="og:url" content="https://huija.github.io/en/skillmod/docs/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/en/skillmod/docs/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/en/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/en/skillmod/docs/">Docs</a>
+        <a href="/en/">Home</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/skillmod/docs/" data-lang="zh">中文</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item current" href="/en/skillmod/docs/">Home</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/quickstart/">Five-minute start</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/concepts/">Core concepts</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/commands/">Command reference</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/scenarios/">Scenario guide</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/automation/">Automation &amp; CI</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/troubleshooting/">Troubleshooting</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / index</p>
+            <h1>skillmod docs</h1>
+            <p>A task-organized reference. To get your first skill running, start with the five-minute start; for the exact usage of a command, go to the command reference; for the rules behind the behavior, go to core concepts.</p>
+          </header>
+
+          <h2>Reading paths</h2>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>You are</th><th>Suggested route</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>New to skillmod</td><td><a href="/en/skillmod/docs/quickstart/">Five-minute start</a> → <a href="/en/skillmod/docs/scenarios/">Scenario guide</a></td></tr>
+                <tr><td>Installed, looking up a command</td><td><a href="/en/skillmod/docs/commands/">Command reference</a></td></tr>
+                <tr><td>Wiring skillmod into CI or scripts</td><td><a href="/en/skillmod/docs/automation/">Automation &amp; CI</a></td></tr>
+                <tr><td>Hitting an error or odd state</td><td><a href="/en/skillmod/docs/troubleshooting/">Troubleshooting</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>All pages</h2>
+          <div class="doc-cards">
+            <a class="doc-card reveal" href="/en/skillmod/docs/quickstart/">
+              <span class="dc-no">01</span>
+              <h3>Five-minute start</h3>
+              <p>Install, add your first skill, meet SKILL.mod and SKILL.lock, and run sync and verify end to end.</p>
+            </a>
+            <a class="doc-card reveal" style="--d:60ms" href="/en/skillmod/docs/concepts/">
+              <span class="dc-no">02</span>
+              <h3>Core concepts</h3>
+              <p>The division of labor between the two files, global vs project scope, the three immutable version forms, install modes and shared storage.</p>
+            </a>
+            <a class="doc-card reveal" style="--d:120ms" href="/en/skillmod/docs/commands/">
+              <span class="dc-no">03</span>
+              <h3>Command reference</h3>
+              <p>All eleven commands: syntax, common flags, behavioral conventions, and caveats.</p>
+            </a>
+            <a class="doc-card reveal" style="--d:180ms" href="/en/skillmod/docs/scenarios/">
+              <span class="dc-no">04</span>
+              <h3>Scenario guide</h3>
+              <p>Adopting what already exists, project distribution, updating and pinning, sharing with agents, removal and cleanup.</p>
+            </a>
+            <a class="doc-card reveal" style="--d:240ms" href="/en/skillmod/docs/automation/">
+              <span class="dc-no">05</span>
+              <h3>Automation &amp; CI</h3>
+              <p>Exit-code table, the --json report shape, the action vocabulary, and wiring skillmod into a pipeline.</p>
+            </a>
+            <a class="doc-card reveal" style="--d:300ms" href="/en/skillmod/docs/troubleshooting/">
+              <span class="dc-no">06</span>
+              <h3>Troubleshooting</h3>
+              <p>A step-by-step self-check, what common errors mean, and preparing a report worth filing.</p>
+            </a>
+          </div>
+
+          <h2>By task</h2>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>I want to…</th><th>Go to</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Install skillmod and run a first skill</td><td><a href="/en/skillmod/docs/quickstart/">Five-minute start</a></td></tr>
+                <tr><td>Understand what SKILL.mod and SKILL.lock each do</td><td><a href="/en/skillmod/docs/concepts/">Core concepts</a> · Two files</td></tr>
+                <tr><td>Split global skills from project skills</td><td><a href="/en/skillmod/docs/concepts/">Core concepts</a> · Scopes</td></tr>
+                <tr><td>Pin a version and leave it alone</td><td><a href="/en/skillmod/docs/concepts/">Core concepts</a> · Versions</td></tr>
+                <tr><td>Get every team machine on the same skill set</td><td><a href="/en/skillmod/docs/scenarios/">Scenario guide</a> · Distribution</td></tr>
+                <tr><td>Bring skills already on disk under management</td><td><a href="/en/skillmod/docs/scenarios/">Scenario guide</a> · Adoption</td></tr>
+                <tr><td>Know what exit code 2 or 3 means</td><td><a href="/en/skillmod/docs/automation/">Automation &amp; CI</a></td></tr>
+                <tr><td>Fix a drift reported by verify</td><td><a href="/en/skillmod/docs/troubleshooting/">Troubleshooting</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="doc-note">
+            <strong>About the source of truth:</strong> this site is a presentation layer over the rules. The finest-grained manifest rules, storage layout, and JSON vocabulary live in the reference docs of the GitHub repository, maintained in step; the pages here are reorganized by task for readers who do not know the repository layout.
+          </div>
+
+          <nav class="doc-pager">
+            <a class="next" href="/en/skillmod/docs/quickstart/">
+              <span class="dir">Next</span>
+              <span class="name">Five-minute start</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/en/skillmod/">skillmod</a>
+      <a href="/en/">Home</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>

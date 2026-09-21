@@ -29,6 +29,7 @@
     <div class="nav-inner">
       <a class="brand" href="/en/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
       <div class="nav-links">
+        <a href="/en/skillmod/docs/">Docs</a>
         <a href="/en/">Home</a>
         <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
@@ -49,8 +50,8 @@
           <h1 class="md"><span class="scramble" data-text="skillmod">skillmod</span></h1>
           <p class="sub">Declare, pin, sync. <span class="hl">Every machine gets the exact same set of skills</span>.</p>
           <div class="hero-cta">
-            <a class="btn btn-primary" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">View source</a>
-            <a class="btn btn-ghost" href="https://github.com/huija/skillmod/releases" target="_blank" rel="noopener">Releases</a>
+            <a class="btn btn-primary" href="/en/skillmod/docs/quickstart/">Five-minute start</a>
+            <a class="btn btn-ghost" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">View source</a>
           </div>
         </div>
         <div class="hero-visual reveal">
@@ -100,94 +101,72 @@
     <section class="section" style="padding-top:0">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2>Capabilities</h2>
+          <h2>Three scenarios — take your seat</h2>
+          <p>skillmod is not built for "one machine, one skill." When any of the following holds, declaring and locking pays for itself.</p>
         </div>
-        <div class="feat-grid">
-          <div class="feat feat-wide reveal">
-            <h3>Eleven commands</h3>
-            <ul class="cmd-list">
-              <li><span class="name">init</span> <span class="desc">register existing skills</span></li>
-              <li><span class="name">get</span> <span class="desc">add from any Git repository</span></li>
-              <li><span class="name">sync</span> <span class="desc">reconcile against the lock, idempotently</span></li>
-              <li><span class="name">share</span> <span class="desc">link into .claude/.codex and any agent</span></li>
-              <li><span class="name">list</span> <span class="desc">show declarations, versions, install status</span></li>
-              <li><span class="name">why</span> <span class="desc">explain one entry: origin and state</span></li>
-              <li><span class="name">update</span> <span class="desc">move to the newest immutable version</span></li>
-              <li><span class="name">verify</span> <span class="desc">check for drift; the CI gate</span></li>
-              <li><span class="name">remove</span> <span class="desc">exit cleanly, or just unshare</span></li>
-              <li><span class="name">prune</span> <span class="desc">clean up stale installs and lock records</span></li>
-              <li><span class="name">upgrade</span> <span class="desc">replace in place, checksum-verified</span></li>
-            </ul>
+        <div class="scene-grid">
+          <div class="scene reveal">
+            <p class="scene-no">01</p>
+            <h3>A global base, per-project picks</h3>
+            <p>Personal, machine-wide skills are declared in the global manifest and available everywhere; a project's dependencies are declared in the project's own <span class="cmd-inline">SKILL.mod</span> / <span class="cmd-inline">SKILL.lock</span> and committed with the repo. A project installs only what it needs. The two manifests never merge — a command touches the global scope only when it carries <span class="cmd-inline">--global</span>.</p>
+            <div class="scene-cmd">
+              <div><span class="p">$</span> skillmod --global init</div>
+              <div class="c">adopt the skills already on this machine</div>
+              <div><span class="p">$</span> cd my-project &amp;&amp; skillmod init</div>
+              <div class="c">register only what this project uses</div>
+            </div>
           </div>
-          <div class="feat feat-wide reveal" style="--d:80ms">
-            <h3>Sources straight from Git</h3>
-            <p>The direct mode of Go modules: a skill is a tagged repository, or a monorepo subdirectory (&lt;repo&gt;//&lt;subdir&gt;). A bare skill name after <span class="cmd">//</span> works too — exact subdirectory first, then a unique name anywhere under skills/. Publishing is tagging. No server, no registry.</p>
+          <div class="scene reveal" style="--d:80ms">
+            <p class="scene-no">02</p>
+            <h3>Project distribution, one sync away</h3>
+            <p>Commit SKILL.mod and SKILL.lock; add .agents/skills/ to .gitignore. A teammate's fresh clone, your new laptop, and the CI job all run the same <span class="cmd-inline">skillmod sync</span>: a byte-identical set of skills, with the agent links that share recorded rebuilt on every machine.</p>
+            <div class="scene-cmd">
+              <div><span class="p">$</span> git clone … &amp;&amp; cd my-project</div>
+              <div><span class="p">$</span> skillmod sync</div>
+              <div><span class="p">$</span> skillmod verify</div>
+              <div class="c">one command after clone, and the team's skill set is back</div>
+            </div>
           </div>
-          <div class="feat feat-slim reveal">
-            <h3>Three immutable versions</h3>
-            <p>Semver tags (including subdirectory tags like <span class="cmd">code-review/v1.2.0</span>), commit SHAs, and pseudo-versions. A pseudo-version takes the repository's highest tag as its base, and old locks migrate on the next update. Branch names are refused — a mutable reference cannot be locked.</p>
-          </div>
-          <div class="feat feat-slim reveal" style="--d:80ms">
-            <h3>Content-addressed lock</h3>
-            <p>SKILL.lock pins content with a dirhash — pure-function generated, timestamp-free, hand-editing forbidden. It also records the resolved commit, so a pseudo-version stays resolvable on machines that never saw the tag.</p>
-          </div>
-          <div class="feat feat-slim reveal" style="--d:160ms">
-            <h3>Shared persistent storage</h3>
-            <p>Read-only whole-repo snapshots live in ~/.agents/skillmod/pkg/mod; HTTPS and SSH variants share storage. A skill is fetched once, and the second project installs straight from disk.</p>
-          </div>
-          <div class="feat feat-wide reveal">
-            <h3>Install as a link, shared machine-wide</h3>
-            <p>Installs default to a symlink into the shared snapshot, falling back to byte-for-byte copies when links are unavailable (Windows included). To edit content, detach first with <span class="cmd">sync --relink --install-mode=copy</span>.</p>
-          </div>
-          <div class="feat feat-wide reveal" style="--d:80ms">
-            <h3>Share with any agent</h3>
-            <p>An agent is one directory segment: .claude, .codex, workbuddy — all equal. Destinations are recorded on the skill's SKILL.mod entry; sync rebuilds the links on every machine, and verify reports missing or drifted ones.</p>
-          </div>
-          <div class="feat feat-wide reveal">
-            <h3>CI gate, machine-readable</h3>
-            <p>verify exits 2 on drift — use it directly as a build gate; get/sync/update/remove keep modified installs instead of overwriting them and report exit 3, handing the decision back. Every command supports <span class="cmd">--json</span> with a stable action vocabulary for scripts to branch on.</p>
-          </div>
-          <div class="feat feat-wide reveal" style="--d:80ms">
-            <h3>Flat 1:1 · zero telemetry</h3>
-            <p>No transitive dependency resolution, no constraint solver (the requires field is reserved). Nothing is collected; the only external dependency is Git.</p>
+          <div class="scene reveal" style="--d:160ms">
+            <p class="scene-no">03</p>
+            <h3>Update, or pin the version</h3>
+            <p><span class="cmd-inline">skillmod update</span> moves every remote skill to the newest immutable version — the highest tag wins, and only a tagless repository tracks HEAD. To pin, write the tag or commit into the version field of SKILL.mod; branch names are refused. SKILL.lock records version, commit, and dirhash, so "which version was in use" always has an answer.</p>
+            <div class="scene-cmd">
+              <div><span class="p">$</span> skillmod update</div>
+              <div><span class="p">$</span> skillmod update gh-fix-ci</div>
+              <div class="c">pinning is version = 'v1.2.0'; branch names are refused</div>
+            </div>
           </div>
         </div>
+        <p class="scene-more reveal">Full walkthroughs for each scenario, plus adopting what already exists and clean removal, live in the <a href="/en/skillmod/docs/scenarios/">scenario guide</a>.</p>
       </div>
     </section>
 
     <section class="section" style="padding-top:0">
       <div class="wrap">
         <div class="section-head reveal">
-          <h2>Two files say it all</h2>
-          <p>SKILL.mod is maintained by people and committed; SKILL.lock is written by the tool, deterministically. Which agents a skill is shared with is declared on its entry, too.</p>
+          <h2>What you get, once it is running</h2>
+          <p>Not another install script — a skill declaration you can commit, reproduce, and verify.</p>
         </div>
-        <div class="code-duo">
-          <div class="code-block reveal">
-            <div class="code-head">
-              <span>SKILL.mod</span>
-              <button class="copy-btn" type="button">Copy</button>
-            </div>
-            <pre><code><span class="k">schemaversion</span> = <span class="n">1</span>
-
-<span class="k">[[skill]]</span>
-<span class="k">name</span> = <span class="s">'gh-fix-ci'</span>
-<span class="k">source</span> = <span class="s">'github.com/openai/skills//skills/.curated/gh-fix-ci'</span>
-<span class="k">version</span> = <span class="s">'v0.0.0-20260624023612-49f948faa925'</span>
-<span class="k">agents</span> = <span class="s">['claude', 'workbuddy']</span></code></pre>
+        <div class="hl-grid">
+          <div class="hl reveal">
+            <h3>Byte-identical on every machine</h3>
+            <p>Clone, new laptop, CI build — the same <span class="cmd-inline">skillmod sync</span> installs the same set of skills.</p>
           </div>
-          <div class="code-block reveal" style="--d:100ms">
-            <div class="code-head">
-              <span>SKILL.lock</span>
-              <button class="copy-btn" type="button">Copy</button>
-            </div>
-            <pre><code><span class="k">[[skill]]</span>
-<span class="k">name</span> = <span class="s">'gh-fix-ci'</span>
-<span class="k">source</span> = <span class="s">'github.com/openai/skills//skills/.curated/gh-fix-ci'</span>
-<span class="k">version</span> = <span class="s">'v0.0.0-20260624023612-49f948faa925'</span>
-<span class="k">commit</span> = <span class="s">'49f948faa9258a0c61caceaf225e179651397431'</span>
-<span class="k">dirhash</span> = <span class="s">'h1:kiGlVBeTCF8Q9f0rPATnDn1jBn/obT3TTTL8D8gdCbM='</span></code></pre>
+          <div class="hl reveal" style="--d:80ms">
+            <h3>Version questions have answers</h3>
+            <p>SKILL.lock records version, commit, and dirhash, so "which version was in use" is one lookup away.</p>
+          </div>
+          <div class="hl reveal" style="--d:160ms">
+            <h3>Tampering and drift surface</h3>
+            <p>Content-addressed locking; <span class="cmd-inline">skillmod verify</span> exits 2 on drift — usable directly as a build gate.</p>
+          </div>
+          <div class="hl reveal" style="--d:240ms">
+            <h3>Local edits are never overwritten</h3>
+            <p>Conflicting targets are kept and reported; exit 3 hands the decision back to a person.</p>
           </div>
         </div>
+        <p class="hl-more reveal">Eleven commands, address and version rules, storage and configuration — the full reference lives in the <a href="/en/skillmod/docs/">skillmod docs</a>.</p>
       </div>
     </section>
 
@@ -197,6 +176,7 @@
           <div>
             <h2>Two paths to get started</h2>
             <p style="color:var(--muted);margin-top:8px">After installing, use <span class="cmd-inline">skillmod upgrade</span> to replace the binary in place: the download is verified against release checksums before it swaps.</p>
+            <p style="margin-top:16px">Not sure what to do next? <a href="/en/skillmod/docs/quickstart/" style="color:var(--accent);border-bottom:1px solid var(--accent-line)">Five-minute start →</a></p>
           </div>
           <div style="display:flex;flex-direction:column;gap:22px">
             <div class="install-group">
@@ -227,6 +207,7 @@
   <footer>
     <div class="wrap foot-inner">
       <span>© 2026 huija</span>
+      <a href="/en/skillmod/docs/">Docs</a>
       <a href="/en/">Home</a>
       <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
     </div>

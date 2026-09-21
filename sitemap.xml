@@ -2,18 +2,74 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://huija.github.io/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-21</lastmod>
   </url>
   <url>
     <loc>https://huija.github.io/skillmod/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/skillmod/docs/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/skillmod/docs/quickstart/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/skillmod/docs/concepts/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/skillmod/docs/commands/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/skillmod/docs/scenarios/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/skillmod/docs/automation/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/skillmod/docs/troubleshooting/</loc>
+    <lastmod>2026-09-21</lastmod>
   </url>
   <url>
     <loc>https://huija.github.io/en/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-21</lastmod>
   </url>
   <url>
     <loc>https://huija.github.io/en/skillmod/</loc>
-    <lastmod>2026-09-20</lastmod>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/en/skillmod/docs/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/en/skillmod/docs/quickstart/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/en/skillmod/docs/concepts/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/en/skillmod/docs/commands/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/en/skillmod/docs/scenarios/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/en/skillmod/docs/automation/</loc>
+    <lastmod>2026-09-21</lastmod>
+  </url>
+  <url>
+    <loc>https://huija.github.io/en/skillmod/docs/troubleshooting/</loc>
+    <lastmod>2026-09-21</lastmod>
   </url>
 </urlset>

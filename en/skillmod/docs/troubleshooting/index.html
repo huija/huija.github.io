@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Troubleshooting · skillmod docs</title>
+  <meta name="description" content="skillmod troubleshooting: a five-step self-check, what common errors mean and how to handle them, cache and snapshot discipline, and preparing a report worth filing.">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="huija">
+  <meta property="og:title" content="Troubleshooting · skillmod docs">
+  <meta property="og:description" content="skillmod troubleshooting: a five-step self-check, what common errors mean and how to handle them, cache and snapshot discipline, and preparing a report worth filing.">
+  <meta property="og:url" content="https://huija.github.io/en/skillmod/docs/troubleshooting/">
+  <meta property="og:image" content="https://huija.github.io/assets/og-skillmod.png">
+  <meta property="og:locale" content="en_US">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://huija.github.io/en/skillmod/docs/troubleshooting/">
+  <link rel="alternate" hreflang="zh-CN" href="https://huija.github.io/skillmod/docs/troubleshooting/">
+  <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/docs/troubleshooting/">
+  <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/docs/troubleshooting/">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="nav-inner">
+      <a class="brand" href="/en/skillmod/"><span class="path">~/</span>skillmod<span class="cursor"></span></a>
+      <div class="nav-links">
+        <a href="/en/skillmod/docs/">Docs</a>
+        <a href="/en/">Home</a>
+        <a class="gh" href="https://github.com/huija/skillmod" target="_blank" rel="noopener">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.1.79-.25.79-.55v-2.17c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.78 0c2.21-1.49 3.18-1.18 3.18-1.18.63 1.59.23 2.76.11 3.05.74.81 1.19 1.83 1.19 3.09 0 4.42-2.7 5.39-5.26 5.68.41.35.77 1.05.77 2.12v3.14c0 .3.21.66.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></svg>
+          <span>huija/skillmod</span>
+        </a>
+        <a class="lang" href="/skillmod/docs/troubleshooting/" data-lang="zh">中文</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="section doc-page">
+    <div class="wrap">
+      <div class="doc-layout">
+
+        <aside class="doc-side">
+          <p class="doc-side-title">文档 / DOCS</p>
+          <nav class="doc-nav">
+            <a class="doc-nav-item" href="/en/skillmod/docs/">Home</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/quickstart/">Five-minute start</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/concepts/">Core concepts</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/commands/">Command reference</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/scenarios/">Scenario guide</a>
+            <a class="doc-nav-item" href="/en/skillmod/docs/automation/">Automation &amp; CI</a>
+            <a class="doc-nav-item current" href="/en/skillmod/docs/troubleshooting/">Troubleshooting</a>
+          </nav>
+        </aside>
+
+        <article class="doc-main reveal">
+          <header>
+            <p class="doc-kicker">docs / troubleshooting</p>
+            <h1>Troubleshooting</h1>
+            <p>Work through the same five steps in order, read what common errors mean before acting, hold the line on cache and snapshot discipline, and — when a report upstream is warranted — prepare a sanitized draft worth filing.</p>
+          </header>
+
+          <h2>Self-check in five steps</h2>
+          <p>When a command errors or the state looks wrong, run the same five steps. The order is deliberate: scope and working directory explain most surprising results, and environment and versions explain much of the rest.</p>
+          <ol>
+            <li>Confirm the intended scope and working directory. Project commands read and write <code>SKILL.mod</code> and <code>SKILL.lock</code> in the current directory and install into <code>.agents/skills/</code> there; a command meant to affect the user-wide environment needs <code>--global</code> spelled out.</li>
+            <li>Run <code>git --version</code> and <code>skillmod --version</code> to confirm Git is available and to record the skillmod version.</li>
+            <li>Run <code>skillmod list</code> for the full declaration overview; for one entry run <code>skillmod why &lt;selector&gt;</code> to see its source, resolved version, commit, dirhash, installation directory, and the status of each configured target.</li>
+            <li>Run <code>skillmod verify</code> and record its exit code. <code>list</code>, <code>why</code>, and <code>verify</code> classify every installation directory the same way, so they cannot disagree about a target.</li>
+            <li>For a planned mutation, rerun it with <code>--dry-run</code> when the command supports it, review the report, and only then decide whether to run it for real.</li>
+          </ol>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> git --version</div>
+            <div><span class="p">$</span> skillmod --version</div>
+            <div><span class="p">$</span> skillmod list</div>
+            <div><span class="p">$</span> skillmod why review</div>
+            <div><span class="p">$</span> skillmod verify</div>
+            <div class="c"># planned writes: read the dry-run report first</div>
+            <div><span class="p">$</span> skillmod sync --relink --dry-run</div>
+          </div>
+          <div class="doc-note">
+            <strong>Exit codes:</strong> <code>verify</code> returns 0 when every checked entry is consistent, 1 for an operational or input error, 2 when drift is detected, and 3 for partial completion where conflicting targets were safely preserved. The full table and the <code>--json</code> report shape live in <a href="/en/skillmod/docs/automation/">Automation &amp; CI</a>.
+          </div>
+
+          <h2>Common errors and what to do</h2>
+          <p>Each row below is one common failure. Read the meaning first, then act; wherever local modifications are involved, the user decides.</p>
+          <div class="doc-table-wrap">
+            <table>
+              <thead>
+                <tr><th>Symptom / error</th><th>Meaning and handling</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><code>SKILL.mod not found</code></td><td>The current scope has no manifest. Initialize the intended scope with <code>init</code>, or change to the correct project root.</td></tr>
+                <tr><td>Drift, or a preserved conflict</td><td>Inspect the local modifications; do not overwrite them without the user's decision. When <code>sync</code> returns 3, read the per-target results: some work completed, while conflicting targets were kept.</td></tr>
+                <tr><td>Network unavailable</td><td>An already materialized immutable snapshot may work offline, validating and installing straight from the local subdirectory; latest-version resolution requires remote references.</td></tr>
+                <tr><td>Branch rejected</td><td>Versions must be immutable: pick a tag, a full commit SHA, or omit the version and let skillmod resolve the latest immutable version.</td></tr>
+                <tr><td>Address rejected as unsafe</td><td>The address must be credential-free: remove the embedded password or token, the query string, and the fragment from the URL, and move an <code>@version</code> suffix in <code>source</code> into the <code>version</code> field. Credentials belong in a Git credential helper, an SSH agent, or the environment.</td></tr>
+                <tr><td>Manifest validation error</td><td>The declaration and the lock are validated when they are read. Report the exact message rather than rewriting the file by guesswork. A <code>SKILL.lock</code> without <code>schemaversion</code> predates schema versioning and is treated as schema version 1; an explicit unsupported version still needs user intervention.</td></tr>
+                <tr><td>Snapshot integrity error</td><td>Do not suppress it. Preserve the diagnostics; if the source and the local state both look valid, move to the issue-reporting workflow.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Cache and snapshot discipline</h2>
+          <p>One shared content store serves every scope: the cache lives at <code>$SKILLMOD_HOME/pkg/mod/</code>, defaulting to <code>~/.agents/skillmod/pkg/mod/</code>. Snapshots are readable and immutable, so projects, global skills, and CI runs reuse one copy instead of downloading the same repository again.</p>
+          <ul>
+            <li><code>prune</code> removes stale installation entries without deleting link targets or snapshots.</li>
+            <li>There is no automatic cache eviction. Before deleting a snapshot by hand, confirm that no installed link still uses it — a link points at a snapshot shared with every other project on the machine.</li>
+            <li>Never delete the cache as a shortcut for removing one dependency. Use <code>remove</code> to drop a dependency and <code>prune</code> to clear stale installations.</li>
+            <li><code>--dry-run</code> leaves manifests and installations untouched, though remote provenance verification may still populate the shared cache.</li>
+          </ul>
+          <div class="doc-cmd">
+            <div><span class="p">$</span> skillmod remove review --dry-run</div>
+            <div><span class="p">$</span> skillmod prune --dry-run</div>
+          </div>
+          <div class="doc-note">
+            <strong>Detach before editing:</strong> <code>auto</code> mode installs links into shared read-only snapshots, so editing through a link edits content shared with every other project on the machine. When an installed skill needs edits, run <code>sync --relink --install-mode=copy</code> for an independent copy.
+          </div>
+
+          <h2>Prepare a report</h2>
+          <p>File an issue only when the diagnosis points at a defect in skillmod itself and the user agrees. Creating a GitHub issue is an external, public mutation: show the destination repository and the final draft, and obtain explicit authorization immediately before submission.</p>
+          <p>Reproduce only with commands that are safe for the current state: <code>--dry-run</code>, <code>list</code>, <code>why</code>, and <code>verify</code>. Do not destroy the failing state before collecting diagnostics.</p>
+          <p>Collect what is available:</p>
+          <ul>
+            <li><code>skillmod --version</code> and <code>git --version</code>, plus <code>gh --version</code> when GitHub CLI is installed</li>
+            <li>Operating system and architecture</li>
+            <li>Installation method and executable path</li>
+            <li>Project or global scope</li>
+            <li>The exact skillmod command and its exit code</li>
+            <li>Expected behavior and actual behavior</li>
+            <li>Minimal reproduction steps</li>
+            <li>Whether the behavior is consistent or intermittent</li>
+          </ul>
+          <p>Include the smallest relevant excerpts of <code>SKILL.mod</code>, <code>SKILL.lock</code>, and command output — not whole files by default.</p>
+          <div class="doc-note">
+            <strong>Redact before sharing:</strong> remove access tokens, credentials, private repository URLs, usernames, home-directory paths, internal hostnames, and unrelated skill declarations. Never upload an entire private manifest or Git configuration by default.
+          </div>
+          <p>Diagnostics may print in another language by default. When reproducible in English, setting <code>SKILLMOD_LANG=en</code> makes them easier for maintainers to search, but do not rerun a mutating command solely to translate its output.</p>
+          <p>Without <code>gh</code>, follow the official installation instructions rather than installing or authenticating it without consent; a user who does not want GitHub CLI gets the same draft prepared and files it on the repository's issues page. Search for duplicates before filing a new one:</p>
+          <div class="doc-cmd">
+            <div class="c"># search open and closed issues with keywords from the symptom</div>
+            <div><span class="p">$</span> gh issue list --repo huija/skillmod --state all --search "&lt;keywords&gt;" --limit 20</div>
+          </div>
+          <div class="doc-note">
+            <strong>Report structure:</strong> Summary (one or two sentences on the defect and its impact) · Environment (skillmod and Git versions, OS and architecture, installation method, scope) · Steps to reproduce · Expected behavior · Actual behavior · Command output (sanitized output and exit code) · Additional context (minimal sanitized manifest excerpts). Title the issue as <code>&lt;command&gt;: &lt;observable problem&gt;</code> — a factual statement, not an unproven root cause.
+          </div>
+
+          <nav class="doc-pager">
+            <a href="/en/skillmod/docs/automation/">
+              <span class="dir">Previous</span>
+              <span class="name">Automation &amp; CI</span>
+            </a>
+          </nav>
+        </article>
+
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap foot-inner">
+      <span>© 2026 huija</span>
+      <a href="/en/skillmod/">skillmod</a>
+      <a href="/en/">Home</a>
+      <a href="https://github.com/huija/skillmod" target="_blank" rel="noopener">github.com/huija/skillmod</a>
+    </div>
+  </footer>
+
+  <script src="/assets/main.js"></script>
+</body>
+</html>
