@@ -772,13 +772,13 @@ a { color: inherit; text-decoration: none; }
 
 /* ---------- landing guarantee strip (skillmod) ---------- */
 
-.hl-grid {
+.promise-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 20px;
 }
 
-.hl {
+.promise-card {
   padding: 24px;
   background: var(--panel);
   border: 1px solid var(--line);
@@ -786,29 +786,29 @@ a { color: inherit; text-decoration: none; }
   transition: border-color 0.3s;
 }
 
-.hl:hover { border-color: var(--accent-line); }
+.promise-card:hover { border-color: var(--accent-line); }
 
-.hl h3 {
+.promise-card h3 {
   font-size: 15.5px;
   letter-spacing: -0.01em;
   margin-bottom: 8px;
 }
 
-.hl p { color: var(--muted); font-size: 13.5px; }
+.promise-card p { color: var(--muted); font-size: 13.5px; }
 
-.hl-more {
+.promise-more {
   margin-top: 28px;
   font-size: 13.5px;
   color: var(--faint);
 }
 
-.hl-more a {
+.promise-more a {
   color: var(--accent);
   border-bottom: 1px solid var(--accent-line);
   transition: opacity 0.25s;
 }
 
-.hl-more a:hover { opacity: 0.8; }
+.promise-more a:hover { opacity: 0.8; }
 
 /* ---------- docs / wiki (skillmod) ---------- */
 
@@ -1094,7 +1094,7 @@ footer {
   .split { grid-template-columns: minmax(0, 1fr); gap: 40px; }
   .feat-wide, .feat-slim { grid-column: span 6; }
   .scene-grid { grid-template-columns: minmax(0, 1fr); }
-  .hl-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .promise-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .doc-layout { grid-template-columns: minmax(0, 1fr); gap: 28px; }
   .doc-side { position: static; }
   .doc-nav { flex-direction: row; flex-wrap: nowrap; overflow-x: auto; padding-bottom: 8px; }
@@ -1113,7 +1113,7 @@ footer {
   .cta-band { padding: 32px 24px; }
   .install-line { width: 100%; }
   .qr-band { flex-direction: column; text-align: center; gap: 20px; }
-  .hl-grid { grid-template-columns: minmax(0, 1fr); }
+  .promise-grid { grid-template-columns: minmax(0, 1fr); }
   .doc-main th { white-space: normal; }
   .doc-main td code { overflow-wrap: anywhere; }
 }

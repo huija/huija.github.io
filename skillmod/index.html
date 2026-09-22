@@ -21,7 +21,7 @@
   <link rel="alternate" hreflang="en" href="https://huija.github.io/en/skillmod/">
   <link rel="alternate" hreflang="x-default" href="https://huija.github.io/skillmod/">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a0d12'/%3E%3Cpath d='M8 10l6 6-6 6' stroke='%2345c8f1' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cline x1='16' y1='22' x2='24' y2='22' stroke='%2345c8f1' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="/assets/style.css?v=2">
+  <link rel="stylesheet" href="/assets/style.css?v=3">
 </head>
 <body>
 
@@ -148,25 +148,25 @@
           <h2>装好之后，你得到什么</h2>
           <p>不是又一个安装脚本，而是一套可提交、可复现、可校验的 skill 声明。</p>
         </div>
-        <div class="hl-grid">
-          <div class="hl reveal">
+        <div class="promise-grid">
+          <div class="promise-card reveal">
             <h3>每台机器，逐字节一致</h3>
             <p>clone、换机、CI 跑构建，同一条 <span class="cmd-inline">skillmod sync</span> 装出同一套 skill。</p>
           </div>
-          <div class="hl reveal" style="--d:80ms">
+          <div class="promise-card reveal" style="--d:80ms">
             <h3>版本问题有答案</h3>
             <p>SKILL.lock 记录 version、commit、dirhash，"当时用的哪个版本"随时可查。</p>
           </div>
-          <div class="hl reveal" style="--d:160ms">
+          <div class="promise-card reveal" style="--d:160ms">
             <h3>篡改与漂移现形</h3>
             <p>内容寻址锁定，<span class="cmd-inline">skillmod verify</span> 在漂移时退出码 2，可直接当构建门槛。</p>
           </div>
-          <div class="hl reveal" style="--d:240ms">
+          <div class="promise-card reveal" style="--d:240ms">
             <h3>本地修改不被硬覆盖</h3>
             <p>冲突目标保留并报告，exit 3 把决定权交还给人。</p>
           </div>
         </div>
-        <p class="hl-more reveal">十一条命令、地址与版本规则、存储与配置——完整参考见 <a href="/skillmod/docs/">skillmod 文档</a>。</p>
+        <p class="promise-more reveal">十一条命令、地址与版本规则、存储与配置——完整参考见 <a href="/skillmod/docs/">skillmod 文档</a>。</p>
       </div>
     </section>
 
@@ -213,6 +213,6 @@
     </div>
   </footer>
 
-  <script src="/assets/main.js?v=2"></script>
+  <script src="/assets/main.js?v=3"></script>
 </body>
 </html>
